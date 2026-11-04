@@ -50,32 +50,32 @@ export const SendPetitionModal = ({
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white w-[40vw] max-w-5xl rounded-lg relative overflow-y-auto max-h-[90vh] p-6">
         {/* Close button provided by ModalProvider, so no need for X here */}
-        <h2 className="text-xl font-semibold text-center mb-6">Send Petition</h2>
+        <h2 className="text-xl font-semibold text-center mb-6">Enviar solicitud</h2>
 
         <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="space-y-4">
           {/* Petition Title */}
           <div>
-            <label htmlFor="petitionTitle" className="block text-sm font-medium text-gray-700">Petition Title</label>
+            <label htmlFor="petitionTitle" className="block text-sm font-medium text-gray-700">Título de la solicitud</label>
             <input
               id="petitionTitle"
               type="text"
               value={petitionTitle}
               onChange={(e) => setPetitionTitle(e.target.value)}
               className='mt-1 block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-              placeholder="Enter petition title"
+              placeholder="Escribe el título de la solicitud"
             />
           </div>
 
            {/* Related Course Selection */}
           <div>
-            <label htmlFor="course" className="block text-sm font-medium text-gray-700">Related Course (Optional)</label>
+            <label htmlFor="course" className="block text-sm font-medium text-gray-700">Asignatura relacionada (opcional)</label>
             <select
               id="course"
               className='mt-1 block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
               value={selectedCourse}
               onChange={(e) => setSelectedCourse(e.target.value)}
             >
-              <option value="">Select Course</option>
+              <option value="">Selecciona una asignatura</option>
               {courses.map((course) => (
                 <option key={course.id} value={course.id}>
                   {course.name}
@@ -87,33 +87,33 @@ export const SendPetitionModal = ({
 
           {/* Recipient (Simple Input for now) */}
            <div>
-            <label htmlFor="recipient" className="block text-sm font-medium text-gray-700">To (e.g., School Administration)</label>
+            <label htmlFor="recipient" className="block text-sm font-medium text-gray-700">Para (p. ej., administración del centro)</label>
             <input
               id="recipient"
               type="text"
               value={recipient}
               onChange={(e) => setRecipient(e.target.value)}
               className='mt-1 block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-              placeholder="Specify recipient"
+              placeholder="Especifica el destinatario"
             />
           </div>
 
           {/* Petition Body/Description */}
           <div>
-            <label htmlFor="petitionBody" className="block text-sm font-medium text-gray-700">Petition Details</label>
+            <label htmlFor="petitionBody" className="block text-sm font-medium text-gray-700">Detalles de la solicitud</label>
             <textarea
               id="petitionBody"
               value={petitionBody}
               onChange={(e) => setPetitionBody(e.target.value)}
               rows="6"
               className='mt-1 block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-              placeholder="Explain the issue and your request..."
+              placeholder="Explica el problema y tu solicitud..."
             />
           </div>
 
           {/* File Upload */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">Supporting Documents (Optional)</label>
+            <label className="block text-sm font-medium text-gray-700">Documentos de apoyo (opcional)</label>
             <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-200">
               <div className="space-y-1 text-center">
                 <svg
@@ -135,12 +135,12 @@ export const SendPetitionModal = ({
                     htmlFor="petition-file-upload"
                     className="relative cursor-pointer bg-gray-300 rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                   >
-                    <span className="px-2">Upload a file</span>
+                    <span className="px-2">Subir un archivo</span>
                     <input id="petition-file-upload" name="petition-file-upload" type="file" className="sr-only" onChange={handleFileChange} />
                   </label>
-                  <p className="pl-1 text-gray-700">or drag and drop</p>
+                  <p className="pl-1 text-gray-700">o arrastra y suelta</p>
                 </div>
-                <p className="text-xs text-gray-500">PDF, DOC, DOCX up to 10MB</p>
+                <p className="text-xs text-gray-500">PDF, DOC, DOCX hasta 10 MB</p>
                  {file && (
                   <div className='flex bg-gray-300 items-center justify-between cursor-text h-8 my-1 rounded-md p-2'>
                     <p className="text-sm text-gray-700">
@@ -159,14 +159,14 @@ export const SendPetitionModal = ({
               type="submit"
               className="w-full bg-purple-900 hover:opacity-90 rounded-lg text-white py-2 font-semibold"
             >
-              Send Petition
+              Enviar solicitud
             </button>
             <button
               type="button"
               onClick={onClose}
               className="w-full bg-red-600 hover:opacity-90 rounded-lg text-white py-2 font-semibold"
             >
-              Cancel
+              Cancelar
             </button>
           </div>
         </form>

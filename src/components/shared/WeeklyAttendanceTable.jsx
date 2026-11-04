@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { format, eachDayOfInterval, isSameDay } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 export const WeeklyAttendanceTable = ({ attendanceData, startDate, endDate }) => {
   const [editMode, setEditMode] = useState(false);
@@ -13,7 +14,7 @@ export const WeeklyAttendanceTable = ({ attendanceData, startDate, endDate }) =>
   if (!startDate || !endDate || editableAttendanceData.length === 0) {
     return (
       <div className="p-6 text-center text-gray-500">
-        {startDate && endDate ? "No students found for the selected filters and date range." : "Please select a date range to view weekly attendance."}
+        {startDate && endDate ? "No se encontraron alumnos para los filtros y el rango de fechas seleccionados." : "Selecciona un rango de fechas para ver la asistencia semanal."}
       </div>
     );
   }
@@ -70,14 +71,14 @@ export const WeeklyAttendanceTable = ({ attendanceData, startDate, endDate }) =>
                       onClick={handleSave}
                       className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
                   >
-                      Save Changes
+                      Guardar cambios
                   </button>
                   <button
                       type="button"
                       onClick={handleCancel}
                       className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
                   >
-                      Cancel
+                      Cancelar
                   </button>
               </>
           ) : (
@@ -86,7 +87,7 @@ export const WeeklyAttendanceTable = ({ attendanceData, startDate, endDate }) =>
                   onClick={() => setEditMode(true)}
                   className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
               >
-                  Edit Attendance
+                  Editar asistencia
               </button>
           )}
       </div>
@@ -95,10 +96,10 @@ export const WeeklyAttendanceTable = ({ attendanceData, startDate, endDate }) =>
         <table className="min-w-full border-collapse">
           <thead className="bg-gray-100 rounded-lg sticky top-0">
             <tr>
-              <th className="px-4 py-3 text-left text-sm font-medium text-gray-600 sticky left-0 bg-gray-100 z-10">Student</th>
+              <th className="px-4 py-3 text-left text-sm font-medium text-gray-600 sticky left-0 bg-gray-100 z-10">Alumno</th>
               {datesInWeek.map(date => (
                 <th key={format(date, 'yyyy-MM-dd')} className="px-3 py-3 text-center text-sm font-medium text-gray-600">
-                  {format(date, 'MMM dd')}
+                  {format(date, 'dd MMM', { locale: es })}
                 </th>
               ))}
             </tr>

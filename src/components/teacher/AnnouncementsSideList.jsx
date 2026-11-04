@@ -3,87 +3,82 @@ import React from 'react';
 const AnnouncementsSideList = () => {
   const announcements = [
     {
-      type: 'Math',
-      topic: 'Upcoming Algebra Quiz',
-      content: 'Dear students, Please review the formulas from Chapter 5 before our next class. The upcoming quiz will cover algebraic expressions and problem-solving. Be ready!',
-      action: 'Details'
+      type: 'Matemáticas',
+      topic: 'Próximo cuestionario de álgebra',
+      content: 'Estimados alumnos: repasad las fórmulas del capítulo 5 antes de nuestra próxima clase. El próximo cuestionario abarcará expresiones algebraicas y resolución de problemas.',
+      action: 'Detalles'
     },
     {
-      type: 'Physics',
-      topic: 'Motion Lab Preparation',
+      type: 'Física',
+      topic: 'Preparación del laboratorio de movimiento',
       content: '',
-      action: 'Details'
+      action: 'Detalles'
     },
     {
-      type: 'Physics',
-      topic: 'Motion Lab Preparation',
+      type: 'Física',
+      topic: 'Preparación del laboratorio de movimiento',
       content: '',
-      action: 'Details'
+      action: 'Detalles'
     },
     {
-      type: 'Physics',
-      topic: 'Motion Lab Preparation',
+      type: 'Historia',
+      topic: 'Revisión de fuentes primarias',
       content: '',
-      action: 'Details'
+      action: 'Detalles'
     },
-    {
-      type: 'Physics',
-      topic: 'Motion Lab Preparation',
-      content: '',
-      action: 'Details'
-    },
-    {
-      type: 'Physics',
-      topic: 'Motion Lab Preparation',
-      content: '',
-      action: 'Details'
-    },
-    {
-      type: 'Physics',
-      topic: 'Motion Lab Preparation',
-      content: '',
-      action: 'Details'
-    }
   ];
 
   return (
-    <div className="bg-white rounded-xl p-3">
+    <div className="bg-white rounded-xl p-3 border border-gray-200 shadow-sm">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold">Announcement's</h3>
-        <button className="text-gray-400 ">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+        <h3 className="text-base font-semibold text-gray-900">Anuncios</h3>
+        <button className="text-gray-400 hover:text-gray-600">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
             <circle cx="10" cy="4" r="1.5"/>
             <circle cx="10" cy="10" r="1.5"/>
             <circle cx="10" cy="16" r="1.5"/>
           </svg>
         </button>
       </div>
-      
-      <div className="max-w-2xl max-h-lvh overflow-hidden mx-auto space-y-2">
-      {announcements.map((announcement, index) => (
-        <div key={index} className="flex">
-          <div className="bg-red-800 w-1.5 flex-shrink-0 rounded-l-lg"></div>
-          <div className="bg-gray-200 rounded-r-lg p-4 text-gray-900 flex-1">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-red-700 text-sm">Announcement</span>
-                <div className="font-medium">{announcement.type}</div>
-                <div className="text-sm opacity-80">Topic: {announcement.topic}</div>
+
+      <div className="max-h-80 overflow-y-auto space-y-2 pr-1">
+        {announcements.map((announcement, index) => (
+          <div key={index} className="flex">
+            <div className="w-1 flex-shrink-0 rounded-l-lg" style={{ backgroundColor: '#C0392B' }} />
+            <div className="bg-gray-50 border border-gray-100 rounded-r-lg p-3 text-gray-900 flex-1">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex-1 min-w-0">
+                  <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: '#C0392B' }}>Anuncio</span>
+                  <div className="font-medium text-sm text-gray-800 truncate">{announcement.type}</div>
+                  <div className="text-xs text-gray-500 truncate">Tema: {announcement.topic}</div>
+                </div>
+                <button
+                  className="text-xs font-semibold px-2 py-1 rounded border flex-shrink-0 transition-colors"
+                  style={{ borderColor: '#C0392B', color: '#C0392B', backgroundColor: 'white' }}
+                  onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#C0392B'; e.currentTarget.style.color = 'white'; }}
+                  onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'white'; e.currentTarget.style.color = '#C0392B'; }}
+                >
+                  {announcement.action}
+                </button>
               </div>
-              <button className="bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white px-3 py-1 rounded text-sm hover:opacity-90">
-                {announcement.action}
-              </button>
+              {announcement.content && (
+                <p className="text-xs text-gray-500 mt-2 line-clamp-2">{announcement.content}</p>
+              )}
             </div>
-            {announcement.content && <p className="text-sm opacity-80 mt-2">{announcement.content}</p>}
           </div>
-        </div>
-      ))}
-    </div>
-    <div className="mt-4 flex justify-center">
-          <button className="bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 ">
-            View All Announcement
-          </button>
-        </div>
+        ))}
+      </div>
+
+      <div className="mt-3 flex justify-center">
+        <button
+          className="text-sm font-semibold px-6 py-2 rounded-lg border transition-colors"
+          style={{ borderColor: '#C0392B', color: '#C0392B', backgroundColor: 'white' }}
+          onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#C0392B'; e.currentTarget.style.color = 'white'; }}
+          onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'white'; e.currentTarget.style.color = '#C0392B'; }}
+        >
+          Ver todos los anuncios
+        </button>
+      </div>
     </div>
   );
 };

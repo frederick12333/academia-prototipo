@@ -19,7 +19,7 @@ const mockStudents = users.filter(user=>user.role==='student')
   studentId: 'S123456',
   grade: student.grade,
   parentPhone: '0 501 808 60 60',
-  address: 'Turkey - Istanbul 123',
+  address: 'Turquía - Estambul 123',
  
 }));
 
@@ -35,11 +35,11 @@ const StudentListPage = () => {
   const [loading, setLoading] = useState(false);
 
   const columns = [
-    'Info',
-    'Student ID',
-    'Grade',
-    'Parent Phone',
-    'Address',
+    'Información',
+    'ID del alumno',
+    'Curso',
+    'Teléfono del familiar',
+    'Dirección',
   ];
 
   const filteredStudents = mockStudents.filter(s =>
@@ -92,7 +92,7 @@ const StudentListPage = () => {
           <div className="relative w-1/3">
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Buscar"
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#4F0129]"
@@ -105,7 +105,7 @@ const StudentListPage = () => {
            
             <button onClick={()=>showModal(<CreateStudentModal onSubmit={handleAddStudent} />)}
              className="p-2 flex  rounded-md bg-green-600 text-white hover:bg-green-700">
-              <Plus size={20}/> Add New Student 
+              <Plus size={20}/> Agregar alumno 
               </button>
           </div>
         </div>
@@ -126,7 +126,7 @@ const StudentListPage = () => {
             onClick={() => setPage(p => Math.max(1, p - 1))}
             disabled={page === 1}
           >
-            Prev
+            Anterior
           </button>
           <div className="flex gap-2">
             {[1, 2, 3, 4, 5].map(p => (
@@ -144,7 +144,7 @@ const StudentListPage = () => {
             onClick={() => setPage(p => Math.min(5, p + 1))}
             disabled={page === 5}
           >
-            Next
+            Siguiente
           </button>
         </div>
        

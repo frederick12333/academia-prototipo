@@ -1,142 +1,141 @@
 import React from 'react';
-import { Home, Users, LibraryBig,Megaphone, Calendar, FileText, ClipboardList, Award, UserCheck, Mail, User, LogOut, X } from 'lucide-react';
-import logo from '../../assets/image.png';
+import { Home, Users, LibraryBig, Calendar, FileText, ClipboardList, Award, UserCheck, User, LogOut, X } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../components/shared/Loading';
-import { DefultImage } from '../../constants/passOver.js';
 
-const Sidebar = ({ currentPage, isOpen, onClose, }) => {
+// Rojo institucional
+const RED = '#C0392B';
+
+const Sidebar = ({ currentPage, isOpen, onClose }) => {
   const [activeItem, setActiveItem] = React.useState(currentPage);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = React.useState(false);
   const { user, logout } = useAuth();
 
   const menuItemsTeacher = [
-    { icon: Home, label: 'Home', path: '/teacher/dashboard' },
-    { icon: Users, label: 'Students', path: '/teacher/students-list' },
-    { icon: Calendar, label: 'Schedule', path: '/teacher/schedule' },
-    { icon: FileText, label: 'Exams', path: '/teacher/exams' },
-    { icon: ClipboardList, label: 'Assignments', path: '/teacher/assignments' },
-    { icon: Award, label: 'Grades', path: '/teacher/grades' },
-    { icon: UserCheck, label: 'Attendance', path: '/teacher/attendance' },
-    { icon: Mail, label: 'Inbox', path: '/teacher/inbox' },
+    { icon: Home,         label: 'Inicio',      path: '/teacher/dashboard' },
+    { icon: Users,        label: 'Alumnos',     path: '/teacher/students-list' },
+    { icon: Calendar,     label: 'Horario',     path: '/teacher/schedule' },
+    { icon: FileText,     label: 'Exámenes',    path: '/teacher/exams' },
+    { icon: ClipboardList,label: 'Tareas',      path: '/teacher/assignments' },
+    { icon: Award,        label: 'Notas',       path: '/teacher/grades' },
   ];
+
   const menuItemsStudent = [
-    { icon: Home, label: 'Home', path: '/student/dashboard' },
-    { icon: LibraryBig, label: 'Courses', path: '/student/courses-list' },
-    { icon: Calendar, label: 'Schedule', path: '/student/schedule' },
-    { icon: Users, label: 'Teachers', path: '/student/teachers-list' },
-    { icon: FileText, label: 'Exams', path: '/student/exams' },
-    { icon: ClipboardList, label: 'Assignments', path: '/student/assignments' },
-    { icon: Award, label: 'Grades', path: '/student/grades' },
-    { icon: UserCheck, label: 'Attendance', path: '/student/attendance' },
-    { icon: Megaphone , label: 'Announcements', path: '/student/announcements' },
-    { icon: Mail, label: 'Inbox', path: '/student/inbox' },
+    { icon: Home,         label: 'Inicio',      path: '/student/dashboard' },
+    { icon: LibraryBig,   label: 'Asignaturas', path: '/student/courses-list' },
+    { icon: Calendar,     label: 'Horario',     path: '/student/schedule' },
+    { icon: FileText,     label: 'Exámenes',    path: '/student/exams' },
+    { icon: ClipboardList,label: 'Tareas',      path: '/student/assignments' },
+    { icon: Award,        label: 'Notas',       path: '/student/grades' },
+    { icon: UserCheck,    label: 'Asistencia',  path: '/student/attendance' },
   ];
 
   const handleItemClick = (label) => {
-    if(label === 'Logout'){
+    if (label === 'Cerrar sesión') {
       setIsLoading(true);
       setTimeout(() => {
         setIsLoading(false);
-      logout();
+        logout();
         navigate('/');
-      }, 1000);
-    } else if(label === 'Profile') {
+      }, 800);
+    } else if (label === 'Perfil') {
       setActiveItem(label);
-      user?.role==='teacher'?
-      navigate(`/teacher/teacher-profile/${user.name}`)
-      :
-      navigate(`/student/student-profile/${user.name}`);
+      user?.role === 'teacher'
+        ? navigate(`/teacher/teacher-profile/${user.name}`)
+        : navigate(`/student/student-profile/${user.name}`);
     } else {
-      const menuItem = user?.role==='teacher'?
-      menuItemsTeacher.find(item => item.label === label)
-      :   
-      menuItemsStudent.find(item => item.label === label);
+      const menu = user?.role === 'teacher' ? menuItemsTeacher : menuItemsStudent;
+      const menuItem = menu.find(item => item.label === label);
       if (menuItem) {
         setActiveItem(label);
         navigate(menuItem.path);
+        if (onClose) onClose();
       }
     }
   };
 
+  const menuItems = user?.role === 'teacher' ? menuItemsTeacher : menuItemsStudent;
+
   return (
     <>
-      {/* Overlay for mobile */}
+      {/* Overlay móvil */}
       {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+        <div
+          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
           onClick={onClose}
         />
       )}
-      
-      {/* Sidebar */}
-      <div className={`fixed lg:static inset-y-0 left-0 z-50 w-64 transform transition-transform duration-300 ease-in-out ${
-        isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-      } bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white min-h-screen py-4 pr-4`}>
-        {/* Close button for mobile */}
-        <button 
-          onClick={onClose}
-          className="lg:hidden absolute top-4 right-4 p-2 rounded-full hover:bg-white/10"
-        >
-          <X size={24} className="text-white" />
-        </button>
 
-        <div 
-         onClick={() => handleItemClick('Home')}
-         className="flex items-center justify-center mb-8 cursor-pointer ">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center mr-3">
-            <img src={logo} alt="Logo" className="object-contain w-[200px] h-[200px]" />
-          </div>
-          <span className="text-xl font-semibold">Titan Edu</span>
+      {/* Columna Izquierda: Menú de Módulos (Sidebar compacto con fondo blanco) */}
+      <aside
+        className={`fixed lg:static inset-y-0 left-0 z-50 lg:z-10 w-64 transform transition-transform duration-300 ease-in-out ${
+          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        } bg-white border-r border-gray-200 text-gray-800 h-full flex flex-col flex-shrink-0 select-none`}
+      >
+        {/* Botón cerrar (exclusivo para móvil) */}
+        <div className="lg:hidden flex justify-end p-3 border-b border-gray-100">
+          <button
+            onClick={onClose}
+            className="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100"
+            title="Cerrar menú"
+          >
+            <X size={20} />
+          </button>
         </div>
-      <div className=" sticky top-0 flex flex-col  ">
-        <nav className="space-y-2">
-          {(user?.role==='teacher'? menuItemsTeacher : menuItemsStudent).map((item, index) => (
-            <div key={index} className='flex w-full space-x-10 items-center justify-left'>
-              <div className={`relative h-12 w-2.5 ${activeItem === item.label ? 'bg-[#10062B]' : 'bg-[#e8e8eb00]'} rounded-e`} />
+
+        {/* Lista vertical de módulos */}
+        <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-1">
+          {menuItems.map((item, index) => {
+            const isActive = activeItem === item.label;
+            return (
               <div
+                key={index}
                 onClick={() => handleItemClick(item.label)}
-                className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer transition-colors w-full ${
-                  activeItem === item.label ? 'bg-[#10062B] text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all ${
+                  isActive
+                    ? 'text-white font-semibold shadow-xs'
+                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                 }`}
+                style={isActive ? { backgroundColor: RED } : {}}
               >
-                <item.icon size={20} />
-                <span>{item.label}</span>
+                <item.icon size={18} />
+                <span className="text-sm">{item.label}</span>
+                {isActive && (
+                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white opacity-90" />
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </nav>
-        
-        <div className='flex w-full space-x-10 items-center justify-left mt-14'>
-          <div className={`relative h-12 w-2.5 ${activeItem === 'Profile' ? 'bg-[#10062B]' : 'bg-[#e8e8eb00]'} rounded-e`} />
-          <div 
-            onClick={() => handleItemClick('Profile')}
-            className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer transition-colors w-full ${
-              activeItem === 'Profile' ? 'bg-[#10062B] text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+
+        {/* Sección inferior: Perfil y Cerrar sesión */}
+        <div className="border-t border-gray-100 px-2 py-3 space-y-1 bg-white">
+          <div
+            onClick={() => handleItemClick('Perfil')}
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all ${
+              activeItem === 'Perfil'
+                ? 'text-white font-semibold'
+                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
             }`}
+            style={activeItem === 'Perfil' ? { backgroundColor: RED } : {}}
           >
-            <User size={20} />
-            <span>Profile</span>
+            <User size={18} />
+            <span className="text-sm">Perfil</span>
+          </div>
+
+          <div
+            onClick={() => handleItemClick('Cerrar sesión')}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer transition-all text-gray-600 hover:bg-red-50 hover:text-red-700"
+          >
+            <LogOut size={18} />
+            {isLoading ? <Loading /> : <span className="text-sm">Cerrar sesión</span>}
           </div>
         </div>
-        <div className='flex w-full space-x-10 items-center justify-left mt-2'>
-          <div className={`relative h-12 w-2.5 ${activeItem === 'none' ? 'bg-[#10062B]' : 'bg-[#e8e8eb00]'} rounded-e`} />
-          <div 
-            onClick={() => handleItemClick('Logout')}
-            className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer transition-colors w-full ${
-              activeItem === 'none' ? 'bg-[#10062B] text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
-            }`}
-          >
-            <LogOut size={20} />
-            {isLoading ? <Loading/> : <span>Logout</span>}
-          </div>
-        </div>
-      </div>
-      </div>
+      </aside>
     </>
   );
 };
 
-export default Sidebar; 
+export default Sidebar;

@@ -29,11 +29,11 @@ const Announcenents = () => {
   return (
     <Layout currentPage={'Announcenents'}>
       <div className="max-w-7xl mx-auto p-6 min-w-full">
-        <h1 className="text-3xl font-bold mb-6 text-gray-900">Announcements</h1>
+        <h1 className="text-3xl font-bold mb-6 text-gray-900">Anuncios</h1>
         <div className="flex flex-col md:flex-row gap-4 mb-8 items-center">
           <input
             type="text"
-            placeholder="Search announcements..."
+            placeholder="Buscar anuncios..."
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
             className="flex-1 h-10 px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -43,7 +43,7 @@ const Announcenents = () => {
             value={selectedCourse}
             onChange={e => setSelectedCourse(e.target.value)}
           >
-            <option value="All">All Courses</option>
+            <option value="All">Todas las asignaturas</option>
             {courses.map(course => (
               <option key={course} value={course}>{course}</option>
             ))}
@@ -56,7 +56,7 @@ const Announcenents = () => {
             ))}
           </div>
           {filteredAnnouncements.length === 0 && (
-            <div className="text-center text-gray-500 py-12 text-lg">No announcements found.</div>
+            <div className="text-center text-gray-500 py-12 text-lg">No se encontraron anuncios.</div>
           )}
         </div>
       </div>

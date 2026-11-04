@@ -7,19 +7,19 @@ import Loading from '../../components/shared/Loading';
 const mockStudents = Array.from({ length: 10 }).map((_, i) => ({
   info: {
     avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
-    name: 'Name Surname',
+    name: 'Nombre Apellido',
     description: `${i % 2 === 0 ? '3A' : '4B'}`,
   },
   studentId: 'S123456',
   grade: i % 2 === 0 ? 3 : 4,
   parentPhone: '0 501 808 60 60',
-  address: 'Turkey - Istanbul - Uskudar 123',
+  address: 'Turquía - Estambul - Üsküdar 123',
 }));
 
 const subjects = [
-  { label: 'Physics', classes: ['3A', '3B'] },
-  { label: 'Chemistry', classes: ['3C'] },
-  { label: 'Math', classes: ['4A', '4B'] },
+  { label: 'Física', classes: ['3A', '3B'] },
+  { label: 'Química', classes: ['3C'] },
+  { label: 'Matemáticas', classes: ['4A', '4B'] },
 ];
 
 const StudentListPage = () => {
@@ -32,11 +32,11 @@ const StudentListPage = () => {
   const [loading, setLoading] = useState(false);
 
   const columns = [
-    'Info',
-    'Student ID',
-    'Grade',
-    'Parent Phone',
-    'Address',
+    'Información',
+    'ID del alumno',
+    'Curso',
+    'Teléfono del familiar',
+    'Dirección',
   ];
 
   const filteredStudents = mockStudents.filter(s =>
@@ -80,7 +80,7 @@ const StudentListPage = () => {
           <div className="relative w-1/3">
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Buscar"
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#4F0129]"
@@ -116,7 +116,7 @@ const StudentListPage = () => {
             onClick={() => setPage(p => Math.max(1, p - 1))}
             disabled={page === 1}
           >
-            Prev
+            Anterior
           </button>
           <div className="flex gap-2">
             {[1, 2, 3, 4, 5].map(p => (
@@ -134,7 +134,7 @@ const StudentListPage = () => {
             onClick={() => setPage(p => Math.min(5, p + 1))}
             disabled={page === 5}
           >
-            Next
+            Siguiente
           </button>
         </div>
         {/* View Modal */}
@@ -142,14 +142,14 @@ const StudentListPage = () => {
           <dialog open className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
             <div className="bg-white rounded-xl p-8 min-w-[400px] relative">
               <button className="absolute top-2 right-2 text-gray-400 hover:text-gray-700" onClick={() => setViewModal(null)}>&times;</button>
-              <h2 className="text-xl font-bold mb-4">Student Details</h2>
+              <h2 className="text-xl font-bold mb-4">Detalles del alumno</h2>
               <div className="flex flex-col gap-2">
-                <div><b>Name:</b> {viewModal.info.name}</div>
-                <div><b>Class:</b> {viewModal.info.description}</div>
-                <div><b>Student ID:</b> {viewModal.studentId}</div>
-                <div><b>Grade:</b> {viewModal.grade}</div>
-                <div><b>Parent Phone:</b> {viewModal.parentPhone}</div>
-                <div><b>Address:</b> {viewModal.address}</div>
+                <div><b>Nombre:</b> {viewModal.info.name}</div>
+                <div><b>Clase:</b> {viewModal.info.description}</div>
+                <div><b>ID del alumno:</b> {viewModal.studentId}</div>
+                <div><b>Curso:</b> {viewModal.grade}</div>
+                <div><b>Teléfono del familiar:</b> {viewModal.parentPhone}</div>
+                <div><b>Dirección:</b> {viewModal.address}</div>
               </div>
             </div>
           </dialog>
@@ -159,11 +159,11 @@ const StudentListPage = () => {
           <dialog open className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
             <div className="bg-white rounded-xl p-8 min-w-[400px] relative">
               <button className="absolute top-2 right-2 text-gray-400 hover:text-gray-700" onClick={() => setDeleteModal(null)}>&times;</button>
-              <h2 className="text-xl font-bold mb-4">Delete Student</h2>
-              <p>Are you sure you want to delete <b>{deleteModal.info.name}</b>?</p>
+              <h2 className="text-xl font-bold mb-4">Eliminar alumno</h2>
+              <p>¿Seguro que quieres eliminar a <b>{deleteModal.info.name}</b>?</p>
               <div className="flex gap-4 mt-6">
-                <button className="px-6 py-2 rounded bg-gray-200" onClick={() => setDeleteModal(null)}>Cancel</button>
-                <button className="px-6 py-2 rounded bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white" onClick={() => { setDeleteModal(null); }}>Delete</button>
+                <button className="px-6 py-2 rounded bg-gray-200" onClick={() => setDeleteModal(null)}>Cancelar</button>
+                <button className="px-6 py-2 rounded bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white" onClick={() => { setDeleteModal(null); }}>Eliminar</button>
               </div>
             </div>
           </dialog>

@@ -3,6 +3,7 @@ import StudentExamTaker from './StudentExamTaker';
 import ExamAnswersReview from './ExamAnswersReview';
 import { ArrowLeft } from 'lucide-react';
 import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 // Assuming a CircularProgress component exists or needs to be created
 // import CircularProgress from './CircularProgress'; 
 
@@ -36,10 +37,10 @@ const ExamResultsModalContent = ({ exam,user, onClose,hight='h-40' , width='w-40
 
   const getExamStatusMessage = () => {
     if (isExamUpcoming) {
-      return `Exam starts on ${format(examStartTime, 'PP HH:mm')}`;
+      return `El examen comienza el ${format(examStartTime, 'PP HH:mm', { locale: es })}`;
     }
     if (isExamEnded) {
-      return `Exam ended on ${format(examEndTime, 'PP HH:mm')}`;
+      return `El examen finalizó el ${format(examEndTime, 'PP HH:mm', { locale: es })}`;
     }
     return ''; // Should not display a message if active
   };
@@ -99,9 +100,9 @@ const ExamResultsModalContent = ({ exam,user, onClose,hight='h-40' , width='w-40
                   ? (remainingTime < (exam?.duration || 0) / 2 ? 'text-red-600' : 'text-green-600')
                   : 'text-blue-600'
               } ${textSize} font-bold `}>
-              {isExamActive ? `${remainingTime}min` : `${exam?.duration || 'N/A'}min`}</span>
+              {isExamActive ? `${remainingTime}min` : `${exam?.duration || 'N/D'}min`}</span>
               <span className={`text-gray-600  text-xs font-bold `}>
-              {isExamActive ? 'Remaining' : 'Duration'}
+              {isExamActive ? 'Restante' : 'Duración'}
              </span>
             </div>
             
@@ -111,15 +112,15 @@ const ExamResultsModalContent = ({ exam,user, onClose,hight='h-40' , width='w-40
 
         {/* Exam Details */}
         <div>
-          <h3 className="text-xl font-semibold text-gray-900">{exam?.title || 'N/A'}</h3>
-          <p className="text-lg text-gray-700">{exam?.course?.name || 'N/A'}</p>
-          <p className="text-gray-600 mt-2"><span className="font-bold">Exam Points:</span> {exam?.Total_Points}</p>
-          <p className="text-gray-600"><span className="font-bold">Duration:</span> {exam?.duration || 'N/A'} min</p>
-          <p className="text-gray-600"><span className="font-bold">Number of Questions:</span> {exam?.questions?.length || 'N/A'}</p>
-          <p className="text-gray-600"><span className="font-bold">Topics:</span> {exam?.topics || 'N/A'}</p>
-          <p className="text-green-700"><span className="font-bold ">Location:</span> {exam?.location || 'N/A'}</p>
-          <p className="text-gray-600 "><span className="font-bold">Date: </span> {exam?.date || 'N/A'}</p>
-          <p className="text-gray-600 "><span className="font-bold"> Time: </span>{exam?.time || 'N/A'}</p>
+          <h3 className="text-xl font-semibold text-gray-900">{exam?.title || 'N/D'}</h3>
+          <p className="text-lg text-gray-700">{exam?.course?.name || 'N/D'}</p>
+          <p className="text-gray-600 mt-2"><span className="font-bold">Puntos del examen:</span> {exam?.Total_Points}</p>
+          <p className="text-gray-600"><span className="font-bold">Duración:</span> {exam?.duration || 'N/D'} min</p>
+          <p className="text-gray-600"><span className="font-bold">Número de preguntas:</span> {exam?.questions?.length || 'N/D'}</p>
+          <p className="text-gray-600"><span className="font-bold">Temas:</span> {exam?.topics || 'N/D'}</p>
+          <p className="text-green-700"><span className="font-bold ">Ubicación:</span> {exam?.location || 'N/D'}</p>
+          <p className="text-gray-600 "><span className="font-bold">Fecha: </span> {exam?.date || 'N/D'}</p>
+          <p className="text-gray-600 "><span className="font-bold"> Hora: </span>{exam?.time || 'N/D'}</p>
         </div>
       </div>
 
@@ -127,7 +128,7 @@ const ExamResultsModalContent = ({ exam,user, onClose,hight='h-40' , width='w-40
     
        <div>
        <p className="text-gray-600 break-words">
-          <span className="font-bold">Description:</span> {exam?.description || 'N/A'}
+          <span className="font-bold">Descripción:</span> {exam?.description || 'N/D'}
         </p>
 
       </div>
@@ -143,7 +144,7 @@ const ExamResultsModalContent = ({ exam,user, onClose,hight='h-40' , width='w-40
               className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
             <label htmlFor="policies" className="ml-2 text-sm text-gray-600">
-              I have read and agree to the exam policies
+              He leído y acepto las normas del examen
             </label>
           </div>
           {!isExamActive && (
@@ -158,7 +159,7 @@ const ExamResultsModalContent = ({ exam,user, onClose,hight='h-40' , width='w-40
                 : 'bg-gray-300 text-gray-500 cursor-not-allowed'
             }`}
           >
-            Start Exam
+            Comenzar examen
           </button>
         </div>
       )}
@@ -204,7 +205,7 @@ const ExamResultsModalContent = ({ exam,user, onClose,hight='h-40' , width='w-40
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               
               <span className={`${scorePercentage>=50?'text-green-600 ':'text-red-600 '} text-2xl font-semibold `}>
-              Absent</span>
+              Ausente</span>
             </div>}
             
           </div>
@@ -212,12 +213,12 @@ const ExamResultsModalContent = ({ exam,user, onClose,hight='h-40' , width='w-40
 
         {/* Exam Details */}
         <div>
-          <h3 className="text-xl font-semibold text-gray-900">{exam?.course?.code || 'N/A'}</h3>
-          <p className="text-lg text-gray-700">{exam?.course?.name || 'N/A'}</p>
-          <p className="text-gray-600 mt-2"><span className="font-bold">Exam Points:</span> {exam?.Total_Points}</p>
-          <p className="text-gray-600"><span className="font-bold">Duration:</span> {exam?.duration || 'N/A'} min</p>
-          <p className="text-gray-600"><span className="font-bold">Topics:</span> {exam?.topics || 'N/A'}</p>
-          <p className="text-gray-600"><span className="font-bold">Number of Questions:</span> {exam?.questions?.length || 'N/A'}</p>
+          <h3 className="text-xl font-semibold text-gray-900">{exam?.course?.code || 'N/D'}</h3>
+          <p className="text-lg text-gray-700">{exam?.course?.name || 'N/D'}</p>
+          <p className="text-gray-600 mt-2"><span className="font-bold">Puntos del examen:</span> {exam?.Total_Points}</p>
+          <p className="text-gray-600"><span className="font-bold">Duración:</span> {exam?.duration || 'N/D'} min</p>
+          <p className="text-gray-600"><span className="font-bold">Temas:</span> {exam?.topics || 'N/D'}</p>
+          <p className="text-gray-600"><span className="font-bold">Número de preguntas:</span> {exam?.questions?.length || 'N/D'}</p>
 
           
         </div>
@@ -227,11 +228,11 @@ const ExamResultsModalContent = ({ exam,user, onClose,hight='h-40' , width='w-40
       {studentScore.attended && (
         <>
           <div>
-            <h4 className="text-lg font-semibold mb-3">Answers</h4>
+            <h4 className="text-lg font-semibold mb-3">Respuestas</h4>
             
             {/* Correct Answers */}
             <div className="flex items-center mb-2">
-              <span className="text-sm text-gray-700 mr-4 w-20">Correct</span>
+              <span className="text-sm text-gray-700 mr-4 w-20">Correctas</span>
               <div className="flex-1 bg-gray-200 rounded-full h-2">
                 <div 
                   className="bg-green-500 h-2 rounded-full"
@@ -243,7 +244,7 @@ const ExamResultsModalContent = ({ exam,user, onClose,hight='h-40' , width='w-40
 
             {/* Incorrect Answers */}
             <div className="flex items-center">
-              <span className="text-sm text-gray-700 mr-4 w-20">Incorrect</span>
+              <span className="text-sm text-gray-700 mr-4 w-20">Incorrectas</span>
               <div className="flex-1 bg-gray-200 rounded-full h-2">
                 <div 
                   className="bg-red-500 h-2 rounded-full"
@@ -259,7 +260,7 @@ const ExamResultsModalContent = ({ exam,user, onClose,hight='h-40' , width='w-40
             onClick={() => setShowReview(true)}
             className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg"
           >
-            Review Answers
+            Revisar respuestas
           </button>
         </>
       )}

@@ -1,332 +1,332 @@
-import React, { useState, useEffect } from 'react';
-import { courses, exams, users } from '../../data/mockData'; // Import necessary data
-import AverageDisplay from "../shared/AverageDisplay"
-import { useSaveNotification } from '../../contexts/SaveNotificationContext';
+import React, { useState } from 'react';
+import { courses, users } from '../../data/mockData';
+import { useAcademic } from '../../contexts/AcademicContext';
+import { Settings, Check, Edit2, AlertCircle } from 'lucide-react';
+import { ConfigureWeightsModal } from './ConfigureWeightsModal';
 
-// Define standard exam order and types
-const STANDARD_EXAM_ORDER = [
-    'First Exam',
-    'Second Exam',
-    'Midterm Exam',
-    'Assignments',
-    'Final Exam'
-];
-
-// Helper function to get all grades for a student across all their courses
-const getAllStudentGrades = (studentId, allCourses, allExams) => {
-    const studentCourses = allCourses.filter(course => course.students.some(s => s.id === studentId));
-
-
-    const studentGradesAggregated = {}; // To store aggregated percentage grades by standard assessment type
-    const assessmentTypeCounts = {}; // To count how many assessments contribute to the average for each type
-    
-    let totalAggregatedRawScore = 0; // To sum raw scores across all courses for the overall average
-
-    studentCourses.forEach(course => {
-        const courseExams = allExams.filter(exam => exam.course?.id === course.id);
-
-        courseExams.forEach(exam => {
-            const studentGrade = exam.grades.find(grade => grade.studentId === studentId);
-            if (studentGrade && studentGrade.score !== null && exam.Total_Points > 0) { 
-                // Map the exam title to the standard type
-                const standardType = STANDARD_EXAM_ORDER.find(type => exam.title.includes(type)) || exam.title;
-                
-                // Calculate percentage for this specific assessment
-                const assessmentPercentage = Math.round((studentGrade.score / exam.Total_Points) * 100);
-
-                if (!studentGradesAggregated[standardType]) {
-                    studentGradesAggregated[standardType] = 0;
-                    assessmentTypeCounts[standardType] = 0;
-                }
-                // Sum percentages for calculating average percentage per assessment type across courses
-                studentGradesAggregated[standardType] += assessmentPercentage;
-                assessmentTypeCounts[standardType]++;
-                
-                // Add to the total raw score across all courses for the overall average
-                totalAggregatedRawScore += studentGrade.score;
-            }
-        });
-    });
-
-    // Calculate average percentage for each standard assessment type across courses
-    const aggregatedGrades = {};
-    Object.keys(studentGradesAggregated).forEach(type => {
-        if (assessmentTypeCounts[type] > 0) {
-           aggregatedGrades[type] = Math.round(studentGradesAggregated[type] / assessmentTypeCounts[type]);
-        } else {
-            aggregatedGrades[type] = null;
-        }
-    });
-
-    // Ensure all standard types exist in the result, even if null
-    STANDARD_EXAM_ORDER.forEach(type => {
-        if (!(type in aggregatedGrades)) {
-            aggregatedGrades[type] = null;
-        }
-    });
-
-    // Calculate the overall aggregated average as the sum of raw scores across all courses, capped at 100
-    const overallAverage = totalAggregatedRawScore !== null ? Math.min(Math.round(totalAggregatedRawScore), 100) : null; // Sum of raw scores across all courses, capped at 100
-    const overallStatus = overallAverage !== null ? (overallAverage >= 50 ? "Passed" : "Failed") : "N/A"; // Assuming 50% passing for overall
-
-    aggregatedGrades.average = overallAverage;
-    aggregatedGrades.status = overallStatus;
-    // //console.log('allStudentGrades :',aggregatedGrades);
-
-    return aggregatedGrades;
-};
-
-// Helper function to get grades for a student in a given course
-const getStudentGrades = (studentId, courseId, allExams) => {
-    const studentExams = allExams.filter(exam => exam.course?.id === courseId);
-    const grades = {};
-    let totalStudentScore = 0;
-
-    STANDARD_EXAM_ORDER.forEach(type => {
-        grades[type] = null;
-    });
-
-    studentExams.forEach(exam => {
-        const studentGrade = exam.grades.find(grade => grade.studentId === studentId);
-        const standardType = STANDARD_EXAM_ORDER.find(type => exam.title.includes(type)) || exam.title;
-        if (studentGrade && studentGrade.score !== null && exam.Total_Points > 0) {
-            const assessmentPercentage = Math.round((studentGrade.percentage * exam.Total_Points) / 100);
-            grades[standardType] = assessmentPercentage;
-            totalStudentScore += studentGrade.score;
-            // console.log('studentGrade : ',studentGrade);
-            // console.log('assessmentPercentage : ',assessmentPercentage);
-            // console.log('totalStudentScore : ',totalStudentScore);
-        }
-    });
-
-    const average = totalStudentScore !== null ? Math.min(Math.round(totalStudentScore), 100) : null;
-    const status = average !== null ? (average >= 50 ? "Passed" : "Failed") : "N/A";
-
-    // console.log('totalStudentScore : ',totalStudentScore);
-    // console.log('average : ',average);
-    // console.log('status : ',status);
-    return { ...grades, average, status };
-};
+const RED = '#C0392B';
 
 export const GradesTableTeacher = ({ selectedCourse, selectedClass, searchTerm }) => {
-    const { showSaveNotification, hideSaveNotification } = useSaveNotification();
+  const { evaluationColumns, gradesMatrix, setStudentGrade } = useAcademic();
 
-    const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [isWeightsModalOpen, setIsWeightsModalOpen] = useState(false);
+  const [localGrades, setLocalGrades] = useState({});
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
-    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false); // New state for unsaved changes
-    const [gradesData, setGradesData] = useState([]);
+  // Obtener alumnos según filtros
+  let students = users.filter(user => user.role === 'student');
 
-    useEffect(() => {
-        let timeoutId;
-        let intervalId;
-    
-    
-        if (editMode && hasUnsavedChanges) {
-            // Initial delay of 10 seconds before the first notification
-          timeoutId = setTimeout(() => {
-            showSaveNotification();
-            // Then show every 10 seconds
-            intervalId = setInterval(() => {
-              showSaveNotification();
-            }, 10000); // 10 seconds
-          }, 10000); // Initial 10 seconds delay
-        }
-    
-        return () => {
-          if (timeoutId) {
-            clearTimeout(timeoutId);
-          }
-          if (intervalId) {
-            clearInterval(intervalId);
-          }
-        };
-    }, [editMode, hasUnsavedChanges, showSaveNotification]);
+  if (selectedClass !== 'All') {
+    students = students.filter(student => student.class === selectedClass);
+  }
 
-    useEffect(() => {
-        // Filter students
-        let students = users.filter(user => user.role === 'student');
-        
-        if (selectedClass !== 'All') {
-            students = students.filter(student => student.class === selectedClass);
-        }
+  if (selectedCourse !== 'All') {
+    const course = courses.find(c => c.name === selectedCourse);
+    if (course) {
+      students = students.filter(student =>
+        course.students.some(s => s.id === student.id)
+      );
+    }
+  }
 
-        if (selectedCourse !== 'All') {
-            const course = courses.find(c => c.name === selectedCourse);
-            if (course) {
-                students = students.filter(student => 
-                    course.students.some(s => s.id === student.id)
-                );
-            }
-        }
-
-        if (searchTerm) {
-            const term = searchTerm.toLowerCase();
-            students = students.filter(student =>
-                student.name.toLowerCase().includes(term) ||
-                String(student.id).includes(term)
-            );
-        }
-
-        // Sort by name
-        students.sort((a, b) => a.name.localeCompare(b.name));
-
-        // Get grades for each student
-        const data = students.map(student => {
-            const grades = {};
-
-            // Get relevant exams once (either all or specific to course)
-            const relevantExams = selectedCourse === 'All' 
-                ? exams 
-                : exams.filter(exam => exam.course?.name === selectedCourse);
-
-            STANDARD_EXAM_ORDER.forEach(standardExamTitle => {
-                const exam = relevantExams.find(e => e.title === standardExamTitle);
-                
-                if (exam) {
-                    const gradeEntry = exam.grades.find(g => g.studentId === student.id);
-                    if (gradeEntry && exam.Total_Points > 0) {
-                        const percentage = Math.round((gradeEntry.score / exam.Total_Points) * 100);
-                        grades[standardExamTitle] = percentage;
-                    } else {
-                        grades[standardExamTitle] = null; // No grade or invalid points
-                    }
-                } else {
-                    grades[standardExamTitle] = null; // Exam for this standard type doesn't exist
-                }
-            });
-
-            // Calculate average from the grades object, which only contains STANDARD_EXAM_ORDER items
-            const validGrades = Object.values(grades).filter(g => g !== null);
-            const average = validGrades.length > 0 
-                ? Math.round(validGrades.reduce((sum, current) => sum + current, 0) / validGrades.length) 
-                : null;
-
-            return {
-                studentId: student.id,
-                studentName: student.name,
-                avatar: student.avatar,
-                courseName: selectedCourse === 'All' ? 
-                courses.find(course => course.students.some(s => s.id === student.id))?.name || 'N/A' : 
-                selectedCourse,
-                class: student.class,
-                grades, // This contains percentages for STANDARD_EXAM_ORDER
-                average,
-                status: average !== null ? (average >= 50 ? "Passed" : "Failed") : "N/A"
-            };
-        });
-
-        setGradesData(data);
-    }, [selectedCourse, selectedClass, searchTerm]);
-
-    const handleGradeChange = (studentId, examTitle, newValue) => {
-        setGradesData(prevData => 
-            prevData.map(student => {
-                if (student.studentId === studentId) {
-                    // Ensure the value is between 0 and 100
-                    const newGrade = Math.min(Math.max(parseInt(newValue) || 0, 0), 100);
-                    const updatedGrades = { ...student.grades, [examTitle]: newGrade };
-                    
-                    // Recalculate average directly from percentages
-                    const validGrades = Object.values(updatedGrades).filter(g => g !== null);
-                    const newAverage = validGrades.length > 0 
-                        ? Math.round(validGrades.reduce((a, b) => a + b, 0) / validGrades.length) 
-                        : null;
-
-                    return {
-                        ...student,
-                        grades: updatedGrades,
-                        average: newAverage,
-                        status: newAverage !== null ? (newAverage >= 50 ? "Passed" : "Failed") : "N/A"
-                    };
-                }
-                return student;
-            })
-        );
-    };
-
-   
-    return (
-        <div className="overflow-x-auto text-sm border rounded-lg">
-            <div className="flex justify-end p-4">
-                
-                <button
-                    onClick={() => setEditMode(!editMode)}
-                    className={!editMode ?"px-4 py-2 bg-gradient-to-br from-[#10062B] to-[#4F0129] hover:opacity-90 text-white rounded-md "
-                                :"px-4 py-2 bg-green-600 hover:opacity-90 text-white rounded-md " }>
-                    {editMode ? 'Save Changes' : 'Edit Grades'}
-                </button>
-            </div>
-            <table className="w-full">
-                <thead>
-                    <tr className="border-b border-gray-200">
-                        <th className="text-left py-3 px-4 font-medium text-gray-700">Student</th>
-                        <th className="text-left py-3 px-4 font-medium text-gray-700">Course</th>
-                        <th className="text-left py-3 px-4 font-medium text-gray-700">Class</th>
-                        {STANDARD_EXAM_ORDER.map((exam, index) => (
-                            <th key={index} className="text-left py-3 px-4 font-medium text-gray-700">
-                                {exam}
-                            </th>
-                        ))}
-                        <th className="text-left py-3 px-4 font-medium text-gray-700">Average</th>
-                        <th className="text-left py-3 px-4 font-medium text-gray-700">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {gradesData.map((student, index) => (
-                        <tr key={student.studentId} className={`border-b border-gray-200 ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
-                            <td className="py-2 pl-4 pr-2">
-                                <div className="flex items-center space-x-3">
-                                    <img
-                                        className="h-8 w-8 rounded-full"
-                                        src={student.avatar}
-                                        alt={student.studentName}
-                                        onError={(e) => {
-                                            e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(student.studentName)}&background=6366f1&color=fff&size=32`;
-                                        }}
-                                    />
-                                    <div>
-                                        <p className="font-medium">{student.studentName}</p>
-                                        <p className="text-xs text-gray-500">ID: {student.studentId}</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td className="py-2 pl-4 pr-2 text-gray-700">{student.courseName}</td>
-                            <td className="py-2 pl-4 pr-2">{student.class}</td>
-                            {STANDARD_EXAM_ORDER.map((exam, examIndex) => (
-                                <td key={examIndex} className="py-2 pl-4 pr-2">
-                                    {editMode ? (
-                                        <input
-                                            type="number"
-                                            value={student.grades[exam] ?? ''}
-                                            onChange={(e) => handleGradeChange(student.studentId, exam, e.target.value)}
-                                            className="w-20 p-1 border rounded"
-                                            min="0"
-                                            max="100"
-                                            placeholder="-"
-                                            onKeyPress={(e) => {
-                                                // Prevent non-numeric input
-                                                if (!/[0-9]/.test(e.key)) {
-                                                    e.preventDefault();
-                                                }
-                                            }}
-                                        />
-                                    ) : (
-                                        student.grades[exam] !== null ? 
-                                            <AverageDisplay value={student.grades[exam]} size="md" /> : 
-                                            '-'
-                                    )}
-                                </td>
-                            ))}
-                            <td className="py-2 pl-4 pr-2">
-                                {student.average !== null ? <AverageDisplay value={student.average} size="md" /> : '-'}
-                            </td>
-                            <td className="py-2 pl-4 pr-2">{student.status}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+  if (searchTerm) {
+    const term = searchTerm.toLowerCase();
+    students = students.filter(student =>
+      student.name.toLowerCase().includes(term) ||
+      String(student.id).includes(term)
     );
+  }
+
+  students.sort((a, b) => a.name.localeCompare(b.name));
+
+  // Entrar en modo edición cargando copia local
+  const startEditMode = () => {
+    const initial = {};
+    students.forEach(st => {
+      initial[st.id] = {};
+      const courseName = selectedCourse === 'All' ? 'Matemáticas' : selectedCourse;
+      evaluationColumns.forEach(col => {
+        const val = gradesMatrix[st.id]?.[courseName]?.[col.id];
+        initial[st.id][col.id] = val !== undefined && val !== null ? val : '';
+      });
+    });
+    setLocalGrades(initial);
+    setEditMode(true);
+    setSaveSuccess(false);
+  };
+
+  const handleLocalGradeChange = (studentId, colId, value) => {
+    let numVal = value;
+    if (value !== '') {
+      numVal = Math.min(20, Math.max(0, parseFloat(value) || 0));
+    }
+    setLocalGrades(prev => ({
+      ...prev,
+      [studentId]: {
+        ...prev[studentId],
+        [colId]: numVal
+      }
+    }));
+  };
+
+  const saveAllGrades = () => {
+    const courseName = selectedCourse === 'All' ? 'Matemáticas' : selectedCourse;
+    Object.entries(localGrades).forEach(([studentId, colMap]) => {
+      Object.entries(colMap).forEach(([colId, score]) => {
+        setStudentGrade(Number(studentId), courseName, colId, score);
+      });
+    });
+    setEditMode(false);
+    setSaveSuccess(true);
+    setTimeout(() => setSaveSuccess(false), 3000);
+  };
+
+  // Cálculo ponderado en base 20 para fila individual
+  const calculateRowAverage = (studentId, courseName) => {
+    let totalScoreWeighted = 0;
+    let totalActiveWeight = 0;
+
+    evaluationColumns.forEach(col => {
+      let score = editMode
+        ? localGrades[studentId]?.[col.id]
+        : gradesMatrix[studentId]?.[courseName]?.[col.id];
+
+      if (score !== undefined && score !== null && score !== '' && !isNaN(score)) {
+        totalScoreWeighted += Number(score) * Number(col.weight);
+        totalActiveWeight += Number(col.weight);
+      }
+    });
+
+    if (totalActiveWeight === 0) return { average: null, status: 'N/D' };
+    const avg = parseFloat((totalScoreWeighted / totalActiveWeight).toFixed(2));
+    const status = avg >= 10.5 ? 'Aprobado' : 'Desaprobado';
+    return { average: avg, status };
+  };
+
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+      {/* Barra de acciones de la tabla */}
+      <div className="p-4 border-b border-gray-200 bg-gray-50 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-bold uppercase tracking-wider text-gray-500">
+            Escala Vigesimal Oficial (0 – 20)
+          </span>
+          {saveSuccess && (
+            <span className="text-xs font-semibold text-green-700 bg-green-100 px-2.5 py-1 rounded-full flex items-center gap-1">
+              <Check size={14} /> ¡Notas guardadas y sincronizadas!
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsWeightsModalOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition-colors shadow-sm"
+          >
+            <Settings size={14} style={{ color: RED }} />
+            Configurar Ponderaciones (%)
+          </button>
+
+          {!editMode ? (
+            <button
+              type="button"
+              onClick={startEditMode}
+              className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-lg text-white transition-opacity hover:opacity-90 shadow-sm"
+              style={{ backgroundColor: RED }}
+            >
+              <Edit2 size={14} />
+              Editar Notas
+            </button>
+          ) : (
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setEditMode(false)}
+                className="px-3 py-1.5 text-xs font-semibold rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={saveAllGrades}
+                className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-lg bg-green-700 text-white hover:bg-green-800 transition-colors shadow-sm"
+              >
+                <Check size={14} />
+                Guardar Notas
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Tabla de Calificaciones */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-gray-100 border-b border-gray-200">
+              <th className="text-left py-3 px-4 text-xs font-bold uppercase tracking-wider text-gray-700">
+                Alumno
+              </th>
+              <th className="text-left py-3 px-3 text-xs font-bold uppercase tracking-wider text-gray-700">
+                Clase
+              </th>
+              <th className="text-left py-3 px-3 text-xs font-bold uppercase tracking-wider text-gray-700">
+                Asignatura
+              </th>
+
+              {/* Columnas dinámicas de evaluación */}
+              {evaluationColumns.map((col) => (
+                <th
+                  key={col.id}
+                  className="text-center py-3 px-3 text-xs font-bold uppercase tracking-wider text-gray-800 border-l border-gray-200"
+                >
+                  <div>{col.name}</div>
+                  <div className="text-[10px] font-semibold text-red-700">({col.weight}%)</div>
+                </th>
+              ))}
+
+              <th className="text-center py-3 px-4 text-xs font-bold uppercase tracking-wider text-gray-900 border-l border-gray-200 bg-gray-200/60">
+                Promedio
+              </th>
+              <th className="text-center py-3 px-4 text-xs font-bold uppercase tracking-wider text-gray-900 border-l border-gray-200">
+                Estado
+              </th>
+            </tr>
+          </thead>
+
+          <tbody className="divide-y divide-gray-200">
+            {students.length === 0 ? (
+              <tr>
+                <td colSpan={evaluationColumns.length + 5} className="py-8 text-center text-gray-400">
+                  No se encontraron alumnos para los filtros seleccionados.
+                </td>
+              </tr>
+            ) : (
+              students.map((student, idx) => {
+                const courseName = selectedCourse === 'All' ? 'Matemáticas' : selectedCourse;
+                const { average, status } = calculateRowAverage(student.id, courseName);
+
+                return (
+                  <tr
+                    key={student.id}
+                    className={`hover:bg-gray-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50/40'}`}
+                  >
+                    {/* Alumno */}
+                    <td className="py-2.5 px-4">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={student.avatar}
+                          alt={student.name}
+                          className="w-8 h-8 rounded-full object-cover border border-gray-200"
+                          onError={(e) => {
+                            e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(student.name)}&background=C0392B&color=fff&size=32`;
+                          }}
+                        />
+                        <div>
+                          <div className="font-semibold text-gray-900 leading-tight">{student.name}</div>
+                          <div className="text-[11px] text-gray-400">ID: {student.id}</div>
+                        </div>
+                      </div>
+                    </td>
+
+                    {/* Clase */}
+                    <td className="py-2.5 px-3">
+                      <span className="px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-gray-800 border border-gray-200">
+                        {student.class || 'N/D'}
+                      </span>
+                    </td>
+
+                    {/* Asignatura */}
+                    <td className="py-2.5 px-3 text-gray-700 font-medium">{courseName}</td>
+
+                    {/* Columnas de evaluación */}
+                    {evaluationColumns.map((col) => {
+                      const currentVal = editMode
+                        ? localGrades[student.id]?.[col.id]
+                        : gradesMatrix[student.id]?.[courseName]?.[col.id];
+
+                      const displayVal = currentVal !== undefined && currentVal !== null && currentVal !== ''
+                        ? Number(currentVal).toFixed(1)
+                        : '-';
+
+                      return (
+                        <td key={col.id} className="py-2 px-2 text-center border-l border-gray-100">
+                          {editMode ? (
+                            <input
+                              type="number"
+                              min="0"
+                              max="20"
+                              step="0.5"
+                              value={localGrades[student.id]?.[col.id] ?? ''}
+                              onChange={(e) => handleLocalGradeChange(student.id, col.id, e.target.value)}
+                              placeholder="0 - 20"
+                              className="w-16 p-1 text-center font-bold text-sm bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-400"
+                            />
+                          ) : (
+                            <span
+                              className={`text-sm font-semibold ${
+                                currentVal !== null && currentVal !== undefined && currentVal !== ''
+                                  ? Number(currentVal) >= 10.5
+                                    ? 'text-gray-900'
+                                    : 'text-red-700'
+                                  : 'text-gray-400'
+                              }`}
+                            >
+                              {displayVal}
+                            </span>
+                          )}
+                        </td>
+                      );
+                    })}
+
+                    {/* Promedio */}
+                    <td className="py-2.5 px-4 text-center border-l border-gray-200 bg-gray-50/70">
+                      {average !== null ? (
+                        <span
+                          className={`text-sm font-bold px-2.5 py-0.5 rounded ${
+                            average >= 10.5
+                              ? 'text-green-800 bg-green-100'
+                              : 'text-red-800 bg-red-100'
+                          }`}
+                        >
+                          {average.toFixed(2)}
+                        </span>
+                      ) : (
+                        <span className="text-gray-400">-</span>
+                      )}
+                    </td>
+
+                    {/* Estado */}
+                    <td className="py-2.5 px-4 text-center border-l border-gray-200">
+                      <span
+                        className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                          status === 'Aprobado'
+                            ? 'text-green-700 bg-green-50 border border-green-200'
+                            : status === 'Desaprobado'
+                            ? 'text-red-700 bg-red-50 border border-red-200'
+                            : 'text-gray-400'
+                        }`}
+                      >
+                        {status}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Modal de configuración de ponderaciones */}
+      <ConfigureWeightsModal
+        isOpen={isWeightsModalOpen}
+        onClose={() => setIsWeightsModalOpen(false)}
+      />
+    </div>
+  );
 };
 
-export default GradesTableTeacher; 
+export default GradesTableTeacher;

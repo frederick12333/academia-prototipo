@@ -47,7 +47,7 @@ export const SaveNotificationProvider = ({ children }) => {
           ${show ? 'translate-y-4 opacity-100' : '-translate-y-full opacity-0'}
         `}
         style={{ zIndex: 1001, width: 'fit-content' }}
-        title="Data is saved locally to prevent loss in case of accidental closure. You must submit the form to save it to the database."
+        title="Los datos se guardan localmente para evitar pérdidas si se cierra la ventana por accidente. Debes enviar el formulario para guardarlos en la base de datos."
       >
         <span className="font-bold text-lg text-white">{message}</span>
         <CheckCircle size={24} className="text-green-400" />

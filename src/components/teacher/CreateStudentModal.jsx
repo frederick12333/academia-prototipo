@@ -51,19 +51,19 @@ export const CreateStudentModal = ({
 
     // Validation
     if (!formData.name.trim()) {
-      showNotification('Name is required', 'error');
+      showNotification('El nombre es obligatorio', 'error');
       return;
     }
     if (!formData.email.trim()) {
-      showNotification('Email is required', 'error');
+      showNotification('El correo electrónico es obligatorio', 'error');
       return;
     }
     if (!formData.grade.trim()) {
-      showNotification('Grade is required', 'error');
+      showNotification('El curso es obligatorio', 'error');
       return;
     }
     if (!formData.class.trim()) {
-      showNotification('Class is required', 'error');
+      showNotification('La clase es obligatoria', 'error');
       return;
     }
 
@@ -82,83 +82,83 @@ export const CreateStudentModal = ({
 
   return (
     <div className="w-[40vw] max-w-5xl rounded-lg relative overflow-y-auto max-h-[90vh]">
-      <h2 className="text-xl font-semibold text-center mb-4">Add New Student</h2>
+      <h2 className="text-xl font-semibold text-center mb-4">Agregar nuevo alumno</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
           {/* Name */}
           <div className="w-full px-2">
-            <label className="block text-sm font-medium mb-2">Name</label>
+            <label className="block text-sm font-medium mb-2">Nombre</label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-              placeholder="Student Name"
+              placeholder="Nombre del alumno"
               className="bg-gray-300 w-full h-8 rounded-md p-2"
             />
           </div>
 
           {/* Email */}
           <div className="w-full px-2">
-            <label className="block text-sm font-medium mb-2">Email</label>
+            <label className="block text-sm font-medium mb-2">Correo electrónico</label>
             <input
               type="email"
               value={formData.email}
               onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-              placeholder="Student Email"
+              placeholder="Correo electrónico del alumno"
               className="bg-gray-300 w-full h-8 rounded-md p-2"
             />
           </div>
 
           {/* Grade */}
           <div className="w-full px-2">
-            <label className="block text-sm font-medium mb-2">Grade</label>
+            <label className="block text-sm font-medium mb-2">Curso</label>
             <input
               type="text"
               value={formData.grade}
               onChange={(e) => setFormData(prev => ({ ...prev, grade: e.target.value }))}
-              placeholder="Student Grade"
+              placeholder="Curso del alumno"
               className="bg-gray-300 w-full h-8 rounded-md p-2"
             />
           </div>
 
           {/* Class */}
           <div className="w-full px-2">
-            <label className="block text-sm font-medium mb-2">Class</label>
+            <label className="block text-sm font-medium mb-2">Clase</label>
             <input
               type="text"
               value={formData.class}
               onChange={(e) => setFormData(prev => ({ ...prev, class: e.target.value }))}
-              placeholder="Student Class"
+              placeholder="Clase del alumno"
               className="bg-gray-300 w-full h-8 rounded-md p-2"
             />
           </div>
 
           {/* Parent Phone */}
           <div className="w-full px-2">
-            <label className="block text-sm font-medium mb-2">Parent Phone</label>
+            <label className="block text-sm font-medium mb-2">Teléfono del tutor</label>
             <input
               type="tel"
               value={formData.parentPhone}
               onChange={(e) => setFormData(prev => ({ ...prev, parentPhone: e.target.value }))}
-              placeholder="Parent Phone Number"
+              placeholder="Teléfono del tutor"
               className="bg-gray-300 w-full h-8 rounded-md p-2"
             />
           </div>
 
           {/* Address */}
           <div className="w-full px-2">
-            <label className="block text-sm font-medium mb-2">Address</label>
+            <label className="block text-sm font-medium mb-2">Dirección</label>
             <textarea
               value={formData.address}
               onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
-              placeholder="Student Address"
+              placeholder="Dirección del alumno"
               className="bg-gray-300 w-full rounded-md min-h-[75px] p-2"
             />
           </div>
 
           {/* Avatar Upload */}
           <div className="w-full px-2">
-            <label className="block text-sm font-medium mb-2">Profile Picture</label>
+            <label className="block text-sm font-medium mb-2">Foto de perfil</label>
             <div className="bg-gray-300 w-full p-4 rounded-lg border-2 border-dashed border-gray-400">
               <input
                 type="file"
@@ -170,7 +170,7 @@ export const CreateStudentModal = ({
               <label htmlFor="avatar-upload" className="cursor-pointer hover:opacity-90">
                 <div className="flex flex-col items-center justify-center">
                   <div className="bg-gray-600 text-white px-6 py-2 text-sm rounded-lg flex items-center gap-2">
-                    Upload Photo
+                    Subir foto
                   </div>
                 </div>
               </label>
@@ -187,7 +187,7 @@ export const CreateStudentModal = ({
             type="submit"
             className="w-full bg-gradient-to-br from-[#10062B] to-[#4F0129] hover:opacity-90 rounded-lg text-white py-2"
           >
-            Create Student
+            Crear alumno
           </button>
           <button
             type="button"
@@ -197,7 +197,7 @@ export const CreateStudentModal = ({
             }}
             className="w-full bg-red-700 hover:opacity-90 rounded-lg text-white py-2"
           >
-            Cancel
+            Cancelar
           </button>
         </div>
       </form>

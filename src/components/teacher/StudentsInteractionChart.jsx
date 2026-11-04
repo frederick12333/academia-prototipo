@@ -3,19 +3,19 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 
 
 const StudentsInteractionChart = () => {
   const data = [
-    { day: 'Mon', thisWeek: 75, lastWeek: 95 },
-    { day: 'Tue', thisWeek: 95, lastWeek: 55 },
-    { day: 'Wed', thisWeek: 65, lastWeek: 55 },
-    { day: 'Thu', thisWeek: 45, lastWeek: 80 },
-    { day: 'Fri', thisWeek: 25, lastWeek: 15 },
-    { day: 'Sat', thisWeek: 25, lastWeek: 0 },
-    { day: 'Sun', thisWeek: 0, lastWeek: 0 },
+    { day: 'Lun', thisWeek: 75, lastWeek: 95 },
+    { day: 'Mar', thisWeek: 95, lastWeek: 55 },
+    { day: 'Mié', thisWeek: 65, lastWeek: 55 },
+    { day: 'Jue', thisWeek: 45, lastWeek: 80 },
+    { day: 'Vie', thisWeek: 25, lastWeek: 15 },
+    { day: 'Sáb', thisWeek: 25, lastWeek: 0 },
+    { day: 'Dom', thisWeek: 0, lastWeek: 0 },
   ];
 
   return (
     <div className="bg-white rounded-xl py-6 pl-0 pr-6">
       <div className="flex items-center justify-between mb-6 px-6">
-        <h3 className="text-lg font-semibold">Students Interaction</h3>
+        <h3 className="text-lg font-semibold">Interacción de alumnos</h3>
        
       </div>
       
@@ -43,12 +43,12 @@ const StudentsInteractionChart = () => {
       <div className="flex items-center space-x-4 w-full pl-6 py-7 justify-center">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-orange-400 rounded-full"></div>
-            <span className="text-sm">This Week</span>
+            <span className="text-sm">Esta semana</span>
             <span className="font-bold">96%</span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-purple-600 rounded-full"></div>
-            <span className="text-sm">Last Week</span>
+            <span className="text-sm">Semana pasada</span>
             <span className="font-bold">86%</span>
           </div>
         </div>

@@ -72,7 +72,7 @@ export const NotificationProvider = ({ children }) => {
             className={getNotificationClasses(notif.animationClass, notif.type)}
           >
             <div>
-              <p className="font-bold text-lg">{notif.type === 'success' ? 'Submitted' : 'Error!'}</p>
+              <p className="font-bold text-lg">{notif.type === 'success' ? 'Enviado' : '¡Error!'}</p>
               <p className="text-sm">{notif.message}</p>
             </div>
             <button onClick={() => hideNotification(notif.id)} className="ml-4 text-black hover:text-gray-500">

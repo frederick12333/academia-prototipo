@@ -83,15 +83,15 @@ export const SendMessageModal = ({
 
     // Validation logic
     if (!selectedRecipient || selectedRecipient === '') {
-      showNotification('Please select a recipient.', 'error');
+      showNotification('Selecciona un destinatario.', 'error');
       return;
     }
     if (!subject.trim()) {
-      showNotification('Subject cannot be empty.', 'error');
+      showNotification('El asunto no puede estar vacío.', 'error');
       return;
     }
     if (!message.trim()) {
-      showNotification('Message cannot be empty.', 'error');
+      showNotification('El mensaje no puede estar vacío.', 'error');
       return;
     }
 
@@ -104,7 +104,7 @@ export const SendMessageModal = ({
     });
     
     // Simulate success for now
-    showNotification('Message was sent successfully!', 'success');
+    showNotification('¡Mensaje enviado correctamente!', 'success');
 
     // Reset form and hide notification
     setHasUnsavedChanges(false);
@@ -126,12 +126,12 @@ export const SendMessageModal = ({
 
   return (
     <div className=" w-[40vw] max-w-5xl rounded-lg relative overflow-y-auto max-h-[90vh]">
-      <h2 className="text-xl font-semibold text-center">Send Message</h2>
+      <h2 className="text-xl font-semibold text-center">Enviar mensaje</h2>
       <div className='w-full px-2'>
         <form onSubmit={handleSend} className="space-y-10">
           <div className="space-y-2">
             <div className='w-full px-2'>
-              <label className="block text-sm font-medium">About which course you will send this message</label>
+              <label className="block text-sm font-medium">Sobre qué asignatura enviarás este mensaje</label>
               <select 
                 className='bg-gray-300 w-full h-8 rounded-md cursor-pointer px-2' 
                 value={selectedCourse}
@@ -140,7 +140,7 @@ export const SendMessageModal = ({
                   setHasUnsavedChanges(true);
                 }}
               >
-                <option value="all">All Courses</option>
+                <option value="all">Todas las asignaturas</option>
                 {courses.map((course) => (
                   <option key={course.id} value={course.id}>
                     {course.name}
@@ -150,7 +150,7 @@ export const SendMessageModal = ({
             </div>
           
             <div className='w-full px-2'>
-              <label className="block text-sm font-medium">To</label>
+              <label className="block text-sm font-medium">Para</label>
               <select 
                 className='bg-gray-300 w-full h-8 rounded-md cursor-pointer px-2' 
                 value={selectedRecipient} 
@@ -159,7 +159,7 @@ export const SendMessageModal = ({
                   setHasUnsavedChanges(true);
                 }}
               >
-                <option value="">Select {isStudent ? 'Teacher' : 'Student'}</option>
+                <option value="">Selecciona {isStudent ? 'Docente' : 'Alumno'}</option>
                 {availableRecipients.map((recipient) => (
                   <option key={recipient.id} value={recipient.id}>
                     {recipient.name}
@@ -169,7 +169,7 @@ export const SendMessageModal = ({
             </div>
 
             <div className='w-full px-2'>
-              <label htmlFor="subject">Subject :</label>
+              <label htmlFor="subject">Asunto:</label>
               <input
                 id="subject"
                 value={subject}
@@ -177,13 +177,13 @@ export const SendMessageModal = ({
                   setSubject(e.target.value);
                   setHasUnsavedChanges(true);
                 }}
-                placeholder="Subject"
+                placeholder="Asunto"
                 className='bg-gray-300 w-full h-8 rounded-md p-2'    
               />
             </div>
 
             <div className='w-full px-2'>
-              <label htmlFor="message">Message</label>
+              <label htmlFor="message">Mensaje</label>
               <textarea
                 id="message"
                 value={message}
@@ -191,13 +191,13 @@ export const SendMessageModal = ({
                   setMessage(e.target.value);
                   setHasUnsavedChanges(true);
                 }}
-                placeholder="Message"
+                placeholder="Mensaje"
                 className='bg-gray-300 w-full text-sm rounded-md min-h-28 p-2' 
               />
             </div>
 
             <div className='w-full px-2'>
-              <label className="block text-sm font-medium mb-2">File</label>
+              <label className="block text-sm font-medium mb-2">Archivo</label>
               <div className="bg-gray-300 w-full p-4 rounded-lg border-2 border-dashed border-gray-400">
                 <input
                   type="file"
@@ -209,7 +209,7 @@ export const SendMessageModal = ({
                 <label htmlFor="file-upload" className="cursor-pointer hover:opacity-90">
                   <div className="flex flex-col items-center justify-center">
                     <div className="bg-gray-600 text-white px-6 py-2 text-sm rounded-lg flex items-center gap-2">
-                      Upload File
+                      Subir archivo
                     </div>
                   </div>
                 </label>
@@ -233,7 +233,7 @@ export const SendMessageModal = ({
               type="submit"
               className="w-full bg-gradient-to-br from-[#10062B] to-[#4F0129] hover:opacity-90 rounded-lg text-white py-2"
             >
-              Send
+              Enviar
             </button>
             <button
               type="button"
@@ -244,7 +244,7 @@ export const SendMessageModal = ({
               }}
               className="w-full bg-red-700 hover:opacity-90 rounded-lg text-white py-2"
             >
-              Close
+              Cerrar
             </button>
           </div>
         </form>

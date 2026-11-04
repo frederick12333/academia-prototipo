@@ -13,22 +13,22 @@ export const ExamCard = ({ exam, isPrevious,onCheckDetails, onEdit,user }) => {
       <div className="card-content p-4">
         <div className="space-y-4">
           <div className="text-md font-medium text-gray-800">
-            Exam Title: {exam.title}
+            Título del examen: {exam.title}
           </div>
           <div className="text-sm text-gray-600">
-            Course: {exam.course?.name || 'N/A'}
+                Asignatura: {exam.course?.name || 'N/D'}
           </div>
           <div className="text-sm text-gray-600">
-            Classes: {(exam.course?.classes || []).join(', ') || 'N/A'}
+                Clases: {(exam.course?.classes || []).join(', ') || 'N/D'}
           </div>
           <div className="text-sm text-gray-600">
-            Date: {exam.date}  Time: {exam.time}
+            Fecha: {exam.date}  Hora: {exam.time}
           </div>
           <div className="text-sm text-gray-600">
-            Duration: {exam.duration}
+            Duración: {exam.duration}
           </div>
           <div className="text-sm text-gray-600">
-            Location:   
+            Ubicación:   
             { exam.isOnline ?
             <span className="bg-green-100 text-green-700 ml-2 px-2 py-1 rounded-full text-sm font-medium">
              {exam.location}
@@ -40,13 +40,13 @@ export const ExamCard = ({ exam, isPrevious,onCheckDetails, onEdit,user }) => {
             }
           </div>
           <div className="text-sm text-gray-600">
-            Topics: {exam.topics}
+            Temas: {exam.topics}
           </div>
           <div className="text-sm text-gray-600">
-            Number of Questions: {exam.number_of_questions}
+            Número de preguntas: {exam.number_of_questions}
           </div>
           <div className="text-sm text-gray-600">
-           Total Points: {exam.Total_Points}
+           Puntos totales: {exam.Total_Points}
           </div>
           {(onCheckDetails || onEdit) && (
             <div className="space-y-3">
@@ -56,7 +56,7 @@ export const ExamCard = ({ exam, isPrevious,onCheckDetails, onEdit,user }) => {
                 className="w-full text-sm h-10 rounded-lg bg-blue-600 hover:opacity-90 text-white"
                   onClick={() => onEdit(exam)}
                 >
-                 {isPrevious?' Renew Exam':'Edit'}
+                 {isPrevious?' Renovar examen':'Editar'}
                 </button>
               )}
                {onCheckDetails && isPrevious && (
@@ -64,7 +64,7 @@ export const ExamCard = ({ exam, isPrevious,onCheckDetails, onEdit,user }) => {
                   onClick={() => onCheckDetails(exam)}
                   className="w-full text-sm h-10 rounded-lg bg-gradient-to-br from-[#10062B] to-[#4F0129] hover:opacity-90 text-white"
                 >
-              Check Grades 
+              Ver notas
                 </button>
               )}
               {onCheckDetails && !isPrevious && user.role==='student' &&(
@@ -74,7 +74,7 @@ export const ExamCard = ({ exam, isPrevious,onCheckDetails, onEdit,user }) => {
                     isExamToday() ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:opacity-90'
                   }`}
                 >
-                {isExamToday() ? "Start Exam":'View Exam Details'} 
+                {isExamToday() ? "Comenzar examen":'Ver detalles del examen'} 
                 </button>
               )}
             </div>

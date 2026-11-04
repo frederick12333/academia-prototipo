@@ -139,10 +139,10 @@ export const CreateExamModal = ({
     <div className="max-w-full max-h-[90vh] overflow-y-auto">
       {step === 'overview' ? (
         <>
-          <h2 className="text-xl font-semibold text-center mb-4">{initialExam ? 'Edit Exam' : 'Create Exam'}</h2>
+          <h2 className="text-xl font-semibold text-center mb-4">{initialExam ? 'Editar examen' : 'Crear examen'}</h2>
           <form onSubmit={handleSubmit} className="space-y-10">
             <div className="space-y-2">
-            <label htmlFor='ExamType' className="text-sm font-medium text-gray-900">Exam Type</label>
+            <label htmlFor='ExamType' className="text-sm font-medium text-gray-900">Tipo de examen</label>
             <div id='ExamType' className="grid grid-cols-2 px-2">
             <div  className="flex items-center gap-2">
                    <input
@@ -153,7 +153,7 @@ export const CreateExamModal = ({
                      onChange={handleFormChange}
                      className='form-checkbox h-4 w-4 text-blue-600 rounded'
                    />
-                   <label htmlFor='isOnline' className="text-sm font-medium text-gray-900">Is Online Exam</label>
+                   <label htmlFor='isOnline' className="text-sm font-medium text-gray-900">Examen en línea</label>
                  </div>
                  <div className="flex items-center gap-2">
                    <input
@@ -164,14 +164,14 @@ export const CreateExamModal = ({
                      onChange={handleFormChange}
                      className='form-checkbox h-4 w-4 text-blue-600 rounded'
                    />
-                   <label htmlFor='FaceToFace' className="text-sm font-medium text-gray-900">Face to face Exam</label>
+                   <label htmlFor='FaceToFace' className="text-sm font-medium text-gray-900">Examen presencial</label>
                  </div>
                
                  
               </div>
               {/* Class Multi-Select Dropdown */}
               <div className='w-full px-2'>
-                <label className="block text-sm font-medium mb-2">Class</label>
+                <label className="block text-sm font-medium mb-2">Clase</label>
                 <div className="relative" ref={classDropdownRef}>
                   <button
                     type="button"
@@ -179,9 +179,9 @@ export const CreateExamModal = ({
                     onClick={() => setShowClassDropdown((prev) => !prev)}
                   >
                     {formData.class.length === 0
-                      ? 'Select Classes'
+                      ? 'Selecciona clases'
                       : formData.class.length === allClasses.length
-                        ? 'All Classes Selected'
+                        ? 'Todas las clases seleccionadas'
                         : formData.class.join(', ')}
                   </button>
                   {showClassDropdown && (
@@ -193,7 +193,7 @@ export const CreateExamModal = ({
                             checked={formData.class.length === allClasses.length}
                             onChange={e => handleAllClassesChange(e.target.checked)}
                           />
-                          <span className="text-sm">All Classes</span>
+                          <span className="text-sm">Todas las clases</span>
                         </label>
                       </div>
                       <hr />
@@ -214,19 +214,19 @@ export const CreateExamModal = ({
                 </div>
                 <div className="text-xs text-gray-500 mt-1">
                   {formData.class.length === allClasses.length
-                    ? 'All Classes Selected'
+                    ? 'Todas las clases seleccionadas'
                     : formData.class.join(', ')}
                 </div>
               </div>
 
               {/* Course Select */}
               <div className='w-full px-2'>
-                <label className="block text-sm font-medium mb-2">Course</label>
+                <label className="block text-sm font-medium mb-2">Asignatura</label>
                 <select className='bg-gray-300 w-full h-8 rounded-md cursor-pointer px-2' 
                   name="course"
                   value={formData.course}
                   onChange={handleFormChange}>
-                  <option value="">Select a Course</option>
+                  <option value="">Selecciona una asignatura</option>
                   {courseOptions.map(course => (
                     <option key={course.id} value={course.id}>{course.name}</option>
                   ))}
@@ -236,21 +236,21 @@ export const CreateExamModal = ({
               {/* Exam Title and Duration */}
               <div className="grid grid-cols-2 gap-4 px-2">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Exam Title</label>
+                  <label className="block text-sm font-medium mb-2">Título del examen</label>
                   <input
                     name="title"
-                    placeholder="Exam Title"
+                    placeholder="Título del examen"
                     value={formData.title}
                     onChange={handleFormChange}
                     className='bg-gray-300 w-full h-8 rounded-md p-2 '
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Duration (minutes)</label>
+                  <label className="block text-sm font-medium mb-2">Duración (minutos)</label>
                   <input
                     type='number'
                     name="duration"
-                    placeholder="e.g. 90"
+                    placeholder="p. ej. 90"
                     value={formData.duration}
                     onChange={handleFormChange}
                     className='bg-gray-300 w-full h-8 rounded-md p-2 '
@@ -261,22 +261,22 @@ export const CreateExamModal = ({
               {/* Date and Time */}
               <div className="grid grid-cols-2 gap-4 px-2">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Date</label>
+                  <label className="block text-sm font-medium mb-2">Fecha</label>
                   <input
                     type="date"
                     name="date"
-                    placeholder="Date"
+                    placeholder="Fecha"
                     value={formData.date}
                     onChange={handleFormChange}
                     className='bg-gray-300 w-full h-8 rounded-md'
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Time</label>
+                  <label className="block text-sm font-medium mb-2">Hora</label>
                   <input
                     type="time"
                     name="time"
-                    placeholder="Time"
+                    placeholder="Hora"
                     value={formData.time}
                     onChange={handleFormChange}
                     className='bg-gray-300 w-full h-8 rounded-md'
@@ -287,20 +287,20 @@ export const CreateExamModal = ({
               {/* Location and Topics */}
               <div className="grid grid-cols-2 gap-4 px-2">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Location</label>
+                  <label className="block text-sm font-medium mb-2">Ubicación</label>
                   <input
                     name="location"
-                    placeholder="e.g., Room 101 or Online Link"
+                    placeholder="p. ej., Aula 101 o enlace en línea"
                     value={formData.location}
                     onChange={handleFormChange}
                     className='bg-gray-300 w-full h-8 rounded-md p-2'
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Topics</label>
+                  <label className="block text-sm font-medium mb-2">Temas</label>
                   <input
                     name="topics"
-                    placeholder="e.g., Algebra, Geometry"
+                    placeholder="p. ej., Álgebra, Geometría"
                     value={formData.topics}
                     onChange={handleFormChange}
                     className='bg-gray-300 w-full h-8 rounded-md p-2'
@@ -310,10 +310,10 @@ export const CreateExamModal = ({
 
               {/* Description */}
               <div className='w-full px-2'>
-                <label className="block text-sm font-medium mb-2">Description</label>
+                <label className="block text-sm font-medium mb-2">Descripción</label>
                 <textarea
                   name="description"
-                  placeholder="Detailed description of the exam"
+                  placeholder="Descripción detallada del examen"
                   value={formData.description}
                   onChange={handleFormChange}
                   className='bg-gray-300 w-full rounded-md min-h-[75px] p-2'
@@ -325,22 +325,22 @@ export const CreateExamModal = ({
                 <div className="space-y-2">
                   <div className="grid grid-cols-2 gap-4 px-2">
                     <div>
-                      <label className="block text-sm font-medium mb-2">Total Points</label>
+                      <label className="block text-sm font-medium mb-2">Puntos totales</label>
                       <input
                         type="number"
                         name="Total_Points"
-                        placeholder="e.g. 100"
+                        placeholder="p. ej. 100"
                         value={formData.Total_Points}
                         onChange={handleFormChange}
                         className='bg-gray-300 w-full h-8 rounded-md p-2'
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Number of Questions</label>
+                      <label className="block text-sm font-medium mb-2">Número de preguntas</label>
                       <input
                         type="number"
                         name="number_of_questions"
-                        placeholder="e.g. 20"
+                        placeholder="p. ej. 20"
                         value={formData.number_of_questions}
                         onChange={handleFormChange}
                         className='bg-gray-300 w-full h-8 rounded-md p-2'
@@ -348,11 +348,11 @@ export const CreateExamModal = ({
                     </div>
                   </div>
                   <div className="w-full px-2">
-                    <label className="block text-sm font-medium mb-2">Passing Grade (%)</label>
+                    <label className="block text-sm font-medium mb-2">Nota mínima para aprobar (%)</label>
                     <input
                       type="number"
                       name="PassingGrade"
-                      placeholder="e.g. 60"
+                      placeholder="p. ej. 60"
                       value={formData.PassingGrade}
                       onChange={handleFormChange}
                       className='bg-gray-300 w-full h-8 rounded-md p-2'
@@ -366,7 +366,7 @@ export const CreateExamModal = ({
                       onChange={handleFormChange}
                       className='form-checkbox h-4 w-4 text-blue-600 rounded'
                     />
-                    <label htmlFor="isRandomQuestions" className="text-sm font-medium text-gray-900">Randomize Questions</label>
+                    <label htmlFor="isRandomQuestions" className="text-sm font-medium text-gray-900">Aleatorizar preguntas</label>
                   </div>
                 </div>
               )}
@@ -378,7 +378,7 @@ export const CreateExamModal = ({
                   type="submit"
                   className="w-full bg-gradient-to-br from-[#10062B] to-[#4F0129] hover:opacity-90 rounded-lg text-white py-2"
                 >
-                  Update Exam
+                  Actualizar examen
                 </button>
               ) : (
                 <button
@@ -386,7 +386,7 @@ export const CreateExamModal = ({
                   onClick={handleContinueToQuestions}
                   className="w-full bg-gradient-to-br from-[#10062B] to-[#4F0129] hover:opacity-90 rounded-lg text-white py-2"
                 >
-                  Continue to Questions
+                  Continuar a las preguntas
                 </button>
               )}
 
@@ -395,7 +395,7 @@ export const CreateExamModal = ({
                 onClick={handleClose}
                 className="w-full bg-red-700 hover:opacity-90 rounded-lg text-white py-2"
               >
-                Cancel
+                Cancelar
               </button>
             </div>
           </form>

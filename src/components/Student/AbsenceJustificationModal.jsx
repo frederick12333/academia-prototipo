@@ -67,7 +67,7 @@ export const AbsenceJustificationModal = ({
 
   return (
       <div className="bg-white w-[40vw] max-w-5xl rounded-lg relative overflow-y-auto max-h-[90vh] p-2">
-        <h2 className="text-xl font-semibold text-center mb-6">Justification Request</h2>
+        <h2 className="text-xl font-semibold text-center mb-6">Solicitud de justificación</h2>
 
         {/* Coming/Old Lecture Buttons */}
         <div className="flex justify-center mb-6">
@@ -75,20 +75,20 @@ export const AbsenceJustificationModal = ({
             className={`px-4 w-full  py-2 rounded-l-lg font-medium ${lectureType === 'coming' ? 'bg-gradient-to-br from-[#10062B] to-[#4F0129]  text-white' : 'bg-gray-200 text-gray-700'}`}
             onClick={() => setLectureType('coming')}
           >
-            Coming Lecture
+            Próxima clase
           </button>
           <button
             className={`px-4 py-2 w-full  rounded-r-lg font-medium ${lectureType === 'old' ? 'bg-gradient-to-br from-[#10062B] to-[#4F0129]  text-white' : 'bg-gray-200 text-gray-700'}`}
             onClick={() => setLectureType('old')}
           >
-            Old Lecture
+            Clase anterior
           </button>
         </div>
 
         <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="space-y-4">
           {/* Course Selection */}
           <div>
-            <label htmlFor="course" className="block text-sm font-medium text-gray-700">Course</label>
+            <label htmlFor="course" className="block text-sm font-medium text-gray-700">Asignatura</label>
             <select
               id="course"
               className='mt-1 block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
@@ -98,7 +98,7 @@ export const AbsenceJustificationModal = ({
                 setSelectedLecture(''); // Reset lecture when course changes
               }}
             >
-              <option value="">Select Course</option>
+              <option value="">Selecciona una asignatura</option>
               {courses.map((course) => (
                 <option key={course.id} value={course.id}>
                   {course.name}
@@ -109,7 +109,7 @@ export const AbsenceJustificationModal = ({
 
           {/* Lecture Selection */}
           <div>
-            <label htmlFor="lecture" className="block text-sm font-medium text-gray-700">Lecture</label>
+            <label htmlFor="lecture" className="block text-sm font-medium text-gray-700">Clase</label>
             <select
               id="lecture"
               className='mt-1 block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
@@ -117,7 +117,7 @@ export const AbsenceJustificationModal = ({
               onChange={(e) => setSelectedLecture(e.target.value)}
               disabled={!selectedCourse || filteredLectures.length === 0} // Disable if no course selected or no lectures found
             >
-              <option value="">Select lecture</option>
+              <option value="">Selecciona una clase</option>
               {filteredLectures.map((lecture) => (
                 <option key={lecture.id} value={lecture.id}>
                   {/* Display lecture info, e.g., Subject - Date - Time */}
@@ -129,20 +129,20 @@ export const AbsenceJustificationModal = ({
 
           {/* Message */}
           <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
+            <label htmlFor="message" className="block text-sm font-medium text-gray-700">Mensaje</label>
             <textarea
               id="message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               rows="4"
               className='mt-1 block w-full bg-gray-200 border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-              placeholder="Message"
+              placeholder="Mensaje"
             />
           </div>
 
           {/* File Upload */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">File</label>
+            <label className="block text-sm font-medium text-gray-700">Archivo</label>
             <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md bg-gray-200">
               <div className="space-y-1 text-center">
                 <svg
@@ -164,12 +164,12 @@ export const AbsenceJustificationModal = ({
                     htmlFor="file-upload"
                     className="relative cursor-pointer bg-gray-300 rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                   >
-                    <span className="px-2">Upload a file</span>
+                    <span className="px-2">Subir un archivo</span>
                     <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={handleFileChange} />
                   </label>
-                  <p className="pl-1 text-gray-700">or drag and drop</p>
+                  <p className="pl-1 text-gray-700">o arrastra y suelta</p>
                 </div>
-                <p className="text-xs text-gray-500">PDF, DOC, DOCX up to 10MB</p>
+                <p className="text-xs text-gray-500">PDF, DOC, DOCX hasta 10 MB</p>
                  {file && (
                   <div className='flex bg-gray-300 items-center justify-between cursor-text h-8 my-1 rounded-md p-2'>
                     <p className="text-sm text-gray-700">
@@ -188,14 +188,14 @@ export const AbsenceJustificationModal = ({
               type="submit"
               className="w-full bg-gradient-to-br from-[#10062B] to-[#4F0129] hover:opacity-90 rounded-lg text-white py-2 font-semibold"
             >
-              Send
+              Enviar
             </button>
             <button
               type="button"
               onClick={onClose}
               className="w-full bg-red-600 hover:opacity-90 rounded-lg text-white py-2 font-semibold"
             >
-              Close
+              Cerrar
             </button>
           </div>
         </form>

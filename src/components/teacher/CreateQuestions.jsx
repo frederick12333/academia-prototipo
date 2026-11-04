@@ -35,24 +35,24 @@ const QuestionEditor = ({ question, onQuestionUpdate }) => {
     <div className="space-y-6">
       <div className="bg-gray-100 p-6 rounded-lg">
         <label htmlFor="question-text" className="text-lg font-semibold block mb-3">
-          Write Your Question
+          Escribe tu pregunta
         </label>
         <textarea
           id="question-text"
           value={localQuestion.question}
           onChange={(e) => updateLocalQuestion({ question: e.target.value })}
-          placeholder="Enter your question here..."
+          placeholder="Escribe aquí tu pregunta..."
           className="w-full p-3 bg-gray-300 rounded-md border border-gray-300 min-h-[100px] text-lg"
         />
       </div>
 
       {/* Image Upload Placeholder */}
       <div className="space-y-3">
-        <label className="text-lg font-semibold">Exam Image</label>
+        <label className="text-lg font-semibold">Imagen del examen</label>
         <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-gray-50">
           <div className="text-gray-400 text-4xl mb-4">📤</div>
           <button className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600">
-            Upload Image
+            Subir imagen
           </button>
         </div>
       </div>
@@ -60,12 +60,12 @@ const QuestionEditor = ({ question, onQuestionUpdate }) => {
       {/* Answer Choices */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <label className="text-lg font-semibold">Answer Choices</label>
+          <label className="text-lg font-semibold">Opciones de respuesta</label>
           <button
             onClick={addChoice}
             className="px-3 py-1 bg-green-600 hover:bg-green-800 text-white rounded text-sm"
           >
-            Add Choice
+            Agregar opción
           </button>
         </div>
 
@@ -78,19 +78,19 @@ const QuestionEditor = ({ question, onQuestionUpdate }) => {
             className="form-checkbox h-4 w-4   rounded"
           />
           <label htmlFor={`randomize-choices-${localQuestion.id}`} className="text-sm font-medium text-red-600">
-            Randomize choices order
+            Aleatorizar el orden de las opciones
           </label>
         </div>
 
         <div className="space-y-3">
           {(localQuestion.choices || ['', '', '', '']).map((choice, index) => (
             <div key={index} className="flex items-center gap-3">
-              <label className="min-w-[80px]">Choice {index + 1}</label>
+              <label className="min-w-[80px]">Opción {index + 1}</label>
               <input
                 type="text"
                 value={choice}
                 onChange={(e) => updateChoice(index, e.target.value)}
-                placeholder={`Enter choice ${index + 1}`}
+                placeholder={`Escribe la opción ${index + 1}`}
                 className="flex-1 p-2 border bg-gray-300 text-black border-gray-300 rounded"
               />
               {(localQuestion.choices?.length || 0) > 2 && (
@@ -108,7 +108,7 @@ const QuestionEditor = ({ question, onQuestionUpdate }) => {
         {/* Correct Answer Selection */}
         <div className="mt-4">
           <label className="text-sm font-medium text-gray-700 block mb-2">
-            Select Correct Answer:
+            Selecciona la respuesta correcta:
           </label>
           <div className="flex flex-wrap gap-2">
             {(localQuestion.choices || []).map((choice, index) => (
@@ -122,7 +122,7 @@ const QuestionEditor = ({ question, onQuestionUpdate }) => {
                     : 'border border-gray-300 text-gray-700 hover:bg-gray-100'
                 }`}
               >
-                Choice {index + 1}
+                Opción {index + 1}
               </button>
             ))}
           </div>
@@ -131,7 +131,7 @@ const QuestionEditor = ({ question, onQuestionUpdate }) => {
 
       {/* Points Input */}
       <div className="flex items-center gap-4 mt-6">
-        <label htmlFor="points" className="text-lg font-semibold">Points:</label>
+        <label htmlFor="points" className="text-lg font-semibold">Puntos:</label>
         <input
           id="points"
           type="number"

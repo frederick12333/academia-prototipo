@@ -10,49 +10,49 @@ const AssignmentDetailsStudentModal = ({ assignment, submission, onClose, onOpen
       <button onClick={onClose} className="absolute top-3 right-3 text-gray-400 hover:text-gray-700">
         <X size={24} />
       </button>
-      <h2 className="text-2xl font-bold mb-4 text-center">Assignment Details</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">Detalles de la tarea</h2>
       <div className="space-y-2 text-sm">
-        <div><span className="font-semibold">Assignment ID:</span> {assignment.assignmentId}</div>
-        <div><span className="font-semibold">Course Name:</span> {assignment.courseName}</div>
-        <div><span className="font-semibold">Title:</span> {assignment.title}</div>
-        <div><span className="font-semibold">Description:</span> {assignment.description}</div>
-        <div><span className="font-semibold">Deadline:</span> {assignment.deadline} <span className="ml-2 font-semibold">Time:</span> {assignment.time}</div>
+        <div><span className="font-semibold">ID de la tarea:</span> {assignment.assignmentId}</div>
+        <div><span className="font-semibold">Asignatura:</span> {assignment.courseName}</div>
+        <div><span className="font-semibold">Título:</span> {assignment.title}</div>
+        <div><span className="font-semibold">Descripción:</span> {assignment.description}</div>
+        <div><span className="font-semibold">Fecha límite:</span> {assignment.deadline} <span className="ml-2 font-semibold">Hora:</span> {assignment.time}</div>
         {assignment.fileName && (
           <div className="flex items-center justify-between bg-gray-200 p-2 rounded-md">
             <div>
-              <span className="font-semibold">Assignment File:</span> {(assignment.fileName).slice(0,15)+'...'} {assignment.fileSize && <span>({assignment.fileSize})</span>}
+              <span className="font-semibold">Archivo de la tarea:</span> {(assignment.fileName).slice(0,15)+'...'} {assignment.fileSize && <span>({assignment.fileSize})</span>}
             </div>
             <button
               type="button"
               className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition"
             >
-              Download
+              Descargar
             </button>
           </div>
         )}
-        <div><span className="font-semibold">Message:</span> {assignment.message || 'You can uploud one file only'}</div>
+        <div><span className="font-semibold">Mensaje:</span> {assignment.message || 'Solo puedes subir un archivo'}</div>
         <hr className="my-2" />
-        <div className="font-semibold text-base mb-1">Your Submission</div>
+        <div className="font-semibold text-base mb-1">Tu entrega</div>
         {submission ? (
           <>
             <div className="flex items-center gap-2">
               {submission.status === 'submitted' ? (
-                <><CheckCircle className="text-green-600 w-5 h-5" /><span className="text-green-700 font-semibold">Submitted</span></>
+                <><CheckCircle className="text-green-600 w-5 h-5" /><span className="text-green-700 font-semibold">Entregada</span></>
               ) : (
-                <><XCircle className="text-red-600 w-5 h-5" /><span className="text-red-700 font-semibold">Not Submitted</span></>
+                <><XCircle className="text-red-600 w-5 h-5" /><span className="text-red-700 font-semibold">No entregada</span></>
               )}
             </div>
             {submission.fileName && (
               <div className="flex items-center gap-2 mt-1 text-green-900 text-xs">
                 <FileText className="w-4 h-4" />
                 {submission.fileName}
-                {submission.grade && <span className="ml-2">Grade: {submission.grade}</span>}
-                {submission.submissionDate && <span className="ml-2">Submitted: {submission.submissionDate}</span>}
+                {submission.grade && <span className="ml-2">Nota: {submission.grade}</span>}
+                {submission.submissionDate && <span className="ml-2">Entregada: {submission.submissionDate}</span>}
               </div>
             )}
           </>
         ) : (
-          <div className="text-gray-500">No submission found for this assignment.</div>
+          <div className="text-gray-500">No se encontró ninguna entrega para esta tarea.</div>
         )}
         {/* Show submit button for upcoming and not-submitted */}
         {(!submission || submission.status === 'not-submitted') && new Date(assignment.deadline) >= new Date() && (
@@ -60,7 +60,7 @@ const AssignmentDetailsStudentModal = ({ assignment, submission, onClose, onOpen
             onClick={onOpenSubmit}
             className="mt-4 w-full flex items-center justify-center gap-2 h-10 rounded-lg bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white hover:opacity-90 font-semibold"
           >
-            <Upload className="w-5 h-5" /> Submit Assignment
+            <Upload className="w-5 h-5" /> Entregar tarea
           </button>
         )}
       </div>
@@ -116,7 +116,7 @@ const AssignmentSubmitModal = ({ assignment, onClose, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.message.trim() && !formData.file) {
-      showNotification('Message or file is required for submission.', 'error');
+      showNotification('Se requiere un mensaje o un archivo para entregar.', 'error');
       return;
     }
     onSubmit(formData);
@@ -130,25 +130,25 @@ const AssignmentSubmitModal = ({ assignment, onClose, onSubmit }) => {
         <button onClick={() => { hideSaveNotification(); onClose(); }} className="absolute top-3 right-3 text-gray-400 hover:text-gray-700">
           <X size={24} />
         </button>
-        <h2 className="text-2xl font-bold mb-4 text-center">Submit Assignment</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">Entregar tarea</h2>
         {/* Assignment details on top */}
         <div className="mb-4 space-y-1 text-sm">
-          <div><span className="font-semibold">Assignment ID:</span> {assignment.assignmentId}</div>
-          <div><span className="font-semibold">Title:</span> {assignment.title}</div>
-          <div><span className="font-semibold">Deadline:</span> {assignment.deadline} <span className="ml-2 font-semibold">Time:</span> {assignment.time}</div>
+          <div><span className="font-semibold">ID de la tarea:</span> {assignment.assignmentId}</div>
+          <div><span className="font-semibold">Título:</span> {assignment.title}</div>
+          <div><span className="font-semibold">Fecha límite:</span> {assignment.deadline} <span className="ml-2 font-semibold">Hora:</span> {assignment.time}</div>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block font-semibold mb-1">Message</label>
+            <label className="block font-semibold mb-1">Mensaje</label>
             <textarea
               className="w-full border rounded-md p-2 min-h-[60px]"
               value={formData.message}
               onChange={handleMessageChange}
-              placeholder="Write a message (optional)"
+              placeholder="Escribe un mensaje (opcional)"
             />
           </div>
           <div>
-            <label className="block font-semibold mb-1">Upload File</label>
+            <label className="block font-semibold mb-1">Subir archivo</label>
             <input
               type="file"
               className="w-full"
@@ -159,7 +159,7 @@ const AssignmentSubmitModal = ({ assignment, onClose, onSubmit }) => {
             type="submit"
             className="w-full h-10 rounded-lg bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white font-semibold hover:opacity-90"
           >
-            Submit
+            Entregar
           </button>
         </form>
       </div>
@@ -173,7 +173,7 @@ export const StudentAssignmentCard = ({
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [submitOpen, setSubmitOpen] = useState(false);
   // Find the submission for this assignment
-  const submission = submissionsFull.find(sub => String(sub.assignmentId) === String(assignment.id));
+  const submission = (submissionsFull || []).find(sub => sub && assignment && String(sub.assignmentId) === String(assignment.id));
   const isPrevious = new Date(assignment.deadline) < new Date();
   const isSubmitted = submission && submission.status === 'submitted';
   const isUnsubmitted = submission && submission.status === 'not-submitted';
@@ -186,7 +186,7 @@ export const StudentAssignmentCard = ({
       statusSection = (
         <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-md p-2 mb-2">
           <CheckCircle className="text-green-600 w-5 h-5" />
-          <span className="text-green-700 font-semibold text-sm">Submitted</span>
+          <span className="text-green-700 font-semibold text-sm">Entregada</span>
           {submission.fileName && (
             <span className="flex items-center gap-1 ml-4 text-green-900 text-xs">
               <FileText className="w-4 h-4" />
@@ -199,7 +199,7 @@ export const StudentAssignmentCard = ({
       statusSection = (
         <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-md p-2 mb-2">
           <XCircle className="text-red-600 w-5 h-5" />
-          <span className="text-red-700 font-semibold text-sm">Not Submitted</span>
+          <span className="text-red-700 font-semibold text-sm">No entregada</span>
         </div>
       );
     }
@@ -212,7 +212,7 @@ export const StudentAssignmentCard = ({
       upcomingStatusSection = (
         <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-md p-2 mb-2">
           <CheckCircle className="text-green-600 w-5 h-5" />
-          <span className="text-green-700 font-semibold text-sm">Submitted</span>
+          <span className="text-green-700 font-semibold text-sm">Entregada</span>
           {submission.fileName && (
             <span className="flex items-center gap-1 ml-4 text-green-900 text-xs">
               <FileText className="w-4 h-4" />
@@ -225,20 +225,20 @@ export const StudentAssignmentCard = ({
       upcomingStatusSection = (
         <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-md p-2 mb-2">
           <XCircle className="text-red-600 w-5 h-5" />
-          <span className="text-red-700 font-semibold text-sm">Not Submitted</span>
+          <span className="text-red-700 font-semibold text-sm">No entregada</span>
         </div>
       );
     }
   }
 
   // Button logic
-  let submitButtonText = 'Submit Assignment';
+  let submitButtonText = 'Entregar tarea';
   let submitButtonClass = 'bg-gradient-to-br from-[#10062B] to-[#4F0129] hover:opacity-90';
   if (isSubmitted) {
-    submitButtonText = 'Submitted Successfully';
+    submitButtonText = 'Entregada correctamente';
     submitButtonClass = 'bg-green-600 hover:bg-green-700';
   } else if (isUnsubmitted) {
-    submitButtonText = 'Submit Assignment';
+    submitButtonText = 'Entregar tarea';
     let submitButtonClass = 'bg-gradient-to-br from-[#10062B] to-[#4F0129] hover:opacity-90';
   }
 
@@ -255,7 +255,7 @@ export const StudentAssignmentCard = ({
         <div className="text-base text-gray-700 font-semibold mb-1">{assignment.courseName}</div>
         <div className="text-sm text-gray-600 mb-1">{assignment.title}</div>
         <div className="text-sm text-gray-700 mb-2">
-          Deadline: <span className="font-bold">{assignment.deadline}</span>  Time: <span className="font-bold">{assignment.time}</span>
+          Fecha límite: <span className="font-bold">{assignment.deadline}</span>  Hora: <span className="font-bold">{assignment.time}</span>
           </div>
 
         {/* Status for previous assignments */}
@@ -268,7 +268,7 @@ export const StudentAssignmentCard = ({
           onClick={() => setDetailsOpen(true)}
           className="w-full text-sm h-10 rounded-lg bg-blue-600 hover:bg-blue-700 text-white mb-2"
             >
-             Check details
+             Ver detalles
             </button>
             
         {/* Only show submit button for upcoming assignments that are not submitted */}

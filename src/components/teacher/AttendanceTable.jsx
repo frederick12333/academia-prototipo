@@ -121,7 +121,7 @@ export const AttendanceTable = ({ onClose, selectedDate, searchTerm,isCreating, 
          {/* Filters */}
          <div className="w-2/3 flex items-center gap-4">
           <span className="text-sm text-gray-500">
-            Total : {filteredStudents.length} student{filteredStudents.length !== 1 ? "s" : ""}
+            Total: {filteredStudents.length} alumno{filteredStudents.length !== 1 ? "s" : ""}
           </span>
         </div>
         {editMode ? (
@@ -132,14 +132,14 @@ export const AttendanceTable = ({ onClose, selectedDate, searchTerm,isCreating, 
               onClick={() => setEditMode(false)}
               className="w-1/6 bg-green-500 hover:opacity-90 rounded-lg text-white py-2"
             >
-              Save Changes
+              Guardar cambios
             </button>
             <button
               type="button"
               onClick={() => setEditMode(false)}
               className="w-1/12  bg-red-500 hover:opacity-90 rounded-lg text-white py-2"
             >
-              Cancel
+              Cancelar
             </button>
             
           </>
@@ -150,13 +150,13 @@ export const AttendanceTable = ({ onClose, selectedDate, searchTerm,isCreating, 
               onClick={() => setEditMode(true)}
               className="w-1/6 bg-blue-500 hover:opacity-90 rounded-lg text-white py-2"
             >
-              Edit 
+              Editar 
             </button>
             <button
               type="button"
               className="w-1/12 bg-gradient-to-br from-[#10062B] to-[#4F0129] hover:opacity-90 rounded-lg text-white py-2"
             >
-              Export
+              Exportar
             </button>
         
           </>
@@ -172,11 +172,11 @@ export const AttendanceTable = ({ onClose, selectedDate, searchTerm,isCreating, 
           <table className="min-w-full border-collapse">
             <thead className="bg-gray-100 rounded-lg sticky top-0 z-5">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Student</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Course</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Class</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Status</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Justification</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Alumno</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Asignatura</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Clase</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Estado</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Justificante</th>
               </tr>
             </thead>
             <tbody>
@@ -242,7 +242,7 @@ export const AttendanceTable = ({ onClose, selectedDate, searchTerm,isCreating, 
                         />
                       ) : (
                           <span className={displayStatus === 'attended' ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
-                            {displayStatus === 'attended' ? "Present" : "Absent"}
+                            {displayStatus === 'attended' ? "Presente" : "Ausente"}
                         </span>
                       )}
                     </td>
@@ -261,10 +261,10 @@ export const AttendanceTable = ({ onClose, selectedDate, searchTerm,isCreating, 
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            View Justification
+                            Ver justificante
                           </a>
                         ) : displayStatus === 'absent' && !displayJustification ? (
-                           <span className="text-gray-500">No justification provided</span>
+                           <span className="text-gray-500">Sin justificante</span>
                         ) : (
                           <span className="text-gray-500">----</span>
   )}
@@ -275,7 +275,7 @@ export const AttendanceTable = ({ onClose, selectedDate, searchTerm,isCreating, 
               ) : (
                 <tr>
                   <td colSpan="5" className="px-6 py-8 text-center text-gray-500">
-                    No students found for the selected filters.
+                    No se encontraron alumnos para los filtros seleccionados.
                   </td>
                 </tr>
               )}

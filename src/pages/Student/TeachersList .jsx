@@ -8,7 +8,7 @@ export const TeachersList   = () => {
   const { user } = useAuth();
 
   
-  const columns = ['Name', 'Course','Status', 'Office Hours','Contact'];
+  const columns = ['Nombre', 'Asignatura','Estado', 'Horario de atención','Contacto'];
 
   const transformedData = courses
   .filter(course => course.students.some(student => student.id === user.id))
@@ -19,8 +19,8 @@ export const TeachersList   = () => {
       fullTeacherData:course.teacher,
     },
     Course: course.code,
-    Status: course.teacher.status,
-    Office_Hours: 'Mon-Wed, 2–4 PM',
+    Status: course.teacher.status === 'Active' ? 'Activo' : course.teacher.status,
+    Office_Hours: 'Lun-Mié, 14:00–16:00',
     Contact: course.teacher.email,
    
   }));

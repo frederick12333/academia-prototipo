@@ -46,7 +46,7 @@ const ExamAnswersReview = ({ exam, studentAnswers, onClose }) => {
           <button onClick={onClose} className="p-2 text-purple-900 hover:bg-purple-100 rounded">
             <ArrowLeft className="w-4 h-4" />
           </button>
-          <h2 className="text-2xl font-bold">Exam Review</h2>
+          <h2 className="text-2xl font-bold">Revisión del examen</h2>
         </div>
       </div>
 
@@ -62,19 +62,19 @@ const ExamAnswersReview = ({ exam, studentAnswers, onClose }) => {
             }`}>
               {/* Question Header */}
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold">Question {index + 1}</h3>
+                <h3 className="text-lg font-semibold">Pregunta {index + 1}</h3>
                 <div className={`flex items-center gap-2 ${
                   isCorrect ? 'text-green-600' : 'text-red-600'
                 }`}>
                   {isCorrect ? (
                     <>
                       <Check className="w-5 h-5" />
-                      <span className="font-medium">Correct</span>
+                      <span className="font-medium">Correcta</span>
                     </>
                   ) : (
                     <>
                       <X className="w-5 h-5" />
-                      <span className="font-medium">Incorrect</span>
+                      <span className="font-medium">Incorrecta</span>
                     </>
                   )}
                 </div>
@@ -86,7 +86,7 @@ const ExamAnswersReview = ({ exam, studentAnswers, onClose }) => {
                 {question.image && (
                   <img 
                     src={question.image} 
-                    alt="Question" 
+                    alt="Pregunta" 
                     className="max-w-full h-auto rounded-lg mb-4"
                   />
                 )}
@@ -126,7 +126,7 @@ const ExamAnswersReview = ({ exam, studentAnswers, onClose }) => {
 
               {/* Points */}
               <div className="mt-4 text-sm text-gray-600">
-                Points: {question.points}
+                Puntos: {question.points}
               </div>
             </div>
           );

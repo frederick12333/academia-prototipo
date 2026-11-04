@@ -19,7 +19,7 @@ const HelpTooltip = ({ content, position = 'top' }) => {
         onMouseLeave={() => setIsVisible(false)}
         onFocus={() => setIsVisible(true)}
         onBlur={() => setIsVisible(false)}
-        aria-label="Help information"
+          aria-label="Información de ayuda"
       >
         <HelpCircle size={18} />
       </button>

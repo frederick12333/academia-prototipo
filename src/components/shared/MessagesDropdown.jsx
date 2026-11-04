@@ -13,24 +13,24 @@ const MessagesDropdown = () => {
       id: 1,
       sender: 'John Doe',
       avatar: '/default-avatar.png',
-      message: 'Can you help me with the math assignment?',
-      time: '5 minutes ago',
+      message: '¿Puedes ayudarme con la tarea de matemáticas?',
+      time: 'Hace 5 minutos',
       unread: true
     },
     {
       id: 2,
       sender: 'Jane Smith',
       avatar: '/default-avatar.png',
-      message: 'The class schedule has been updated',
-      time: '1 hour ago',
+      message: 'Se ha actualizado el horario de clases',
+      time: 'Hace 1 hora',
       unread: false
     },
     {
       id: 3,
       sender: 'Mike Johnson',
       avatar: '/default-avatar.png',
-      message: 'Don\'t forget about the group project meeting',
-      time: '2 hours ago',
+      message: 'No olvides la reunión del proyecto grupal',
+      time: 'Hace 2 horas',
       unread: false
     }
   ]);
@@ -55,10 +55,10 @@ const MessagesDropdown = () => {
       setMessages([
         {
           id: Date.now(),
-          sender: 'You',
+          sender: 'Tú',
           avatar: '/default-avatar.png',
           message: newMessage,
-          time: 'Just now',
+          time: 'Ahora mismo',
           unread: false
         },
         ...messages
@@ -89,12 +89,12 @@ const MessagesDropdown = () => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-lg py-1 z-50">
           <div className="px-4 py-2 border-b border-gray-100">
-            <h3 className="text-sm font-semibold text-gray-900 mb-2">Messages</h3>
+            <h3 className="text-sm font-semibold text-gray-900 mb-2">Mensajes</h3>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
               <input
                 type="text"
-                placeholder="Search messages..."
+                placeholder="Buscar mensajes..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -135,7 +135,7 @@ const MessagesDropdown = () => {
               ))
             ) : (
               <div className="px-4 py-3 text-center text-gray-500">
-                No messages found
+No se encontraron mensajes
               </div>
             )}
           </div>
@@ -146,20 +146,20 @@ const MessagesDropdown = () => {
                 type="text"
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type a message..."
+                placeholder="Escribe un mensaje..."
                 className="flex-1 px-3 py-2 text-sm bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button
                 type="button"
                 className="p-2 text-gray-400 hover:text-gray-600"
-                title="Attach file"
+                title="Adjuntar archivo"
               >
                 <Paperclip size={18} />
               </button>
               <button
                 type="submit"
                 className="p-2 text-blue-600 hover:text-blue-700"
-                title="Send message"
+                title="Enviar mensaje"
               >
                 <Send size={18} />
               </button>

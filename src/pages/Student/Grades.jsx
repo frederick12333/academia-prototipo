@@ -1,139 +1,178 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react';
 import Layout from '../../components/layouts/Layout';
-import { courses, exams } from '../../data/mockData';
-import AverageDisplay from "../../components/shared/AverageDisplay"
+import { courses } from '../../data/mockData';
 import { useAuth } from '../../contexts/AuthContext';
+import { useAcademic } from '../../contexts/AcademicContext';
+import { Award, BookOpen, User, CheckCircle2, XCircle } from 'lucide-react';
 
-// Define standard exam order and types (re-defined locally for self-containment)
-const STANDARD_EXAM_ORDER = [
-    'First Exam',
-    'Second Exam',
-    'Midterm Exam',
-    'Assignments',
-    'Final Exam'
-];
-
-// Helper function to get grades for a student in a given course (re-defined locally)
-const getStudentGrades = (studentId, courseId, allExams) => {
-    const studentExams = allExams.filter(exam => exam.course?.id === courseId);
-    const grades = {};
-    let totalStudentScore = 0;
-
-    STANDARD_EXAM_ORDER.forEach(type => {
-        grades[type] = null;
-    });
-
-    studentExams.forEach(exam => {
-        const studentGrade = exam.grades.find(grade => grade.studentId === studentId);
-        const standardType = STANDARD_EXAM_ORDER.find(type => exam.title.includes(type)) || exam.title;
-        if (studentGrade && studentGrade.score !== null && exam.Total_Points > 0) {
-            const assessmentPercentage = Math.round((studentGrade.score / exam.Total_Points) * 100);
-            grades[standardType] = assessmentPercentage;
-            totalStudentScore += studentGrade.score;
-        }
-    });
-
-    // Calculate average based on total raw score for this course
-    const courseExamsWithPoints = studentExams.filter(exam => exam.Total_Points > 0);
-    const totalCoursePoints = courseExamsWithPoints.reduce((sum, exam) => sum + exam.Total_Points, 0);
-
-    const average = totalCoursePoints > 0 ? Math.min(Math.round((totalStudentScore / totalCoursePoints) * 100), 100) : null;
-    const status = average !== null ? (average >= 50 ? "Passed" : "Failed") : "N/A";
-
-    return { ...grades, average, status };
-};
+const RED = '#C0392B';
 
 const Grades = () => {
-  const { user : authUser } = useAuth();
-  const [studentGradesData, setStudentGradesData] = useState([]);
+  const { user } = useAuth();
+  const { evaluationColumns, gradesMatrix, calculateStudentCourseAverage } = useAcademic();
 
-  useEffect(() => {
-    if (!authUser) return;
-
-    const currentStudentId = authUser.id;
-
-    const studentCourses = courses.filter(course => course.students.some(s => s.id === currentStudentId));
-
-    const gradesDataForDisplay = [];
-
-    studentCourses.forEach(course => {
-      const studentGrades = getStudentGrades(currentStudentId, course.id, exams);
-    
-      const rowData = {
-        Course: course.name,
-        ...Object.fromEntries([
-            ...Object.keys(studentGrades)
-            .filter(key => !['average', 'status'].includes(key))
-            .map(type => {
-                if (type === 'Assignments') {
-                    // Generate random data for Assignments (between 0 and 100)
-                    const randomGrade = Math.floor(Math.random() * 101);
-                    return [type, <AverageDisplay value={randomGrade} size="md" />];
-                } else {
-                    // Use actual data for other assessment types
-                    return [type, studentGrades[type] !== null ? <AverageDisplay value={studentGrades[type]} size="md" /> : '-'];
-                }
-            }),
-            ['Midterm Exam', studentGrades['Midterm Exam'] !== null ? <AverageDisplay value={studentGrades['Midterm Exam']} size="md" /> : '-'],
-        ]),
-        Average: studentGrades.average !== null ? <AverageDisplay value={studentGrades.average} size="md" /> : '-',
-        Status: studentGrades.status !== "N/A" ? studentGrades.status : '-',
-      };
-
-      gradesDataForDisplay.push(rowData);
-    });
-
-    setStudentGradesData(gradesDataForDisplay);
-
-  }, [authUser, courses, exams]);
+  // Cursos en los que está matriculado el alumno
+  const studentCourses = courses.filter(course =>
+    course.students?.some(s => s.id === user?.id)
+  );
 
   return (
-    <Layout currentPage={'Grades'}>
-      <div className='px-12 bg-white ' >
-        <div className=" px-0">
+    <Layout currentPage="Notas">
+      <div className="bg-gray-50 min-h-screen">
+        {/* Encabezado institucional */}
+        <div className="bg-white border-b border-gray-200 px-6 py-5">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-1.5 h-10 rounded-full" style={{ backgroundColor: RED }} />
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                  Academia Apu San Antonio de Andahuaylas
+                </p>
+                <h1 className="text-xl font-bold text-gray-900 leading-tight">
+                  Boleta de Calificaciones del Alumno (Escala Vigesimal 0 – 20)
+                </h1>
+              </div>
+            </div>
 
-          <div className="mt-2 space-y-4 ">
-          <h1 className="text-2xl font-semibold text-black m-6">Grades</h1>
-
-             {studentGradesData.map((courseData, index) => {
-                 const courseColumns = [
-                     ...Object.keys(courseData).filter(key => !['Course', 'Average', 'Status'].includes(key)),
-                     'Average',
-                     'Status',
-                 ];
-
-                 return (
-                    <div key={index} className="overflow-x-auto border text-sm rounded-lg p-4 shadow-md">
-                         <h4 className="text-md font-semibold mb-2">{`${courseData.Course}`}</h4>
-                         <table className="w-full">
-                             <thead>
-                                 <tr className="border-b border-gray-200 bg-gray-100">
-                                     {courseColumns.map((column, colIndex) => (
-                                         <th key={colIndex} className="text-left py-2 px-3 font-medium text-gray-700">
-                                             {column}
-                                         </th>
-                                     ))}
-                                 </tr>
-                             </thead>
-                             <tbody>
-                                 <tr>
-                                     {courseColumns.map((column, colIndex) => (
-                                         <td key={colIndex} className="py-2 px-3 text-gray-700">
-                                             {courseData[column]}
-                                         </td>
-                                     ))}
-                                 </tr>
-                             </tbody>
-                         </table>
-                    </div>
-                 );
-            })}
+            {/* Datos del estudiante */}
+            <div className="flex items-center gap-3 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-200">
+              <User size={16} style={{ color: RED }} />
+              <div className="text-xs">
+                <span className="font-bold text-gray-800">{user?.name}</span>
+                <span className="text-gray-400 ml-2">| Clase: {user?.class || '3A'}</span>
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Listado de Cursos y Tablas Académicas */}
+        <div className="p-6 space-y-6 max-w-7xl mx-auto">
+          {studentCourses.length === 0 ? (
+            <div className="bg-white p-12 rounded-xl border border-gray-200 text-center text-gray-400">
+              No tienes asignaturas registradas actualmente.
+            </div>
+          ) : (
+            studentCourses.map(course => {
+              const { average, status } = calculateStudentCourseAverage(user?.id, course.name);
+              const studentCourseGrades = gradesMatrix[user?.id]?.[course.name] || {};
+
+              return (
+                <div
+                  key={course.id}
+                  className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden"
+                >
+                  {/* Barra de cabecera de la materia */}
+                  <div
+                    className="px-6 py-3 flex flex-wrap items-center justify-between gap-2 text-white"
+                    style={{ backgroundColor: RED }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <BookOpen size={18} />
+                      <h2 className="font-bold text-base tracking-wide">{course.name}</h2>
+                      <span className="text-xs text-red-100 bg-black/20 px-2 py-0.5 rounded ml-2">
+                        Código: {course.code}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-medium text-red-100">
+                        Docente: {course.teacher?.name || 'Profesor Titular'}
+                      </span>
+                      <span
+                        className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
+                          status === 'Aprobado'
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-red-100 text-red-800'
+                        }`}
+                      >
+                        {status}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Tabla con estructura académica limpia */}
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="bg-gray-100 border-b border-gray-200 text-gray-700">
+                          <th className="text-left py-2.5 px-6 text-xs font-bold uppercase tracking-wider w-1/2">
+                            Criterio / Evaluación
+                          </th>
+                          <th className="text-center py-2.5 px-4 text-xs font-bold uppercase tracking-wider w-1/4">
+                            Ponderación (%)
+                          </th>
+                          <th className="text-center py-2.5 px-4 text-xs font-bold uppercase tracking-wider w-1/4">
+                            Calificación (0 – 20)
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody className="divide-y divide-gray-100">
+                        {evaluationColumns.map((col, idx) => {
+                          const score = studentCourseGrades[col.id];
+                          const hasScore = score !== undefined && score !== null && !isNaN(score);
+                          const numScore = hasScore ? Number(score) : null;
+
+                          return (
+                            <tr
+                              key={col.id}
+                              className={`hover:bg-gray-50/80 transition-colors ${
+                                idx % 2 === 0 ? 'bg-white' : 'bg-gray-50/40'
+                              }`}
+                            >
+                              <td className="py-2.5 px-6 text-gray-800 font-medium">
+                                {col.name}
+                              </td>
+                              <td className="py-2.5 px-4 text-center font-semibold text-gray-600">
+                                {col.weight}%
+                              </td>
+                              <td className="py-2.5 px-4 text-center">
+                                {numScore !== null ? (
+                                  <span
+                                    className={`font-bold text-sm ${
+                                      numScore >= 10.5 ? 'text-gray-900' : 'text-red-700'
+                                    }`}
+                                  >
+                                    {numScore.toFixed(1)}
+                                  </span>
+                                ) : (
+                                  <span className="text-gray-400 font-normal">Sin calificar</span>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        })}
+
+                        {/* Fila destacada de Promedio Ponderado Final */}
+                        <tr className="bg-gray-900 text-white font-bold">
+                          <td className="py-3 px-6 text-sm" colSpan={2}>
+                            Promedio Ponderado Final
+                          </td>
+                          <td className="py-3 px-4 text-center text-base tracking-wide">
+                            {average !== null ? (
+                              <span
+                                className={`px-3 py-1 rounded text-sm font-extrabold ${
+                                  average >= 10.5 ? 'bg-green-700 text-white' : 'bg-red-700 text-white'
+                                }`}
+                              >
+                                {average.toFixed(2)}
+                              </span>
+                            ) : (
+                              <span className="text-gray-400 text-sm">Pendiente</span>
+                            )}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
       </div>
-
-
     </Layout>
-  )
-}
+  );
+};
+
 export default Grades;

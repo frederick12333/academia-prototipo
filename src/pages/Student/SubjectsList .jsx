@@ -6,7 +6,7 @@ import AverageDisplay from '../../components/shared/AverageDisplay';
 
 export const SubjectsList   = () => {
   
-  const columns = ['Course', 'Code',  'Grade', 'Attendance', 'Credits','Teacher'];
+  const columns = ['Asignatura', 'Código',  'Nota', 'Asistencia', 'Créditos','Docente'];
 
   const transformedData = courses.map(course => ({
     Course: course.name,

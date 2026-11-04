@@ -1,17 +1,14 @@
 import React from 'react';
-const PerformanceCard = () => {
-  // Calculate the progress (9.1 out of 10 = 91%)
-  const progress = 91
-  const circumference = 2 * Math.PI * 45 // radius of 45
-  const strokeDasharray = circumference
-  const strokeDashoffset = circumference - (progress / 100) * circumference
 
+const RED = '#C0392B';
+
+const PerformanceCard = () => {
   return (
-    <div className="bg-white border rounded-xl p-6 shadow-lg max-w-sm mx-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-900">Performance</h3>
+    <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-base font-semibold text-gray-900">Rendimiento</h3>
         <button className="text-gray-400 hover:text-gray-600">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
             <circle cx="10" cy="4" r="1.5" />
             <circle cx="10" cy="10" r="1.5" />
             <circle cx="10" cy="16" r="1.5" />
@@ -19,22 +16,21 @@ const PerformanceCard = () => {
         </button>
       </div>
 
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-4">
         <div className="relative">
-          <svg className="w-40 h-20" viewBox="0 0 100 50">
-            {/* Background semi-circle */}
+          <svg className="w-36 h-20" viewBox="0 0 100 50">
+            {/* Fondo del semicírculo */}
             <path
               d="M 10 45 A 40 40 0 0 1 90 45"
-              stroke="#e5e7eb"
+              stroke="#f3f4f6"
               strokeWidth="8"
               fill="transparent"
               strokeLinecap="round"
             />
-
-            {/* Progress semi-circle */}
+            {/* Progreso */}
             <path
               d="M 10 45 A 40 40 0 0 1 90 45"
-              stroke="url(#performanceGradient)"
+              stroke={RED}
               strokeWidth="8"
               fill="transparent"
               strokeDasharray="125.6"
@@ -42,27 +38,19 @@ const PerformanceCard = () => {
               strokeLinecap="round"
               className="transition-all duration-1000 ease-out"
             />
-
-            <defs>
-              <linearGradient id="performanceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#4F0129" />
-                <stop offset="100%" stopColor="#10062B" />
-              </linearGradient>
-            </defs>
           </svg>
-
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center mt-2">
+            <div className="text-center mt-3">
               <div className="text-2xl font-bold text-gray-900">9.1</div>
-              <div className="text-xs text-gray-500">of 10 max LTS</div>
+              <div className="text-xs text-gray-400">de 10 máx.</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="text-center text-sm text-gray-600">2024-2025 Spring Semester</div>
+      <div className="text-center text-xs text-gray-500">Semestre 2024 – 2025</div>
     </div>
-  )
-}
+  );
+};
 
-export default PerformanceCard
+export default PerformanceCard;

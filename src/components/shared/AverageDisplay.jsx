@@ -5,7 +5,7 @@ const AverageDisplay = ({ value, size = "md", showPercentage = true, className =
       return (
         <div className={`flex items-center justify-center ${getSizeClasses(size)} ${className}`}>
           <div className="bg-gray-200 rounded-full flex items-center justify-center text-gray-500 text-xs font-medium w-full h-full">
-            NA
+            N/D
           </div>
         </div>
       )

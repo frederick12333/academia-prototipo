@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Calendar from '../../components/shared/Calendar';
 import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import { CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const SchoolCalendar = () => {
@@ -8,13 +9,13 @@ const SchoolCalendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   
   const formatMonthYear = (date) => {
-    return format(date, 'MMMM yyyy');
+    return format(date, 'MMMM yyyy', { locale: es });
   };
 
   return (
     <div className="bg-white rounded-xl  overflow-x-auto p-4  items-center">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold">School Calendar</h3>
+        <h3 className="text-lg font-semibold">Calendario escolar</h3>
         <div className="flex items-center space-x-2 cursor-pointer">
           <span className="text-sm font-medium">{formatMonthYear(currentMonth)}</span>
         </div>

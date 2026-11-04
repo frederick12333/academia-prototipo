@@ -170,7 +170,7 @@ const Attendance = () => {
       <div className="max-h-screen bg-white max-w-6xl  overflow-x-auto px-6 py-2">
         {/* Header */}
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Attendance</h1> {/* Changed title slightly */}
+          <h1 className="text-2xl font-bold">Asistencia</h1> {/* Changed title slightly */}
        
          {/* View Type Selection (Day/Week) */}
          <div className="flex gap-4 mb-6">
@@ -179,13 +179,13 @@ const Attendance = () => {
                 className={`px-4 py-1 rounded ${viewType === 'day' ? 'bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white' : 'bg-gray-200 text-gray-800'}`}
                 onClick={() => setViewType('day')}
             >
-                Daily View
+                Vista diaria
               </button>
             <button
                 className={`px-4 py-1 rounded ${viewType === 'week' ? 'bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white' : 'bg-gray-200 text-gray-800'}`}
                 onClick={() => setViewType('week')}
             >
-                Weekly View
+                Vista semanal
               </button>
             </div>
           </div>
@@ -194,7 +194,7 @@ const Attendance = () => {
         <div className="bg-white rounded-lg">
            {viewType === 'day' ? (
                isWeekend(formattedCurrentDate) ? (
-                   <div className="p-6 text-center text-xl text-gray-600">It's the weekend! No attendance data for {formattedCurrentDate}.</div>
+                   <div className="p-6 text-center text-xl text-gray-600">¡Es fin de semana! No hay datos de asistencia para {formattedCurrentDate}.</div>
                ) : (
                    <AttendanceDaily 
                        attendanceData={loadDailyStudents()} 
@@ -212,13 +212,13 @@ const Attendance = () => {
             <div className="flex flex-wrap items-center gap-4 ">
                  {/* Search Input */}
                 <div className="flex-grow max-w-xs">
-                    <label htmlFor="search" className="sr-only">Search Students</label>
+                    <label htmlFor="search" className="sr-only">Buscar alumnos</label>
                     <input
                         type="text"
                         name="search"
                         id="search"
                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-3 py-2"
-                        placeholder="Search by Name or ID"
+                        placeholder="Buscar por nombre o ID"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -226,14 +226,14 @@ const Attendance = () => {
 
                 {/* Course Filter */}
                 <div className="flex-grow max-w-xs">
-                   <label htmlFor="courseFilter" className="sr-only">Filter by Course</label>
+                   <label htmlFor="courseFilter" className="sr-only">Filtrar por asignatura</label>
                    <select
                       id="courseFilter"
                       value={selectedCourse}
                       onChange={(e) => setSelectedCourse(e.target.value)}
                       className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-3 py-2"
                    >
-                      <option value="All">All Courses</option>
+                      <option value="All">Todas las asignaturas</option>
                       {courses.map(course => (
                           <option key={course.id} value={course.name}>{course.name}</option>
                       ))}
@@ -242,14 +242,14 @@ const Attendance = () => {
 
                 {/* Class Filter */}
                  <div className="flex-grow max-w-xs">
-                    <label htmlFor="classFilter" className="sr-only">Filter by Class</label>
+                    <label htmlFor="classFilter" className="sr-only">Filtrar por clase</label>
                     <select
                       id="classFilter"
                       value={selectedClass}
                       onChange={(e) => setSelectedClass(e.target.value)}
                       className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-3 py-2"
                     >
-                       <option value="All">All Classes</option>
+                       <option value="All">Todas las clases</option>
                        {availableClasses.map((className) => (
                           <option key={className} value={className}>
                             {className}
@@ -261,7 +261,7 @@ const Attendance = () => {
                  {/* Date Selection based on View Type */}
                  {viewType === 'day' ? (
                       <div className="flex-grow max-w-xs">
-                           <label htmlFor="dailyDate" className="sr-only">Select Date</label>
+                           <label htmlFor="dailyDate" className="sr-only">Seleccionar fecha</label>
                            <input
                                type="date"
                                id="dailyDate"
@@ -273,7 +273,7 @@ const Attendance = () => {
                  ) : (
                       <div className="flex items-center gap-4 flex-grow max-w-sm">
                            <div>
-                               <label htmlFor="startDate" className="sr-only">From Date</label>
+                               <label htmlFor="startDate" className="sr-only">Desde</label>
                                <input
                                    type="date"
                                    id="startDate"
@@ -282,9 +282,9 @@ const Attendance = () => {
                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm px-3 py-2"
                                />
                            </div>
-                           <span>to</span>
+                           <span>a</span>
                            <div>
-                                <label htmlFor="endDate" className="sr-only">To Date</label>
+                                <label htmlFor="endDate" className="sr-only">Hasta</label>
                                 <input
                                    type="date"
                                    id="endDate"

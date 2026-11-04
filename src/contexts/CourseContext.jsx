@@ -1,16 +1,20 @@
 import React, { createContext, useState, useContext } from "react";
 import { courses as mockCourses } from "../data/mockData";
 
-const CourseContext = createContext();
+const CourseContext = createContext({
+  courses: [],
+  fetchCourses: () => {},
+  updateCourse: () => {},
+});
 
 export const CourseProvider = ({ children }) => {
-  const [courses, setCourses] = useState(mockCourses);
+  const [courses, setCourses] = useState(Array.isArray(mockCourses) ? mockCourses : []);
 
-  const fetchCourses = () => setCourses(mockCourses);
+  const fetchCourses = () => setCourses(Array.isArray(mockCourses) ? mockCourses : []);
   const updateCourse = (id, updates) => {
     setCourses((prev) =>
-      prev.map((course) =>
-        course.id === id ? { ...course, ...updates } : course
+      (prev || []).map((course) =>
+        course && course.id === id ? { ...course, ...updates } : course
       )
     );
   };
@@ -22,4 +26,7 @@ export const CourseProvider = ({ children }) => {
   );
 };
 
-export const useCourse = () => useContext(CourseContext); 
+export const useCourse = () => {
+  const context = useContext(CourseContext);
+  return context || { courses: [], fetchCourses: () => {}, updateCourse: () => {} };
+};

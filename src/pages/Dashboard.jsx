@@ -19,7 +19,7 @@ export default function Dashboard() {
         </div>
 
         <main className="bg-gray-100 p-5">
-          <h3 className="text-black font-semibold text-xl mb-4">Dashboard</h3>
+          <h3 className="text-black font-semibold text-xl mb-4">Panel</h3>
           <div className='container flex-1 w-full h-full'> 
             {/* Main content goes here Dont change container ... */}
 

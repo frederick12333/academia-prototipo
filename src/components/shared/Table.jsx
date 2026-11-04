@@ -5,6 +5,19 @@ import { useNavigate } from 'react-router-dom';
 const Table = ({ data, title, columns, isActions = true, user, actionChil=false }) => {
   const navigate = useNavigate();
 
+  const titleLabels = {
+    'Courses': 'Asignaturas',
+    'Courses ': 'Asignaturas',
+    'All Students': 'Todos los alumnos',
+    'All Teachers': 'Todos los docentes',
+    'Parents': 'Familiares',
+    'Grades': 'Notas',
+    'Recent Exams Performance': 'Rendimiento en exámenes recientes',
+    'Classes Exams Performance': 'Rendimiento de exámenes por clase',
+    'Free Time Schedule': 'Horario de tiempo libre',
+  };
+  const displayTitle = titleLabels[title] || title;
+
   const handleRowClick = (row,index) => {
   
      
@@ -75,7 +88,7 @@ const Table = ({ data, title, columns, isActions = true, user, actionChil=false 
   return (
     <div className="bg-white rounded-xl p-4 text-sm">
       <div className='flex justify-between mb-4 items-center'>
-        <h3 className="text-lg font-semibold">{title}</h3>
+        <h3 className="text-lg font-semibold">{displayTitle}</h3>
         {user?.role === 'teacher' && !isActions &&
           <div className='bg-gradient-to-br from-[#10062B] to-[#4F0129] flex justify-center items-center h-9 w-9 rounded-full hover:opacity-90 cursor-pointer'>
             <Pencil size={19} color='white' />
@@ -92,7 +105,7 @@ const Table = ({ data, title, columns, isActions = true, user, actionChil=false 
                   {column}
                 </th>
               ))}
-              {isActions && <th className="text-left py-3 px-4 font-medium text-gray-700">Actions</th>}
+              {isActions && <th className="text-left py-3 px-4 font-medium text-gray-700">Acciones</th>}
             </tr>
           </thead>
           <tbody>

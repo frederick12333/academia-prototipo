@@ -9,7 +9,7 @@ import {mockGrades} from '../../data/mockData';
 
 import { useLocation } from 'react-router-dom';
 
-import { Monitor, ChartNoAxesCombined,MessageCircleMore, LibraryBig, Award, Eye } from 'lucide-react';
+import { Monitor, ChartNoAxesCombined, Phone, LibraryBig, Award, Eye } from 'lucide-react';
 
  const StudentProfile  = () => {
   const location = useLocation();
@@ -19,29 +19,29 @@ import { Monitor, ChartNoAxesCombined,MessageCircleMore, LibraryBig, Award, Eye 
   const stats = [
     {
       value: '95%',
-      title: 'Grade Average Point',
+      title: 'Promedio de notas',
       icon: <Award size={50} />,
     },
     {
       value: '05',
-      title: 'Courses',
+      title: 'Asignaturas',
       icon: <LibraryBig size={50} />,
     },
     {
       value: '89%',
-      title: 'Attendance Average  ',
+      title: 'Promedio de asistencia  ',
       icon: <Monitor size={50} />,
     },
     {
       value: '95%',
-      title: 'Performance',
+      title: 'Rendimiento',
       icon: <ChartNoAxesCombined  size={50} />,
     }
   ];
   
   const courses = [
     {
-      course: "Calculus",
+      course: "Cálculo",
       attended: 85,
       absence: 10,
       approvedAbsence: 3,
@@ -52,7 +52,7 @@ import { Monitor, ChartNoAxesCombined,MessageCircleMore, LibraryBig, Award, Eye 
       status: "Normal"
     },
     {
-      course: "Calculus",
+      course: "Cálculo",
       attended: 85,
       absence: 10,
       approvedAbsence: 3,
@@ -63,7 +63,7 @@ import { Monitor, ChartNoAxesCombined,MessageCircleMore, LibraryBig, Award, Eye 
       status: "Normal"
     },
     {
-      course: "Calculus",
+      course: "Cálculo",
       attended: 67,
       absence: 28,
       approvedAbsence: 0,
@@ -71,10 +71,10 @@ import { Monitor, ChartNoAxesCombined,MessageCircleMore, LibraryBig, Award, Eye 
         name: 'Zehra Özkan',
         avatar: 'https://cdn.pixabay.com/photo/2023/12/15/17/13/woman-8451051_1280.jpg',
       },      
-      status: "Under Average"
+      status: "Bajo el promedio"
     },
     {
-      course: "Calculus",
+      course: "Cálculo",
       attended: 85,
       absence: 10,
       approvedAbsence: 3,
@@ -85,7 +85,7 @@ import { Monitor, ChartNoAxesCombined,MessageCircleMore, LibraryBig, Award, Eye 
       status: "Normal"
     },
     {
-      course: "Calculus",
+      course: "Cálculo",
       attended: 85,
       absence: 10,
       approvedAbsence: 3,
@@ -96,27 +96,27 @@ import { Monitor, ChartNoAxesCombined,MessageCircleMore, LibraryBig, Award, Eye 
       status: "Normal"
     },
   ];
-  const coursesColumns = ['Course', 'Attended', 'Absence', 'Approved Absence', 'Teacher', 'Status'];
+  const coursesColumns = ['Asignatura', 'Asistencias', 'Ausencias', 'Ausencias justificadas', 'Docente', 'Estado'];
   const parents = [
     {
-      name: "Parent Name",
+      name: "Nombre del familiar",
       contactNumber: "+905070406000",
       email: "email@example.com",
-      preferredContact: "Phone Call",
-      occupation: "Teacher",
-      status: "Active"
+      preferredContact: "Llamada telefónica",
+      occupation: "Docente",
+      status: "Activo"
     },
     {
-      name: "Parent Name",
+      name: "Nombre del familiar",
       contactNumber: "+905070406000",
       email: "email@example.com",
-      preferredContact: "Phone Call",
-      occupation: "NA",
-      status: "NA"
+      preferredContact: "Llamada telefónica",
+      occupation: "N/D",
+      status: "N/D"
     }
   ];
-  const parentsColumns = ['Name', 'Contact Number', 'Email', 'Preferred Contact By ', 'Occupation', 'Status'];
-  const columns = ['Course', '1st', '2nd','Assignments' ,'Final', 'Average', 'Status'];
+  const parentsColumns = ['Nombre', 'Número de contacto', 'Correo electrónico', 'Contacto preferido', 'Ocupación', 'Estado'];
+  const columns = ['Asignatura', '1.º', '2.º','Tareas' ,'Final', 'Promedio', 'Estado'];
   
   const transformedData = mockGrades.map(grade => ({
     Course: grade.course,
@@ -160,7 +160,7 @@ import { Monitor, ChartNoAxesCombined,MessageCircleMore, LibraryBig, Award, Eye 
          actionChil={
                     <div 
                         className="w-7 h-7 cursor-pointer transition-colors bg-gradient-to-br from-[#10062B] to-[#4F0129] rounded-full flex items-center justify-center hover:opacity-80">
-                        <MessageCircleMore color='white' size={19}/>
+                        <Phone color='white' size={15}/>
                      </div>
                   }
          />

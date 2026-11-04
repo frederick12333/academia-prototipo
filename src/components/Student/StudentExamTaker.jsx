@@ -90,7 +90,7 @@ const StudentExamTaker = ({ exam, onClose, onSubmit, remainingTime }) => {
       {/* Current Question */}
       <div className="bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white p-4 rounded-lg mb-6">
         <h3 className="text-xl font-bold">
-          Question {currentQuestion} of {exam.questions.length}
+          Pregunta {currentQuestion} de {exam.questions.length}
         </h3>
       </div>
 
@@ -103,7 +103,7 @@ const StudentExamTaker = ({ exam, onClose, onSubmit, remainingTime }) => {
               {getCurrentQuestionData().image && (
                 <img 
                   src={getCurrentQuestionData().image} 
-                  alt="Question" 
+                  alt="Pregunta" 
                   className="max-w-full h-auto rounded-lg mb-4"
                 />
               )}
@@ -144,14 +144,14 @@ const StudentExamTaker = ({ exam, onClose, onSubmit, remainingTime }) => {
           className="flex gap-2 justify-center items-center px-4 py-2 bg-white border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50"
         >
           <ChevronLeft />
-          Previous Question
+          Pregunta anterior
         </button>
         <button
           onClick={() => setCurrentQuestion(Math.min(exam.questions.length, currentQuestion + 1))}
           disabled={currentQuestion === exam.questions.length}
           className="flex gap-2 justify-center items-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-800 disabled:opacity-50"
         >
-          Next Question
+          Siguiente pregunta
           <ChevronRight />
         </button>
       </div>
@@ -163,7 +163,7 @@ const StudentExamTaker = ({ exam, onClose, onSubmit, remainingTime }) => {
           disabled={isSubmitting}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg disabled:opacity-50"
         >
-          {isSubmitting ? 'Submitting...' : 'Submit Exam'}
+          {isSubmitting ? 'Enviando...' : 'Enviar examen'}
         </button>
       </div>
     </div>

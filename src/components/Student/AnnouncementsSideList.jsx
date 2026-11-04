@@ -5,22 +5,22 @@ const AnnouncementsSideList = () => {
   const announcements = [
     {
       id: 1,
-      title: 'Midterm Exam Schedule',
-      course: 'Calculus',
+      title: 'Horario del examen parcial',
+      course: 'Cálculo',
       date: '2024-03-15',
       isNew: true,
     },
     {
       id: 2,
-      title: 'Assignment Due Date Extended',
-      course: 'Physics',
+      title: 'Fecha de entrega de la tarea ampliada',
+      course: 'Física',
       date: '2024-03-14',
       isNew: true,
     },
     {
       id: 3,
-      title: 'Course Material Updated',
-      course: 'Chemistry',
+      title: 'Material del curso actualizado',
+      course: 'Química',
       date: '2024-03-13',
       isNew: false,
     },
@@ -29,7 +29,7 @@ const AnnouncementsSideList = () => {
   return (
     <div className="bg-white rounded-xl p-4">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold">Announcements</h3>
+        <h3 className="text-lg font-semibold">Anuncios</h3>
         <Bell className="h-5 w-5 text-gray-500" />
       </div>
       <div className="space-y-4">
@@ -45,7 +45,7 @@ const AnnouncementsSideList = () => {
               </div>
               {announcement.isNew && (
                 <span className="px-2 py-1 text-xs bg-red-100 text-red-600 rounded-full">
-                  New
+                  Nuevo
                 </span>
               )}
             </div>

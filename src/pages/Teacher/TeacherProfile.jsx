@@ -18,45 +18,45 @@ const user = location.state?.teacher || authUser;
   const stats = [
     {
       value: '120',
-      title: 'Students',
+      title: 'Alumnos',
       icon: <ListChecks  size={50} />,
     },
     {
       value: '05',
-      title: 'Courses',
+      title: 'Asignaturas',
       icon: <LibraryBig size={50} />,
     },
     {
       value: '500',
-      title: 'Total given Lessons',
+      title: 'Clases impartidas',
       icon: <Monitor size={50} />,
     },
     {
       value: '95%',
-      title: 'Performance',
+      title: 'Rendimiento',
       icon: <ChartNoAxesCombined size={50} />,
     }
   ];
   const courses = [
-    { no: '01', title: 'Course', type: 'Online', resources: 'Link' },
-    { no: '02', title: 'Course', type: 'F2F', resources: 'Link' },
-    { no: '03', title: 'Course', type: 'F2F', resources: 'Link' },
-    { no: '04', title: 'Course', type: 'Online', resources: 'Link' },
-    { no: '05', title: 'Course', type: 'Online', resources: 'Link' },
-    { no: '06', title: 'Course', type: 'Online', resources: 'Link' },
-    { no: '07', title: 'Course', type: 'Online', resources: 'Link' }
+    { no: '01', title: 'Asignatura', type: 'En línea', resources: 'Enlace' },
+    { no: '02', title: 'Asignatura', type: 'Presencial', resources: 'Enlace' },
+    { no: '03', title: 'Asignatura', type: 'Presencial', resources: 'Enlace' },
+    { no: '04', title: 'Asignatura', type: 'En línea', resources: 'Enlace' },
+    { no: '05', title: 'Asignatura', type: 'En línea', resources: 'Enlace' },
+    { no: '06', title: 'Asignatura', type: 'En línea', resources: 'Enlace' },
+    { no: '07', title: 'Asignatura', type: 'En línea', resources: 'Enlace' }
   ];
-  const coursesColumns = ['No', 'Title', 'Type', 'Resources'];
+  const coursesColumns = ['N.º', 'Título', 'Tipo', 'Recursos'];
   const schedule = [
-    { day: 'Mon', from: '11:00', to: '14:00' },
-    { day: 'Tue', from: '11:00', to: '14:00' },
-    { day: 'Wed', from: '11:00', to: '14:00' },
-    { day: 'Thu', from: '11:00', to: '14:00' },
-    { day: 'Fri', from: '11:00', to: '14:00' },
-    { day: 'Sat', from: 'NA', to: 'NA' },
-    { day: 'Sun', from: 'NA', to: 'NA' }
+    { day: 'Lun', from: '11:00', to: '14:00' },
+    { day: 'Mar', from: '11:00', to: '14:00' },
+    { day: 'Mié', from: '11:00', to: '14:00' },
+    { day: 'Jue', from: '11:00', to: '14:00' },
+    { day: 'Vie', from: '11:00', to: '14:00' },
+    { day: 'Sáb', from: 'N/D', to: 'N/D' },
+    { day: 'Dom', from: 'N/D', to: 'N/D' }
   ];
-  const scheduleColumns = ['Day', 'From', 'To'];
+  const scheduleColumns = ['Día', 'Desde', 'Hasta'];
 
   return (
     <Layout currentPage={'UserProfile'}>
@@ -89,9 +89,9 @@ const user = location.state?.teacher || authUser;
         <div className="mt-4 space-y-2 ">
 
           <AnnouncementCard 
-            title="CO301 | Exam Hall List Updated"
-            content="Dear Students, The attached list contains information about the exam hall where you will take the exam. Each student must take the exam in the hall specified in the list. Do not forget to bring your pencils (not pen) and erasers along with your student ID cards when you come to the exam."
-            fileName="CO301-Midterm Exam Hall Information1.pdf"
+            title="CO301 | Lista del aula de examen actualizada"
+            content="Estimados alumnos: la lista adjunta contiene información sobre el aula donde realizarán el examen. Cada alumno debe realizar el examen en el aula indicada en la lista. No olviden traer lápices (no bolígrafo), gomas y su carné de estudiante el día del examen."
+            fileName="CO301-Informacion-Aula-Examen-Parcial1.pdf"
             fileSize="169.5 KB"
             dateAdded="2025-04-10"
             lastUpdate="2025-04-10 19:38:52"
@@ -101,8 +101,8 @@ const user = location.state?.teacher || authUser;
           />
           
           <AnnouncementCard 
-            title="CO301 | Exam Hall List"
-            content="Dear Students, The attached list contains information about the exam hall where you will take the exam. Each student must take the exam in the hall specified in the list. Do not forget to bring your pencils (not pen) and erasers along with your student ID cards when you come to the exam."
+            title="CO301 | Lista del aula de examen"
+            content="Estimados alumnos: la lista adjunta contiene información sobre el aula donde realizarán el examen. Cada alumno debe realizar el examen en el aula indicada en la lista. No olviden traer lápices (no bolígrafo), gomas y su carné de estudiante el día del examen."
             dateAdded="2025-04-10"
             lastUpdate="2025-04-10"
             isUpdated={false}
@@ -111,7 +111,7 @@ const user = location.state?.teacher || authUser;
            {authUser?.role === 'teacher'&& 
           <div className="mt-2 flex justify-center">
           <button className=" w-full bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white px-8 py-3 rounded-lg font-medium hover:opacity-90 ">
-            Send New Announcement
+            Enviar nuevo anuncio
           </button>
         </div>}
           </div>

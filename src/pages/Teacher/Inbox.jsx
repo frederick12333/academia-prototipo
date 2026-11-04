@@ -42,7 +42,7 @@ const Inbox = () => {
   const getTabButtonClass = (tab) => {
     const baseClass = "px-6 py-2 rounded-lg font-medium transition-colors";
     if (activeTab === tab) {
-      return`${baseClass} bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white`;
+      return`${baseClass} bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white`
     }
     return tab === 'new' 
     ? `${baseClass} bg-green-600 text-white`
@@ -61,7 +61,7 @@ const Inbox = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-700" size={20} />
               <input
                 type="text"
-                placeholder="Search messages..."
+                placeholder="Buscar mensajes..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full  h-9 pl-10 pr-4 py-3 bg-gray-50 rounded-lg border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -73,19 +73,19 @@ const Inbox = () => {
             onClick={() => setActiveTab('incoming')}
             className={getTabButtonClass('incoming')}
           >
-            Incoming Messages
+            Mensajes recibidos
           </button>
           <button 
             onClick={() => setActiveTab('outgoing')}
             className={getTabButtonClass('outgoing')}
           >
-            Outgoing Messages
+            Mensajes enviados
           </button>
           <button 
             onClick={handleNewMessage}
             className={getTabButtonClass('new')}
           >
-            New Message
+            Nuevo mensaje
           </button>
        
         </div>
@@ -97,7 +97,7 @@ const Inbox = () => {
           <div className="space-y-4">
             {filteredMessages.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-gray-500 text-lg">No messages found</p>
+                <p className="text-gray-500 text-lg">No se encontraron mensajes</p>
               </div>
             ) : (
               filteredMessages.map((message) => (

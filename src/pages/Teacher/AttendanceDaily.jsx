@@ -14,7 +14,7 @@ const AttendanceDaily = () => {
   const [selectedCourse, setSelectedCourse] = useState("All") // State for course filter
   const [selectedClass, setSelectedClass] = useState("All") // State for class filter
 
-  const formatDate = (date) => date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
+  const formatDate = (date) => date.toLocaleDateString("es-ES", { day: "2-digit", month: "short", year: "numeric" })
 
   const goToPreviousDay = () => {
     const newDate = new Date(currentDate)
@@ -49,7 +49,7 @@ const AttendanceDaily = () => {
   // Get unique classes from the selected course record(s)
   const availableClasses = ["All", ...new Set(
     selectedCourseRecords.flatMap(record => 
-      record.classes.map(cls => cls.className)
+      (record?.classes || []).map(cls => cls?.className)
     )
   )];
 
@@ -84,7 +84,7 @@ const AttendanceDaily = () => {
             className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 flex items-center gap-2"
           >
             <Plus size={20} />
-            Create New Attendance List
+            Crear nueva lista de asistencia
           </button>
         </div>
 
@@ -94,7 +94,7 @@ const AttendanceDaily = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-700" size={20} />
             <input
               type="text"
-              placeholder="Search students by name or ID..."
+              placeholder="Buscar alumnos por nombre o ID..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full h-10 pl-10 pr-4 py-2 bg-gray-50 rounded-lg border border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -103,7 +103,7 @@ const AttendanceDaily = () => {
 
           {/* Course Filter */}
           <div className='flex gap-2 items-center '>
-            <label htmlFor="courseFilter" className="font-medium text-gray-700">Course:</label>
+            <label htmlFor="courseFilter" className="font-medium text-gray-700">Asignatura:</label>
             <select
               id="courseFilter"
               value={selectedCourse}
@@ -123,7 +123,7 @@ const AttendanceDaily = () => {
 
           {/* Class Filter */}
           <div className='flex gap-2 items-center '>
-            <label htmlFor="classFilter" className="font-medium text-gray-700">Class:</label>
+            <label htmlFor="classFilter" className="font-medium text-gray-700">Clase:</label>
             <select
               id="classFilter"
               value={selectedClass}
@@ -146,7 +146,7 @@ const AttendanceDaily = () => {
               onClick={goToPreviousDay}
               className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
             >
-              &#8592; Previous Day
+              &#8592; Día anterior
             </button>
             <span className="text-lg font-semibold text-black min-w-[150px] text-center">
               {formatDate(currentDate)}
@@ -155,7 +155,7 @@ const AttendanceDaily = () => {
               onClick={goToNextDay}
               className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
             >
-              Next Day &#8594;
+              Día siguiente &#8594;
             </button>
           </div>
         </div>
@@ -163,7 +163,7 @@ const AttendanceDaily = () => {
         {/* Attendance Content - Conditional Rendering */}
         {isWeekend ? (
           <div className="text-center text-xl font-semibold text-gray-600 py-10">
-            It's a weekend. No attendance data available.
+            Es fin de semana. No hay datos de asistencia disponibles.
           </div>
         ) : (
           // Attendance Table (only shown on weekdays)

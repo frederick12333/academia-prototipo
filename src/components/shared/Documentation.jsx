@@ -11,7 +11,7 @@ import {
   AlertTriangle,
   Users,
   FileText,
-  MessageSquare,
+  Bell,
   Calendar,
   BarChart
 } from 'lucide-react';
@@ -22,269 +22,269 @@ const Documentation = ({ isOpen, onClose }) => {
 
   const sections = {
     'getting-started': {
-      title: 'Getting Started',
+      title: 'Primeros pasos',
       content: [
         {
-          title: 'Welcome to School Management System',
-          content: 'This comprehensive guide will help you navigate through the system and make the most of its features. Whether youre a teacher or student, youll find everything you need to know here.',
+          title: 'Bienvenido al Sistema de Gestión Escolar',
+          content: 'Esta guía completa te ayudará a navegar por el sistema y a aprovechar al máximo sus funciones. Tanto si eres docente como alumno, aquí encontrarás todo lo que necesitas saber.',
           icon: <Star className="text-yellow-500" size={20} />
         },
         {
-          title: 'Quick Start Guide',
-          content: `1. Login with your credentials (e.g., teacher@school.com / student@school.com)
-2. Access your dashboard from the sidebar
-3. Navigate to your courses using the "Courses" tab
-4. Check your schedule in the "Schedule" section
-5. View announcements in the "Announcements" tab`,
+          title: 'Guía de inicio rápido',
+          content: `1. Inicia sesión con tus credenciales (p. ej., teacher@titan.edu.tr / student@titan.edu.tr)
+2. Accede a tu panel desde la barra lateral
+3. Ve a tus asignaturas con la pestaña "Asignaturas"
+4. Consulta tu horario en la sección "Horario"
+5. Revisa los anuncios en la pestaña "Anuncios"`,
           icon: <Clock className="text-blue-500" size={20} />
         },
         {
-          title: 'System Requirements',
-          content: `Required:
-• Modern web browser (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
-• Stable internet connection (minimum 5Mbps)
-• Screen resolution: 1024x768 or higher
-• JavaScript enabled
-• Cookies enabled
+          title: 'Requisitos del sistema',
+          content: `Requerido:
+• Navegador web moderno (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
+• Conexión a internet estable (mínimo 5 Mbps)
+• Resolución de pantalla: 1024x768 o superior
+• JavaScript habilitado
+• Cookies habilitadas
 
-Recommended:
-• 8GB RAM or more
-• 4-core processor or better
-• 1080p display or higher`,
+Recomendado:
+• 8 GB de RAM o más
+• Procesador de 4 núcleos o superior
+• Pantalla de 1080p o superior`,
           icon: <CheckCircle className="text-green-500" size={20} />
         }
       ]
     },
     'teacher-guide': {
-      title: 'Teacher Guide',
+      title: 'Guía para docentes',
       content: [
         {
-          title: 'Managing Classes',
-          content: `Step-by-Step Class Management:
-1. Go to "Students List" in the sidebar
-2. Click "Create New Class" button
-3. Fill in class details:
-   - Class Name (e.g., "Mathematics 101")
-   - Grade Level
-   - Schedule
-   - Maximum Capacity
-4. Add students using the "Add Students" button
-5. Save and publish the class
+          title: 'Gestión de clases',
+          content: `Gestión de clases paso a paso:
+1. Ve a "Lista de alumnos" en la barra lateral
+2. Haz clic en el botón "Crear nueva clase"
+3. Rellena los datos de la clase:
+   - Nombre de la clase (p. ej., "Matemáticas 101")
+   - Nivel educativo
+   - Horario
+   - Capacidad máxima
+4. Añade alumnos con el botón "Añadir alumnos"
+5. Guarda y publica la clase
 
-Quick Actions:
-• View class roster
-• Track attendance
-• Manage grades
-• Send announcements`,
+Acciones rápidas:
+• Ver la lista de la clase
+• Registrar la asistencia
+• Gestionar las notas
+• Enviar anuncios`,
           icon: <Users className="text-purple-500" size={20} />
         },
         {
-          title: 'Creating Assignments',
-          content: `How to Create an Assignment:
-1. Navigate to "Assignments" in the sidebar
-2. Click "Create New Assignment"
-3. Fill in the details:
-   - Title (e.g., "Week 3: Algebra Problems")
-   - Description
-   - Due Date and Time
-   - Attach Files (PDF, DOC, etc.)
-   - Grade Weight
-4. Select target classes
-5. Preview and publish
+          title: 'Crear tareas',
+          content: `Cómo crear una tarea:
+1. Ve a "Tareas" en la barra lateral
+2. Haz clic en "Crear nueva tarea"
+3. Rellena los datos:
+   - Título (p. ej., "Semana 3: problemas de álgebra")
+   - Descripción
+   - Fecha y hora de entrega
+   - Adjuntar archivos (PDF, DOC, etc.)
+   - Peso en la nota
+4. Selecciona las clases destinatarias
+5. Previsualiza y publica
 
-Assignment Types:
-• Regular Homework
-• Quiz
-• Project
-• Exam
-• Extra Credit`,
+Tipos de tarea:
+• Deberes habituales
+• Cuestionario
+• Proyecto
+• Examen
+• Crédito extra`,
           icon: <FileText className="text-green-500" size={20} />
         },
         {
-          title: 'Grade Management',
-          content: `Grading Process:
-1. Access "Grades" from the sidebar
-2. Select class and assignment
-3. Input grades:
-   - Numerical scores
-   - Letter grades
-   - Comments
-4. Calculate averages automatically
-5. Generate reports
+          title: 'Gestión de notas',
+          content: `Proceso de calificación:
+1. Accede a "Notas" desde la barra lateral
+2. Selecciona la clase y la tarea
+3. Introduce las notas:
+   - Puntuaciones numéricas
+   - Notas con letra
+   - Comentarios
+4. Calcula los promedios automáticamente
+5. Genera informes
 
-Grade Categories:
-• Assignments (30%)
-• Quizzes (20%)
-• Projects (25%)
-• Exams (25%)
+Categorías de nota:
+• Tareas (30 %)
+• Cuestionarios (20 %)
+• Proyectos (25 %)
+• Exámenes (25 %)
 
-Report Types:
-• Individual student reports
-• Class performance reports
-• Progress tracking reports`,
+Tipos de informe:
+• Informes individuales del alumno
+• Informes de rendimiento de la clase
+• Informes de seguimiento del progreso`,
           icon: <BarChart className="text-yellow-500" size={20} />
         },
         {
-          title: 'Attendance Tracking',
-          content: `Daily Attendance Process:
-1. Go to "Attendance" in the sidebar
-2. Select class and date
-3. Mark attendance:
-   - Present
-   - Absent
-   - Late
-   - Excused
-4. Add notes if needed
-5. Save attendance
+          title: 'Registro de asistencia',
+          content: `Proceso de asistencia diaria:
+1. Ve a "Asistencia" en la barra lateral
+2. Selecciona la clase y la fecha
+3. Marca la asistencia:
+   - Presente
+   - Ausente
+   - Tarde
+   - Justificado
+4. Añade observaciones si es necesario
+5. Guarda la asistencia
 
-Reports Available:
-• Daily attendance sheets
-• Monthly summaries
-• Student attendance history
-• Absence patterns
-• Excuse documentation`,
+Informes disponibles:
+• Hojas de asistencia diarias
+• Resúmenes mensuales
+• Historial de asistencia del alumno
+• Patrones de ausencia
+• Documentación justificativa`,
           icon: <Calendar className="text-blue-500" size={20} />
         }
       ]
     },
     'student-guide': {
-      title: 'Student Guide',
+      title: 'Guía para alumnos',
       content: [
         {
-          title: 'Accessing Courses',
-          content: `Course Navigation:
-1. Login to your account
-2. Go to "Courses" in the sidebar
-3. View your enrolled courses:
-   - Course name
-   - Teacher
-   - Schedule
-   - Progress
-4. Click on a course to access:
-   - Course materials
-   - Assignments
-   - Grades
-   - Announcements
+          title: 'Acceso a las asignaturas',
+          content: `Navegación por las asignaturas:
+1. Inicia sesión en tu cuenta
+2. Ve a "Asignaturas" en la barra lateral
+3. Consulta tus asignaturas matriculadas:
+   - Nombre de la asignatura
+   - Docente
+   - Horario
+   - Progreso
+4. Haz clic en una asignatura para acceder a:
+   - Materiales del curso
+   - Tareas
+   - Notas
+   - Anuncios
 
-Course Features:
-• Course calendar
-• Resource library
-• Discussion board
-• Progress tracking`,
+Funciones de la asignatura:
+• Calendario del curso
+• Biblioteca de recursos
+• Foro de debate
+• Seguimiento del progreso`,
           icon: <Book className="text-purple-500" size={20} />
         },
         {
-          title: 'Submitting Work',
-          content: `Assignment Submission Steps:
-1. Go to "Assignments" tab
-2. Find the assignment
-3. Click "Submit Work"
-4. Upload files:
-   - Supported formats: PDF, DOC, DOCX, TXT, ZIP
-   - Maximum size: 10MB
-5. Add comments if needed
-6. Submit before deadline
+          title: 'Entrega de trabajos',
+          content: `Pasos para entregar una tarea:
+1. Ve a la pestaña "Tareas"
+2. Localiza la tarea
+3. Haz clic en "Entregar trabajo"
+4. Sube los archivos:
+   - Formatos admitidos: PDF, DOC, DOCX, TXT, ZIP
+   - Tamaño máximo: 10 MB
+5. Añade comentarios si es necesario
+6. Entrega antes de la fecha límite
 
-Submission Status:
-• Draft (saved but not submitted)
-• Submitted
-• Graded
-• Late submission
-• Returned for revision`,
+Estado de la entrega:
+• Borrador (guardado pero no entregado)
+• Entregado
+• Calificado
+• Entrega tardía
+• Devuelto para revisión`,
           icon: <FileText className="text-green-500" size={20} />
         },
         {
-          title: 'Viewing Grades',
-          content: `Accessing Your Grades:
-1. Click "Grades" in the sidebar
-2. View grades by:
-   - Course
-   - Assignment type
-   - Date
-3. Check:
-   - Individual grades
-   - Course average
-   - Overall GPA
-   - Grade history
+          title: 'Consulta de notas',
+          content: `Acceso a tus notas:
+1. Haz clic en "Notas" en la barra lateral
+2. Consulta las notas por:
+   - Asignatura
+   - Tipo de tarea
+   - Fecha
+3. Comprueba:
+   - Notas individuales
+   - Promedio de la asignatura
+   - Nota media global
+   - Historial de notas
 
-Grade Notifications:
-• New grade alerts
-• Grade change notifications
-• Missing assignment reminders
-• Progress reports`,
+Notificaciones de notas:
+• Alertas de nuevas notas
+• Notificaciones de cambios de nota
+• Recordatorios de tareas pendientes
+• Informes de progreso`,
           icon: <BarChart className="text-yellow-500" size={20} />
         },
         {
-          title: 'Communication',
-          content: `Messaging System:
-1. Access "Inbox" from sidebar
-2. Compose new message:
-   - Select recipient
-   - Choose course (if applicable)
-   - Write message
-   - Attach files
-3. View message history
-4. Check notifications
+          title: 'Alertas Académicas',
+          content: `Sistema de mensajería:
+1. Accede a "Mensajes" desde la barra lateral
+2. Redacta un mensaje nuevo:
+   - Selecciona el destinatario
+   - Elige la asignatura (si corresponde)
+   - Escribe el mensaje
+   - Adjunta archivos
+3. Consulta el historial de mensajes
+4. Revisa las notificaciones
 
-Communication Features:
-• Direct messaging
-• Course announcements
-• Group messages
-• File sharing
-• Read receipts
-• Message search`,
-          icon: <MessageSquare className="text-orange-500" size={20} />
+Funciones de comunicación:
+• Mensajería directa
+• Anuncios de la asignatura
+• Mensajes grupales
+• Uso compartido de archivos
+• Confirmaciones de lectura
+• Búsqueda de mensajes`,
+          icon: <Bell className="text-red-500" size={20} />
         }
       ]
     },
     'troubleshooting': {
-      title: 'Troubleshooting',
+      title: 'Solución de problemas',
       content: [
         {
-          title: 'Common Issues',
-          content: `Frequently Encountered Problems:
+          title: 'Problemas frecuentes',
+          content: `Problemas habituales:
 
-1. Login Issues:
-   • Clear browser cache
-   • Reset password
-   • Check internet connection
+1. Problemas de inicio de sesión:
+   • Borra la caché del navegador
+   • Restablece la contraseña
+   • Comprueba la conexión a internet
 
-2. File Upload Problems:
-   • Check file size (max 10MB)
-   • Verify file format
-   • Try different browser
+2. Problemas al subir archivos:
+   • Comprueba el tamaño del archivo (máx. 10 MB)
+   • Verifica el formato del archivo
+   • Prueba con otro navegador
 
-3. Grade Display Issues:
-   • Refresh page
-   • Clear browser cache
-   • Check internet connection
+3. Problemas de visualización de notas:
+   • Actualiza la página
+   • Borra la caché del navegador
+   • Comprueba la conexión a internet
 
-4. System Performance:
-   • Close other applications
-   • Clear browser cache
-   • Update browser`,
+4. Rendimiento del sistema:
+   • Cierra otras aplicaciones
+   • Borra la caché del navegador
+   • Actualiza el navegador`,
           icon: <AlertTriangle className="text-red-500" size={20} />
         },
         {
-          title: 'Technical Support',
-          content: `Support Channels:
+          title: 'Soporte técnico',
+          content: `Canales de soporte:
 
-1. Email Support:
-   • support@schoolsystem.com
-   • Response within 24 hours
+1. Soporte por correo electrónico:
+   • soporte@titan.edu.tr
+   • Respuesta en un plazo de 24 horas
 
-2. Phone Support:
+2. Soporte telefónico:
    • (555) 123-4567
-   • Monday-Friday, 8AM-6PM
+   • De lunes a viernes, de 8:00 a 18:00
 
-3. Live Chat:
-   • Available 24/7
-   • Click "Help" button
+3. Chat en directo:
+   • Disponible 24/7
+   • Haz clic en el botón "Ayuda"
 
-4. Knowledge Base:
-   • FAQ section
-   • Video tutorials
-   • Step-by-step guides`,
+4. Base de conocimiento:
+   • Sección de preguntas frecuentes
+   • Tutoriales en vídeo
+   • Guías paso a paso`,
           icon: <CheckCircle className="text-green-500" size={20} />
         }
       ]
@@ -315,7 +315,7 @@ Communication Features:
                 <div className="flex items-center">
                   <Book className="h-6 w-6 text-gray-900" />
                   <h2 className="ml-3 text-xl font-semibold text-gray-900">
-                    Documentation
+                    Documentación
                   </h2>
                 </div>
                 <button
@@ -331,7 +331,7 @@ Communication Features:
                 <div className="relative">
                   <input
                     type="text"
-                    placeholder="Search documentation..."
+                    placeholder="Buscar en la documentación..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -383,7 +383,7 @@ Communication Features:
                 onClick={onClose}
                 className="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                Close Documentation
+                Cerrar documentación
               </button>
             </div>
           </div>

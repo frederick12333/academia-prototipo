@@ -5,7 +5,7 @@ import React from 'react';
 export const MessageCard= ({ message, onReply }) => {
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
-    return date.toLocaleString();
+    return date.toLocaleString('es-ES');
   };
 
   return (
@@ -30,7 +30,7 @@ export const MessageCard= ({ message, onReply }) => {
                   </div>
                 )}
                   <div className="text-sm text-gray-500">
-                  To: {message.receiverName}
+                  Para: {message.receiverName}
                   </div>
               </div>
              
@@ -38,7 +38,7 @@ export const MessageCard= ({ message, onReply }) => {
             <div className="flex  gap-4 items-center">
             {!message.isRead && (
           <span className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium">
-            New
+            Nuevo
           </span>
         )}
           <div className="text-sm text-gray-500">
@@ -62,7 +62,7 @@ export const MessageCard= ({ message, onReply }) => {
                 onClick={() => onReply(message)}
                 className="bg-gradient-to-br w-36 h-8 rounded-md from-[#10062B] to-[#4F0129] hover:opacity-90 text-white text-sm"
               >
-                Reply
+                Responder
               </button>
               
             </div>

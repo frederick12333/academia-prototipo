@@ -2,44 +2,44 @@ import { Eye } from "lucide-react";
 
 const grades = [
   {
-    subject: "Mathmatics",
+    subject: "Matemáticas",
     assignments: 92,
     midterm: 88,
     final: 90,
     overall: "B+",
-    status: "Passed",
+    status: "Aprobado",
   },
   {
-    subject: "Physics",
+    subject: "Física",
     assignments: 95,
     midterm: 94,
     final: null,
     overall: "A-",
-    status: "Passed",
+    status: "Aprobado",
   },
   {
-    subject: "Chemistry",
+    subject: "Química",
     assignments: 87,
     midterm: 82,
     final: null,
     overall: "B",
-    status: "Passed",
+    status: "Aprobado",
   },
   {
-    subject: "Turkish Literature",
+    subject: "Literatura Turca",
     assignments: 98,
     midterm: 96,
     final: null,
     overall: "A",
-    status: "Passed",
+    status: "Aprobado",
   },
   {
-    subject: "History",
+    subject: "Historia",
     assignments: 90,
     midterm: 92,
     final: null,
     overall: "B+",
-    status: "Passed",
+    status: "Aprobado",
   },
 ];
 
@@ -59,7 +59,7 @@ const GradeCircle = ({ value }) => {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center text-[8px] sm:text-[10px] font-medium">
-          NA
+          N/D
         </div>
       </div>
     );
@@ -133,7 +133,7 @@ export default function GradesPage() {
   return (
     <div className="bg-white rounded-md p-2 sm:p-4 m-2 sm:m-4 mt-0">
       <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6 ml-2 sm:ml-4">
-        Grades
+        Notas
       </h1>
 
       <div className="overflow-x-auto">
@@ -144,25 +144,25 @@ export default function GradesPage() {
             <thead>
               <tr>
                 <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  Subject
+                  Asignatura
                 </th>
                 <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  1st
+                  1.º
                 </th>
                 <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  2nd
+                  2.º
                 </th>
                 <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium uppercase tracking-wider">
                   Final
                 </th>
                 <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  Overall
+                  Promedio
                 </th>
                 <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  Status
+                  Estado
                 </th>
                 <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium uppercase tracking-wider">
-                  Actions
+                  Acciones
                 </th>
               </tr>
             </thead>

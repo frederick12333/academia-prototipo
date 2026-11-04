@@ -81,7 +81,7 @@ const OnlineExamBuilder = ({ open, onOpenChange, onBack, examData }) => {
         <button onClick={onBack} className="p-2 text-purple-900 hover:bg-purple-100 rounded">
           <ArrowLeft className="w-4 h-4" />
         </button>
-        <h2 className="text-2xl font-bold">Questions</h2>
+        <h2 className="text-2xl font-bold">Preguntas</h2>
       </div>
 
       {/* Question Numbers */}
@@ -111,7 +111,7 @@ const OnlineExamBuilder = ({ open, onOpenChange, onBack, examData }) => {
       {/* Current Question Title */}
       <div className="bg-gradient-to-br from-[#10062B] to-[#4F0129] text-white p-4 rounded-lg mb-6">
         <h3 className="text-xl font-bold text-center">
-          Question: {currentQuestion}
+          Pregunta: {currentQuestion}
         </h3>
       </div>
 
@@ -129,7 +129,7 @@ const OnlineExamBuilder = ({ open, onOpenChange, onBack, examData }) => {
             className="flex gap-2 justify-center items-center px-4 py-2 bg-white border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50"
           >
             <ChevronLeft />
-            Previous Question
+            Pregunta anterior
           </button>
           <button
             onClick={() =>
@@ -138,7 +138,7 @@ const OnlineExamBuilder = ({ open, onOpenChange, onBack, examData }) => {
             disabled={currentQuestion === totalQuestions}
             className="flex gap-2 justify-center items-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-800 disabled:opacity-50"
           >
-            Next Question
+            Siguiente pregunta
             <ChevronRight />
 
           </button>
@@ -151,7 +151,7 @@ const OnlineExamBuilder = ({ open, onOpenChange, onBack, examData }) => {
               onClick={onBack}
               className="flex gap-2 justify-center items-center w-full bg-red-500 hover:opacity-90 rounded-lg text-white py-2"
             >
-             {'Go Back'}
+             {'Volver'}
              
             </button>
             
@@ -159,7 +159,7 @@ const OnlineExamBuilder = ({ open, onOpenChange, onBack, examData }) => {
           onClick={handleSubmitExam}
           className="w-full bg-blue-500 hover:opacity-90 rounded-lg text-white py-2"
           >
-          Submit All
+          Enviar todo
         </button>
     </div>
     </div>

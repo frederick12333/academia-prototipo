@@ -23,7 +23,7 @@ const AnnouncementCard = ({
           <h3 className="text-md font-bold text-gray-800">{title}</h3>
           {isUpdated && (
           <span className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium">
-            Updated
+            Actualizado
           </span>
         )}
         </div>
@@ -58,14 +58,14 @@ const AnnouncementCard = ({
             <p className="text-sm text-gray-500">{fileSize}</p>
           </div>
           <button className="text-purple-600 hover:text-purple-800 font-medium">
-            Download
+             Descargar
           </button>
         </div>
       )}
       
       <div className="flex justify-between text-sm text-gray-500 pt-4 border-t border-gray-100">
-        <span>Date of addition: {dateAdded}</span>
-        <span>Date of last update: {lastUpdate}</span>
+        <span>Fecha de publicación: {dateAdded}</span>
+        <span>Fecha de la última actualización: {lastUpdate}</span>
       </div>
     </div>
   );

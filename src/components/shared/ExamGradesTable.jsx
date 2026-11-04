@@ -13,8 +13,8 @@ export const ExamGradesTable = ({ onClose, exam: examData }) => {
 
     return {
       ...grade,
-      studentName: student?.name || "Unknown Student",
-      studentId: student?.id || "N/A",
+      studentName: student?.name || "Alumno desconocido",
+      studentId: student?.id || "N/D",
       avatar: student?.avatar || "",
       className: student?.class || "",
       email: student?.email || "",
@@ -64,36 +64,36 @@ export const ExamGradesTable = ({ onClose, exam: examData }) => {
       <div className="max-w-full max-h-[80vh] overflow-y-auto">
         {/* Header */}
         <div className="flex justify-between items-center px-6 mb-4 sticky top-0 bg-white z-10">
-          <h2 className="text-xl font-semibold text-center flex-1">Exam Grades List</h2>
+          <h2 className="text-xl font-semibold text-center flex-1">Lista de notas del examen</h2>
         </div>
 
         {/* Exam Details */}
         <div className="mb-4 bg-gray-50 p-4 rounded-lg">
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
             <div>
-              <span className="font-medium">Title:</span> {exam.title}
+              <span className="font-medium">Título:</span> {exam.title}
             </div>
             <div>
-              <span className="font-medium">Course:</span> {exam.course.name} ({exam.course.code})
+              <span className="font-medium">Asignatura:</span> {exam.course.name} ({exam.course.code})
             </div>
             <div>
-              <span className="font-medium">Number of Questions:</span> {exam.number_of_questions}
+              <span className="font-medium">Número de preguntas:</span> {exam.number_of_questions}
             </div>
             <div>
-              <span className="font-medium">Date:</span> {exam.date}
+              <span className="font-medium">Fecha:</span> {exam.date}
             </div>
             <div>
-              <span className="font-medium">Time:</span> {exam.time}
+              <span className="font-medium">Hora:</span> {exam.time}
             </div>
             <div>
-              <span className="font-medium">Duration:</span> {exam.duration} minutes
+              <span className="font-medium">Duración:</span> {exam.duration} minutos
             </div>
             <div>
-              <span className="font-medium">Location:</span> {exam.location}
+              <span className="font-medium">Ubicación:</span> {exam.location}
             </div>
 
             <div>
-              <span className="font-medium">Total Points:</span> {exam.Total_Points}
+              <span className="font-medium">Puntos totales:</span> {exam.Total_Points}
             </div>
           </div>
         </div>
@@ -101,7 +101,7 @@ export const ExamGradesTable = ({ onClose, exam: examData }) => {
         {/* Class Filter */}
         <div className="mb-4 flex items-center gap-4">
           <label htmlFor="classFilter" className="font-medium text-gray-700">
-            Filter by Class:
+            Filtrar por clase:
           </label>
           <select
             id="classFilter"
@@ -111,12 +111,12 @@ export const ExamGradesTable = ({ onClose, exam: examData }) => {
           >
             {availableClasses.map((className) => (
               <option key={className} value={className}>
-                {className}
+                {className === "All Classes" ? "Todas las clases" : className}
               </option>
             ))}
           </select>
           <span className="text-sm text-gray-500">
-            Showing {filteredGrades.length} student{filteredGrades.length !== 1 ? "s" : ""}
+            Mostrando {filteredGrades.length} alumno{filteredGrades.length !== 1 ? "s" : ""}
           </span>
         </div>
 
@@ -125,13 +125,13 @@ export const ExamGradesTable = ({ onClose, exam: examData }) => {
           <table className="min-w-full border-collapse">
             <thead className="bg-gray-100 rounded-lg sticky top-0 z-5">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Student</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Class</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Attendance</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Score</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Percentage</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Status</th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Feedback</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Alumno</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Clase</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Asistencia</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Puntuación</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Porcentaje</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Estado</th>
+                <th className="px-6 py-3 text-left text-sm font-medium text-gray-600">Comentarios</th>
               </tr>
             </thead>
             <tbody>
@@ -180,7 +180,7 @@ export const ExamGradesTable = ({ onClose, exam: examData }) => {
                         />
                       ) : (
                         <span className={grade.attended ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
-                          {grade.attended ? "Present" : "Absent"}
+                          {grade.attended ? "Presente" : "Ausente"}
                         </span>
                       )}
                     </td>
@@ -205,7 +205,7 @@ export const ExamGradesTable = ({ onClose, exam: examData }) => {
                     </td>
                     <td className="px-6 py-4">
                       <span className={grade.passed ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
-                        {grade.passed ? "Passed" : "Failed"}
+                        {grade.passed ? "Aprobado" : "Reprobado"}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-gray-900">
@@ -217,7 +217,7 @@ export const ExamGradesTable = ({ onClose, exam: examData }) => {
       className="w-full border border-gray-300 rounded px-2 py-1"
     />
   ) : (
-    grade.feedback || "No feedback provided"
+    grade.feedback || "Sin comentarios"
   )}
 </td>         
          </tr>
@@ -225,7 +225,7 @@ export const ExamGradesTable = ({ onClose, exam: examData }) => {
               ) : (
                 <tr>
                   <td colSpan="7" className="px-6 py-8 text-center text-gray-500">
-                    No students found for the selected class.
+                    No se encontraron alumnos para la clase seleccionada.
                   </td>
                 </tr>
               )}
@@ -243,7 +243,7 @@ export const ExamGradesTable = ({ onClose, exam: examData }) => {
             onClick={() => setEditScores(false)}
             className="w-full bg-green-500 hover:opacity-90 rounded-lg text-white py-2"
           >
-            Save Changes 
+            Guardar cambios 
           </button>
           :
           <button
@@ -251,7 +251,7 @@ export const ExamGradesTable = ({ onClose, exam: examData }) => {
             onClick={() => setEditScores(true)}
             className="w-full bg-blue-500 hover:opacity-90 rounded-lg text-white py-2"
           >
-            Edit
+            Editar
           </button>}
           {editScores ?
           <button
@@ -262,14 +262,14 @@ export const ExamGradesTable = ({ onClose, exam: examData }) => {
               setEditScores(false)}}
             className="w-full bg-red-500 hover:opacity-90 rounded-lg text-white py-2"
           >
-            Cancel Changes 
+            Cancelar cambios 
           </button>
           :
           <button
           type="button"
           className="w-full bg-gradient-to-br from-[#10062B] to-[#4F0129] hover:opacity-90 rounded-lg text-white py-2"
         >
-          Download Grades List
+          Descargar lista de notas
         </button>}
        {!editScores &&
         <button
@@ -277,7 +277,7 @@ export const ExamGradesTable = ({ onClose, exam: examData }) => {
           onClick={onClose}
           className="w-full bg-red-500 hover:opacity-90 rounded-lg text-white py-2"
         >
-          Close
+          Cerrar
         </button>}
       </div>
     </>

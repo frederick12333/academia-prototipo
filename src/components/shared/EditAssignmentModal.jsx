@@ -19,7 +19,7 @@ export const EditAssignmentModal = ({
   });
 
   const classes = ['AC125', 'PH101', 'DS458', 'CS201', 'MATH301'];
-  const courses = ['Computer', 'Physics', 'Data Science', 'Mathematics', 'Chemistry'];
+  const courses = ['Informática', 'Física', 'Ciencia de Datos', 'Matemáticas', 'Química'];
 
   useEffect(() => {
     if (assignment) {
@@ -55,26 +55,26 @@ export const EditAssignmentModal = ({
   <dialog open={isOpen}>
       <div className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-center">Edit Assignment</h2>
+              <h2 className="text-xl font-semibold text-center">Editar tarea</h2>
               <button onClick={onClose} className="absolute right-4 top-4">X</button>
           </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium mb-2">Class</label>
+            <label className="block text-sm font-medium mb-2">Clase</label>
             <input type='checkbox' value={formData.class} onValueChange={(value) => setFormData(prev => ({ ...prev, class: value }))}/>
               
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Class</label>
+            <label className="block text-sm font-medium mb-2">Asignatura</label>
             <input type='checkbox' value={formData.class} onValueChange={(value) => setFormData(prev => ({ ...prev, course: value }))}/>
             
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Assignment Title</label>
+              <label className="block text-sm font-medium mb-2">Título de la tarea</label>
               <input
                 value={formData.title}
                 onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
@@ -82,7 +82,7 @@ export const EditAssignmentModal = ({
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Assignment Grade</label>
+              <label className="block text-sm font-medium mb-2">Nota de la tarea</label>
               <input
                 value={formData.grade}
                 onChange={(e) => setFormData(prev => ({ ...prev, grade: e.target.value }))}
@@ -93,7 +93,7 @@ export const EditAssignmentModal = ({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-2">Assignment Deadline</label>
+              <label className="block text-sm font-medium mb-2">Fecha límite de la tarea</label>
               <input
                 type="date"
                 value={formData.date}
@@ -102,7 +102,7 @@ export const EditAssignmentModal = ({
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-2">Assignment Deadline</label>
+              <label className="block text-sm font-medium mb-2">Fecha límite de la tarea</label>
               <input
                 type="time"
                 value={formData.time}
@@ -113,9 +113,9 @@ export const EditAssignmentModal = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Message</label>
+            <label className="block text-sm font-medium mb-2">Mensaje</label>
             <textarea
-              placeholder="Message"
+              placeholder="Mensaje"
               value={formData.message}
               onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
               className="bg-gray-200 min-h-[100px]"
@@ -123,7 +123,7 @@ export const EditAssignmentModal = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Assignment File</label>
+            <label className="block text-sm font-medium mb-2">Archivo de la tarea</label>
             <div className="bg-gray-200 p-6 rounded-lg">
               {assignment.fileName ? (
                 <div className="flex items-center justify-between bg-white p-3 rounded-lg mb-4">
@@ -156,7 +156,7 @@ export const EditAssignmentModal = ({
                 <div className="flex flex-col items-center justify-center">
                   <div className="bg-gray-600 text-white px-6 py-3 rounded-lg flex items-center gap-2">
                     <Upload className="w-4 h-4" />
-                    Upload File
+                    Subir archivo
                   </div>
                   {formData.file && (
                     <p className="mt-2 text-sm text-gray-600">{formData.file.name}</p>
@@ -170,7 +170,7 @@ export const EditAssignmentModal = ({
             type="submit"
             className="w-full bg-purple-900 hover:bg-purple-800 text-white py-3"
           >
-            Submit
+            Enviar
           </button>
         </form>
       </div>
