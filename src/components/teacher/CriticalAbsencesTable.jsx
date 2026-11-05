@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { AlertTriangle, FileSpreadsheet, Users, CheckCircle2, Fingerprint, Calendar, Clock, X, Search } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, Fingerprint, Search, FileSpreadsheet, X, Calendar, Clock } from 'lucide-react';
+import { users } from '../../data/mockData';
 
 const RED = '#C0392B';
 
@@ -7,128 +8,125 @@ export const CriticalAbsencesTable = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
-  // Registro generalizado de inasistencias diarias (Huellero / Portería institucional)
+  // Consolidado de inasistencias generales de portería por huellero
   const studentsAttendanceData = [
     {
       id: 3,
       name: 'Frederick Rodas',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
       section: '3A',
-      diasAcademicos: 40,
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150',
+      diasAcademicos: 80,
       faltasAcumuladas: 2,
       tardanzasAcumuladas: 3,
-      porcentajeFaltasNum: 5.0,
-    },
-    {
-      id: 5,
-      name: 'Mateo Salazar',
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150',
-      section: '3A',
-      diasAcademicos: 40,
-      faltasAcumuladas: 7,
-      tardanzasAcumuladas: 5,
-      porcentajeFaltasNum: 17.5,
-    },
-    {
-      id: 9,
-      name: 'Joaquín Castro',
-      avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150',
-      section: '2B',
-      diasAcademicos: 40,
-      faltasAcumuladas: 8,
-      tardanzasAcumuladas: 4,
-      porcentajeFaltasNum: 20.0,
-    },
-    {
-      id: 8,
-      name: 'Sofia Huamán',
-      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150',
-      section: '2B',
-      diasAcademicos: 40,
-      faltasAcumuladas: 6,
-      tardanzasAcumuladas: 2,
-      porcentajeFaltasNum: 15.0,
-    },
-    {
-      id: 6,
-      name: 'Valeria Rojas',
-      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150',
-      section: '3A',
-      diasAcademicos: 40,
-      faltasAcumuladas: 1,
-      tardanzasAcumuladas: 1,
       porcentajeFaltasNum: 2.5,
-    },
-    {
-      id: 7,
-      name: 'Lucas Mendoza',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150',
-      section: '2B',
-      diasAcademicos: 40,
-      faltasAcumuladas: 3,
-      tardanzasAcumuladas: 2,
-      porcentajeFaltasNum: 7.5,
     },
     {
       id: 4,
       name: 'Camila Quispe',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150',
       section: '3A',
-      diasAcademicos: 40,
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150',
+      diasAcademicos: 80,
+      faltasAcumuladas: 1,
+      tardanzasAcumuladas: 2,
+      porcentajeFaltasNum: 1.25,
+    },
+    {
+      id: 5,
+      name: 'Mateo Salazar',
+      section: '3A',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150',
+      diasAcademicos: 80,
+      faltasAcumuladas: 14,
+      tardanzasAcumuladas: 6,
+      porcentajeFaltasNum: 17.5, // > 15% ALERTA
+    },
+    {
+      id: 6,
+      name: 'Valeria Rojas',
+      section: '3A',
+      avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150',
+      diasAcademicos: 80,
       faltasAcumuladas: 0,
-      tardanzasAcumuladas: 0,
+      tardanzasAcumuladas: 1,
       porcentajeFaltasNum: 0.0,
     },
     {
-      id: 10,
-      name: 'Luciana Alarcón',
-      avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150',
+      id: 7,
+      name: 'Lucas Mendoza',
       section: '2B',
-      diasAcademicos: 40,
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150',
+      diasAcademicos: 80,
+      faltasAcumuladas: 13,
+      tardanzasAcumuladas: 5,
+      porcentajeFaltasNum: 16.25, // > 15% ALERTA
+    },
+    {
+      id: 8,
+      name: 'Sofía Castro',
+      section: '2B',
+      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150',
+      diasAcademicos: 80,
+      faltasAcumuladas: 3,
+      tardanzasAcumuladas: 2,
+      porcentajeFaltasNum: 3.75,
+    },
+    {
+      id: 9,
+      name: 'Joaquín Huamán',
+      section: '2B',
+      avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150',
+      diasAcademicos: 80,
+      faltasAcumuladas: 4,
+      tardanzasAcumuladas: 4,
+      porcentajeFaltasNum: 5.0,
+    },
+    {
+      id: 10,
+      name: 'Andrea Flores',
+      section: '2B',
+      avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150',
+      diasAcademicos: 80,
       faltasAcumuladas: 1,
-      tardanzasAcumuladas: 3,
-      porcentajeFaltasNum: 2.5,
+      tardanzasAcumuladas: 0,
+      porcentajeFaltasNum: 1.25,
     },
   ];
 
-  // Filtrado por buscador
-  const filteredStudents = studentsAttendanceData.filter(s =>
-    s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    s.section.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredStudents = studentsAttendanceData.filter((student) => {
+    const term = searchTerm.toLowerCase();
+    return (
+      student.name.toLowerCase().includes(term) ||
+      student.section.toLowerCase().includes(term) ||
+      `2026-apa-${student.id}`.includes(term)
+    );
+  });
 
   // Alumnos en riesgo (> 15% de faltas generales)
   const atRiskCount = studentsAttendanceData.filter(s => s.porcentajeFaltasNum > 15).length;
 
   return (
     <>
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-        {/* Cabecera de la tarjeta */}
-        <div className="px-6 py-4 border-b border-gray-200 flex flex-wrap items-center justify-between gap-3 bg-white">
+      <div className="bg-white rounded-none border border-gray-300 shadow-none overflow-hidden w-full">
+        {/* Cabecera limpia sin subtítulos de relleno */}
+        <div className="px-5 py-3.5 border-b border-gray-300 flex flex-wrap items-center justify-between gap-3 bg-white">
           <div className="flex items-center gap-3">
             <div
-              className="w-1.5 h-7 rounded-full flex-shrink-0"
+              className="w-1.5 h-6 rounded-none flex-shrink-0"
               style={{ backgroundColor: RED }}
             />
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-base font-bold text-gray-900 leading-tight">
-                  Inasistencias Diarias Generales - Alerta
-                </h3>
-                <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full border border-gray-200">
-                  <Fingerprint size={11} className="text-red-700" />
-                  Control Huellero Institucional
-                </span>
-              </div>
-              <p className="text-xs text-gray-500 mt-0.5">
-                Seguimiento preventivo de inhabilitación por inasistencias en portería general
-              </p>
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm sm:text-base font-bold text-gray-900 leading-tight">
+                Inasistencias Diarias Generales - Alerta
+              </h3>
+              <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-gray-100 text-gray-600 px-2 py-0.5 rounded-none border border-gray-300">
+                <Fingerprint size={11} className="text-red-700" />
+                Control Huellero Institucional
+              </span>
             </div>
           </div>
 
           {/* Acciones: Buscador y Botón Ver Reporte General de Ingresos */}
           <div className="flex flex-wrap items-center gap-2.5">
-            {/* Buscador de alumnos */}
             <div className="relative">
               <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
@@ -136,19 +134,18 @@ export const CriticalAbsencesTable = () => {
                 placeholder="Buscar alumno o sección..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-8 pr-3 py-1.5 text-xs bg-gray-50 border border-gray-300 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-red-600 w-44 sm:w-52"
+                className="pl-8 pr-3 py-1.5 text-xs bg-gray-50 border border-gray-300 rounded-none text-gray-800 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-red-600 w-44 sm:w-52"
               />
             </div>
 
-            {/* Botón: Ver Reporte General de Ingresos */}
             <button
               type="button"
               onClick={() => setIsReportModalOpen(true)}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-white font-semibold text-xs transition-all shadow-sm hover:opacity-90 active:scale-95"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-none text-white font-semibold text-xs transition-opacity hover:opacity-90 shadow-none"
               style={{ backgroundColor: RED }}
               title="Consultar consolidado diario de ingreso por huellero biométrico"
             >
-              <FileSpreadsheet size={15} />
+              <FileSpreadsheet size={14} />
               Ver Reporte General de Ingresos
             </button>
           </div>
@@ -156,225 +153,211 @@ export const CriticalAbsencesTable = () => {
 
         {/* Resumen de alerta institucional si hay alumnos en riesgo */}
         {atRiskCount > 0 && (
-          <div className="bg-red-50 border-b border-red-100 px-6 py-2.5 flex items-center justify-between text-xs text-red-800">
+          <div className="bg-red-50 border-b border-red-200 px-5 py-2 flex items-center justify-between text-xs text-red-800">
             <div className="flex items-center gap-2">
-              <AlertTriangle size={15} className="text-red-600 flex-shrink-0" />
+              <AlertTriangle size={14} className="text-red-600 flex-shrink-0" />
               <span>
-                <strong>Alerta Institucional:</strong> Hay <strong>{atRiskCount}</strong> alumno(s) que superan el 15% de inasistencias generales acumuladas en el ciclo.
+                <strong>Alerta Institucional:</strong> Hay <strong>{atRiskCount}</strong> alumno(s) que superan el 15% de inasistencias acumuladas.
               </span>
             </div>
-            <span className="text-[11px] font-semibold text-red-700 bg-red-100 px-2.5 py-0.5 rounded-full border border-red-200">
-              Límite crítico de inhabilitación: 30%
+            <span className="text-[11px] font-bold text-red-700 bg-red-100 px-2 py-0.5 rounded-none border border-red-300">
+              Límite de inhabilitación: 30%
             </span>
           </div>
         )}
 
-        {/* Tabla limpia de inasistencias diarias generales */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="bg-gray-50 border-b border-gray-200 text-gray-600 font-bold uppercase tracking-wider">
-              <tr>
-                <th className="py-3 px-6">Alumno</th>
-                <th className="py-3 px-4 text-center">Sección</th>
-                <th className="py-3 px-4 text-center">Días Académicos</th>
-                <th className="py-3 px-4 text-center">Faltas Acumuladas</th>
-                <th className="py-3 px-4 text-center">Tardanzas</th>
-                <th className="py-3 px-4 text-center">% Faltas</th>
-                <th className="py-3 px-6 text-center">Estado</th>
+        {/* Contenedor responsivo con tabla al 100% que evita desbordes y cortes */}
+        <div className="w-full overflow-x-auto">
+          <table className="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr style={{ backgroundColor: RED }} className="text-white border-b border-red-800">
+                <th className="py-2.5 px-3 font-bold uppercase tracking-wider text-white">Alumno</th>
+                <th className="py-2.5 px-3 text-center font-bold uppercase tracking-wider text-white border-l border-red-700/60">ID Matrícula</th>
+                <th className="py-2.5 px-3 text-center font-bold uppercase tracking-wider text-white border-l border-red-700/60">Sección</th>
+                <th className="py-2.5 px-3 text-center font-bold uppercase tracking-wider text-white border-l border-red-700/60">Días Académicos</th>
+                <th className="py-2.5 px-3 text-center font-bold uppercase tracking-wider text-white border-l border-red-700/60">Faltas</th>
+                <th className="py-2.5 px-3 text-center font-bold uppercase tracking-wider text-white border-l border-red-700/60">Tardanzas</th>
+                <th className="py-2.5 px-3 text-center font-bold uppercase tracking-wider text-white border-l border-red-700/60">% Faltas</th>
+                <th className="py-2.5 px-3 text-center font-bold uppercase tracking-wider text-white border-l border-red-700/60">Estado</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
-              {filteredStudents.map((student) => {
-                const isCritical = student.porcentajeFaltasNum > 15;
-                return (
-                  <tr
-                    key={student.id}
-                    className={`transition-colors ${
-                      isCritical ? 'bg-red-50/25 hover:bg-red-50/40' : 'hover:bg-gray-50/60'
-                    }`}
-                  >
-                    {/* Alumno */}
-                    <td className="py-3 px-6">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={student.avatar}
-                          alt={student.name}
-                          className="w-8 h-8 rounded-full object-cover border border-gray-200"
-                          onError={(e) => {
-                            e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(student.name)}&background=C0392B&color=fff&size=32`;
-                          }}
-                        />
-                        <div>
-                          <p className="font-bold text-gray-900 text-sm leading-tight">
+            <tbody>
+              {filteredStudents.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="py-6 text-center text-gray-400 bg-white">
+                    No se encontraron registros de estudiantes.
+                  </td>
+                </tr>
+              ) : (
+                filteredStudents.map((student, idx) => {
+                  const isCritical = student.porcentajeFaltasNum > 15;
+                  return (
+                    <tr
+                      key={student.id}
+                      className={`border-b border-gray-200 transition-colors ${
+                        isCritical
+                          ? 'bg-red-50/40 hover:bg-red-50/70'
+                          : idx % 2 === 0
+                          ? 'bg-white hover:bg-gray-50'
+                          : 'bg-gray-50/60 hover:bg-gray-100/60'
+                      }`}
+                    >
+                      {/* Alumno */}
+                      <td className="py-2.5 px-3">
+                        <div className="flex items-center gap-2.5">
+                          <img
+                            src={student.avatar}
+                            alt={student.name}
+                            className="w-7 h-7 rounded-none object-cover border border-gray-300"
+                            onError={(e) => {
+                              e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(student.name)}&background=C0392B&color=fff&size=28`;
+                            }}
+                          />
+                          <span className="font-semibold text-gray-900 text-xs">
                             {student.name}
-                          </p>
-                          <p className="text-[11px] text-gray-400">
-                            Matrícula: 2026-APA-{student.id.toString().padStart(4, '0')}
-                          </p>
+                          </span>
                         </div>
-                      </div>
-                    </td>
+                      </td>
 
-                    {/* Sección */}
-                    <td className="py-3 px-4 text-center">
-                      <span className="inline-block px-2.5 py-0.5 rounded font-semibold text-xs bg-gray-100 text-gray-700 border border-gray-200">
-                        {student.section}
-                      </span>
-                    </td>
+                      {/* ID Matrícula */}
+                      <td className="py-2.5 px-3 text-center font-mono font-medium text-gray-600 border-l border-gray-200">
+                        2026-APA-{student.id.toString().padStart(4, '0')}
+                      </td>
 
-                    {/* Días Académicos Totales */}
-                    <td className="py-3 px-4 text-center font-semibold text-gray-800 text-sm">
-                      {student.diasAcademicos}
-                    </td>
+                      {/* Sección */}
+                      <td className="py-2.5 px-3 text-center border-l border-gray-200">
+                        <span className="inline-block px-2 py-0.5 rounded-none font-bold text-[11px] bg-gray-100 text-gray-800 border border-gray-300">
+                          {student.section}
+                        </span>
+                      </td>
 
-                    {/* Faltas Acumuladas */}
-                    <td className="py-3 px-4 text-center">
-                      <span
-                        className={`inline-block px-2.5 py-0.5 rounded-full font-bold text-xs ${
-                          isCritical
-                            ? 'bg-red-100 text-red-700 border border-red-200'
-                            : student.faltasAcumuladas > 0
-                            ? 'bg-amber-100 text-amber-700 border border-amber-200'
-                            : 'bg-green-100 text-green-700 border border-green-200'
-                        }`}
-                      >
-                        {student.faltasAcumuladas}
-                      </span>
-                    </td>
+                      {/* Días Académicos Totales */}
+                      <td className="py-2.5 px-3 text-center font-semibold text-gray-800 border-l border-gray-200">
+                        {student.diasAcademicos}
+                      </td>
 
-                    {/* Tardanzas */}
-                    <td className="py-3 px-4 text-center">
-                      <span className="text-gray-600 font-semibold">
+                      {/* Faltas Acumuladas */}
+                      <td className="py-2.5 px-3 text-center border-l border-gray-200">
+                        <span
+                          className={`inline-block px-2 py-0.5 rounded-none font-bold text-xs border ${
+                            isCritical
+                              ? 'bg-red-100 text-red-700 border-red-300'
+                              : student.faltasAcumuladas > 0
+                              ? 'bg-amber-100 text-amber-700 border-amber-300'
+                              : 'bg-green-100 text-green-700 border-green-300'
+                          }`}
+                        >
+                          {student.faltasAcumuladas}
+                        </span>
+                      </td>
+
+                      {/* Tardanzas */}
+                      <td className="py-2.5 px-3 text-center text-gray-700 font-semibold border-l border-gray-200">
                         {student.tardanzasAcumuladas}
-                      </span>
-                    </td>
+                      </td>
 
-                    {/* % Faltas */}
-                    <td className="py-3 px-4 text-center">
-                      <span
-                        className={`font-bold text-sm ${
-                          isCritical
-                            ? 'text-red-700'
-                            : student.porcentajeFaltasNum > 0
-                            ? 'text-amber-700'
-                            : 'text-green-700'
-                        }`}
-                      >
-                        {student.porcentajeFaltasNum.toFixed(1)}%
-                      </span>
-                    </td>
+                      {/* % Faltas */}
+                      <td className="py-2.5 px-3 text-center font-bold border-l border-gray-200">
+                        <span
+                          className={
+                            isCritical
+                              ? 'text-red-700 font-extrabold'
+                              : student.porcentajeFaltasNum > 0
+                              ? 'text-amber-700'
+                              : 'text-green-700'
+                          }
+                        >
+                          {student.porcentajeFaltasNum.toFixed(1)}%
+                        </span>
+                      </td>
 
-                    {/* Estado */}
-                    <td className="py-3 px-6 text-center">
-                      {isCritical ? (
-                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700 border border-red-300 shadow-xs">
-                          <AlertTriangle size={12} className="text-red-600 flex-shrink-0" />
-                          Riesgo de Inhabilitación
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-300">
-                          <CheckCircle2 size={12} className="text-gray-500 flex-shrink-0" />
-                          Regular
-                        </span>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
+                      {/* Estado */}
+                      <td className="py-2.5 px-3 text-center border-l border-gray-200">
+                        {isCritical ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none text-[11px] font-bold bg-red-100 text-red-700 border border-red-300">
+                            <AlertTriangle size={11} className="text-red-600 flex-shrink-0" />
+                            Riesgo
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none text-[11px] font-semibold bg-gray-100 text-gray-700 border border-gray-300">
+                            <CheckCircle2 size={11} className="text-gray-500 flex-shrink-0" />
+                            Regular
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
         </div>
-
-        {/* Pie informativo institucional */}
-        <div className="bg-gray-50/70 border-t border-gray-100 px-6 py-2.5 flex flex-wrap items-center justify-between gap-2 text-[11px] text-gray-500">
-          <div className="flex items-center gap-1.5">
-            <Fingerprint size={13} className="text-gray-400" />
-            <span>
-              Registro plano por huella dactilar en portería. El sistema no requiere pase de lista en aula por docente.
-            </span>
-          </div>
-          <span className="font-medium text-gray-600">
-            Sede Central Andahuaylas · Periodo 2026-I
-          </span>
-        </div>
       </div>
 
-      {/* Modal: Reporte General de Ingresos (Informativo y Estético) */}
+      {/* Modal: Reporte General de Ingresos */}
       {isReportModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden border border-gray-200 animate-in fade-in zoom-in-95 duration-150">
-            {/* Header del Modal */}
-            <div className="px-6 py-4 text-white flex items-center justify-between" style={{ backgroundColor: RED }}>
-              <div className="flex items-center gap-3">
-                <div className="bg-white/10 p-2 rounded-lg">
-                  <Fingerprint size={22} className="text-white" />
-                </div>
+          <div className="bg-white rounded-none shadow-2xl max-w-2xl w-full overflow-hidden border border-gray-300">
+            <div className="px-5 py-3.5 text-white flex items-center justify-between" style={{ backgroundColor: RED }}>
+              <div className="flex items-center gap-2.5">
+                <Fingerprint size={20} className="text-white" />
                 <div>
-                  <h2 className="text-lg font-bold leading-tight">Reporte General de Ingresos</h2>
+                  <h2 className="text-base font-bold leading-tight">Reporte General de Ingresos</h2>
                   <p className="text-xs text-red-100">Control Biométrico Diario · Academia Apu San Antonio</p>
                 </div>
               </div>
               <button
                 onClick={() => setIsReportModalOpen(false)}
-                className="p-1.5 hover:bg-white/20 rounded-lg transition-colors text-white"
+                className="p-1 hover:bg-white/20 rounded-none transition-colors text-white"
                 title="Cerrar"
               >
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
 
-            {/* Contenido del Reporte */}
-            <div className="p-6 space-y-4">
-              <div className="grid grid-cols-3 gap-3">
-                <div className="p-3 bg-green-50 border border-green-200 rounded-xl text-center">
-                  <p className="text-[11px] font-semibold text-green-700 uppercase">Ingresos a Tiempo</p>
-                  <p className="text-xl font-bold text-green-900 mt-1">94.5%</p>
-                  <p className="text-[10px] text-green-600">Antes de 08:00 AM</p>
+            <div className="p-5 space-y-4 max-h-[75vh] overflow-y-auto text-xs text-gray-800">
+              <div className="bg-gray-50 p-3 border border-gray-300 rounded-none flex items-center justify-between">
+                <div>
+                  <span className="font-bold text-gray-900 block">Torniquete Principal - Puerta 01</span>
+                  <span className="text-gray-500">Horario de ingreso regular: 07:15 AM a 08:00 AM</span>
                 </div>
-                <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-center">
-                  <p className="text-[11px] font-semibold text-amber-700 uppercase">Tardanzas Hoy</p>
-                  <p className="text-xl font-bold text-amber-900 mt-1">3</p>
-                  <p className="text-[10px] text-amber-600">08:01 - 08:15 AM</p>
-                </div>
-                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-center">
-                  <p className="text-[11px] font-semibold text-red-700 uppercase">Faltas Registradas</p>
-                  <p className="text-xl font-bold text-red-900 mt-1">1</p>
-                  <p className="text-[10px] text-red-600">Sin marcación de huella</p>
-                </div>
+                <span className="px-2.5 py-1 text-xs font-bold text-green-700 bg-green-50 border border-green-300 rounded-none">
+                  Operativo
+                </span>
               </div>
 
-              <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-xs space-y-2 text-gray-700">
-                <div className="flex items-center justify-between pb-2 border-b border-gray-200">
-                  <span className="font-semibold text-gray-900">Estado del Huellero Principal:</span>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-800">
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                    En línea / Sincronizado
-                  </span>
-                </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span>Última sincronización con el servidor:</span>
-                  <span className="font-mono text-gray-900">Hoy, 08:30 AM</span>
-                </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span>Módulo de registro docente:</span>
-                  <span className="text-gray-500">Desactivado (El registro es autónomo por torniquete de ingreso)</span>
-                </div>
+              <div className="border border-gray-300 rounded-none overflow-hidden">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-gray-100 border-b border-gray-300 text-gray-700 font-bold uppercase text-[10px]">
+                      <th className="py-2 px-3">Estudiante</th>
+                      <th className="py-2 px-3 text-center border-l border-gray-200">Sección</th>
+                      <th className="py-2 px-3 text-center border-l border-gray-200">Hora Ingreso</th>
+                      <th className="py-2 px-3 text-center border-l border-gray-200">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {studentsAttendanceData.map(st => (
+                      <tr key={st.id} className="hover:bg-gray-50">
+                        <td className="py-2 px-3 font-semibold text-gray-900">{st.name}</td>
+                        <td className="py-2 px-3 text-center border-l border-gray-200">{st.section}</td>
+                        <td className="py-2 px-3 text-center border-l border-gray-200 font-mono text-gray-600">
+                          {st.faltasAcumuladas > 10 ? '--:--' : '07:48 AM'}
+                        </td>
+                        <td className="py-2 px-3 text-center border-l border-gray-200">
+                          <span className={`px-2 py-0.5 rounded-none font-bold text-[10px] border ${
+                            st.faltasAcumuladas > 10
+                              ? 'bg-red-50 text-red-700 border-red-300'
+                              : 'bg-green-50 text-green-700 border-green-300'
+                          }`}>
+                            {st.faltasAcumuladas > 10 ? 'Inasistencia' : 'Puntual'}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-
-              <p className="text-[11px] text-gray-500 leading-relaxed text-center">
-                El control de asistencia institucional se realiza automáticamente mediante el lector biométrico instalado en la puerta de acceso de la Academia. Los docentes no requieren realizar toma de asistencia en aula.
-              </p>
-            </div>
-
-            {/* Footer */}
-            <div className="bg-gray-50 border-t border-gray-200 px-6 py-3 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setIsReportModalOpen(false)}
-                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg text-xs font-semibold transition-colors"
-              >
-                Cerrar reporte
-              </button>
             </div>
           </div>
         </div>

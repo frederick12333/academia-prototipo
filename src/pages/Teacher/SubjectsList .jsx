@@ -1,12 +1,8 @@
 import React from 'react';
-import Layout from '../../components/layouts/Layout';
+import SubjectsListStudent from '../Student/SubjectsList ';
 
- const SubjectsList   = () => {
-  return (
-    <Layout currentPage={'Courses'}>
-      
-      
-    </Layout>
-  )
-}
+const SubjectsList = () => {
+  return <SubjectsListStudent />;
+};
+
 export default SubjectsList;

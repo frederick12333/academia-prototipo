@@ -192,8 +192,8 @@ const NotificationsDropdown = () => {
             )}
           </div>
 
-          {/* Listado de avisos */}
-          <div className="max-h-96 overflow-y-auto divide-y divide-gray-100">
+          {/* Listado de avisos con scroll optimizado max-h-[320px] */}
+          <div className="max-h-[320px] overflow-y-auto pr-1 divide-y divide-gray-100">
             {isLoading ? (
               <div className="flex justify-center items-center py-6">
                 <Loader2 className="w-6 h-6 animate-spin text-gray-400" />

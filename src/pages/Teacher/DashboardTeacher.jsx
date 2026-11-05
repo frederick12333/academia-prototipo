@@ -6,7 +6,6 @@ import Layout from '../../components/layouts/Layout';
 import FastActions from '../../components/shared/FastActions';
 import ScheduleView from '../../components/shared/ScheduleView';
 import CriticalAbsencesTable from '../../components/teacher/CriticalAbsencesTable';
-import AnnouncementsSideList from '../../components/teacher/AnnouncementsSideList';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default function DashboardTeacher() {
@@ -27,7 +26,6 @@ export default function DashboardTeacher() {
         {/* Columna lateral derecha */}
         <div className="space-y-4 w-full lg:w-80 flex-shrink-0">
           <FastActions user={user} colorButton="bg-red-700" />
-          <AnnouncementsSideList />
         </div>
       </div>
     </Layout>

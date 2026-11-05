@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../../components/layouts/Layout';
-import { Calendar, Clock, MapPin, Download, FileText, Info, Award, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, MapPin, Download, FileText, Award, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useAcademic } from '../../contexts/AcademicContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { courses } from '../../data/mockData';
@@ -60,26 +60,13 @@ export const Exams = () => {
   return (
     <Layout currentPage="Exams">
       <div className="bg-gray-50 min-h-screen">
-        {/* Cabecera institucional */}
-        <div className="bg-white border-b border-gray-200 px-6 py-5">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div className="w-1.5 h-10 rounded-full" style={{ backgroundColor: RED }} />
-              <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-gray-400">
-                  Academia Apu San Antonio de Andahuaylas
-                </p>
-                <h1 className="text-xl font-bold text-gray-900 leading-tight">
-                  Tablero Informativo de Evaluaciones Físicas
-                </h1>
-              </div>
-            </div>
-
-            {/* Aviso informativo de evaluaciones presenciales */}
-            <div className="flex items-center gap-2 bg-red-50 text-red-800 border border-red-200 px-3 py-1.5 rounded-lg text-xs font-medium">
-              <Info size={16} className="text-red-700 flex-shrink-0" />
-              <span>Todas las evaluaciones se rinden de forma física y presencial en las aulas de la academia.</span>
-            </div>
+        {/* Cabecera limpia */}
+        <div className="bg-white border-b border-gray-200 px-6 py-4">
+          <div className="flex items-center gap-3">
+            <div className="w-1.5 h-8 rounded-full" style={{ backgroundColor: RED }} />
+            <h1 className="text-lg font-bold text-gray-900">
+              Cronograma de Exámenes
+            </h1>
           </div>
         </div>
 

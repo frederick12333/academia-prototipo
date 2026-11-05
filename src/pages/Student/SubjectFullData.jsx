@@ -8,7 +8,7 @@ import { useAuth } from '../../contexts/AuthContext';
   
 export const SubjectFullData   = () => {
   const location = useLocation();
-  const course = location.state?.cours;
+  const course = location.state?.cours || { name: 'Física', code: 'FIS301-APU-2026-II', teacher: { name: 'Prof. Jhon Wick' } };
   const { user } = useAuth();
     const [userRole, setUserRole] = useState(user.role);
  

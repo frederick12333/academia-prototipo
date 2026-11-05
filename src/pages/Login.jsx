@@ -67,23 +67,25 @@ export default function Login() {
       {/* ============================================================ */}
       {/* PANEL IZQUIERDO (33%): Formulario e Identidad Institucional  */}
       {/* ============================================================ */}
-      <div className="w-full md:w-[33%] h-full flex flex-col justify-center items-center px-6 sm:px-10 py-8 bg-white overflow-y-auto z-10 shadow-lg md:shadow-none">
+      <div className="w-full md:w-[33%] h-full flex flex-col justify-start items-center px-6 sm:px-10 pt-4 sm:pt-6 pb-6 bg-white overflow-y-auto z-10 shadow-lg md:shadow-none">
         <div className="w-full max-w-sm flex flex-col items-center">
           
           {/* Cabecera / Identidad Institucional */}
-          <div className="w-full flex flex-col items-center text-center mb-6">
-            <img
-              src="/image/imagenacademia.png"
-              alt="Logo Academia Apu San Antonio de Andahuaylas"
-              className="w-28 h-28 object-contain mb-3 drop-shadow-sm select-none"
-            />
+          <div className="w-full flex flex-col items-center text-center mb-4 sm:mb-5">
+            <div className="w-full flex items-center justify-center mb-2.5 sm:mb-3">
+              <img
+                src="/image/imagenacademia.png"
+                alt="Logo Academia Apu San Antonio de Andahuaylas"
+                className="w-full max-w-[320px] sm:max-w-[350px] h-auto max-h-32 sm:max-h-36 object-contain drop-shadow-md select-none transition-transform duration-300 hover:scale-105"
+              />
+            </div>
             <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 tracking-tight leading-tight">
               Academia Apu San Antonio de Andahuaylas
             </h1>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mt-1.5">
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mt-1">
               Excelencia · Disciplina · Servicio
             </p>
-            <div className="w-12 h-0.5 bg-red-600 rounded-full mt-3 opacity-80" />
+            <div className="w-12 h-0.5 bg-red-600 rounded-full mt-2.5 opacity-80" />
           </div>
 
           {/* Formulario de Inicio de Sesión */}

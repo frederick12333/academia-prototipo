@@ -5,8 +5,8 @@ import { useAcademic } from '../../contexts/AcademicContext';
 
 const RED = '#C0392B';
 
-export const CreateHybridAssignmentModal = ({ isOpen, onClose }) => {
-  const { addPhysicalAssignment } = useAcademic();
+export const CreateHybridAssignmentModal = ({ isOpen, onClose, taskToEdit = null, defaultCourse = null }) => {
+  const { addPhysicalAssignment, updatePhysicalAssignment } = useAcademic();
 
   const [courseId, setCourseId] = useState(courses[0]?.id || 1);
   const selectedCourseObj = courses.find(c => c.id === Number(courseId)) || courses[0];
@@ -19,6 +19,25 @@ export const CreateHybridAssignmentModal = ({ isOpen, onClose }) => {
   const [fileName, setFileName] = useState('');
   const [fileSize, setFileSize] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+
+  React.useEffect(() => {
+    if (taskToEdit) {
+      setTitle(taskToEdit.title || '');
+      setSelectedClass(taskToEdit.className || availableClasses[0] || '3A');
+      const foundCourse = courses.find(c => c.name === taskToEdit.courseName);
+      if (foundCourse) setCourseId(foundCourse.id);
+      if (taskToEdit.deadline || taskToEdit.dueDate) setDeadline(taskToEdit.deadline || taskToEdit.dueDate);
+      if (taskToEdit.instructions) setInstructions(taskToEdit.instructions);
+    } else {
+      setTitle('');
+      setInstructions('Resolver los ejercicios en el cuaderno de trabajo de manera ordenada. Presentación física en el aula para revisión y firma del docente.');
+      if (defaultCourse) {
+        const foundCourse = courses.find(c => c.name === defaultCourse.courseName);
+        if (foundCourse) setCourseId(foundCourse.id);
+        if (defaultCourse.className) setSelectedClass(defaultCourse.className);
+      }
+    }
+  }, [taskToEdit, defaultCourse, isOpen]);
 
   if (!isOpen) return null;
 
@@ -49,32 +68,46 @@ export const CreateHybridAssignmentModal = ({ isOpen, onClose }) => {
       return;
     }
 
-    const newAssignment = {
-      title: title.trim(),
-      courseId: selectedCourseObj.id,
-      courseName: selectedCourseObj.name,
-      className: selectedClass,
-      deadline,
-      instructions,
-      fileName: fileName || `Guia_Trabajo_${title.trim().replace(/\s+/g, '_')}.pdf`,
-      fileSize: fileSize || '850 KB',
-      grades: {}
-    };
+    if (taskToEdit) {
+      updatePhysicalAssignment(taskToEdit.id, {
+        title: title.trim(),
+        courseId: selectedCourseObj.id,
+        courseName: selectedCourseObj.name,
+        className: selectedClass,
+        deadline,
+        dueDate: deadline,
+        instructions: instructions.trim(),
+      });
+    } else {
+      const newAssignment = {
+        title: title.trim(),
+        courseId: selectedCourseObj.id,
+        courseName: selectedCourseObj.name,
+        className: selectedClass,
+        deadline,
+        instructions,
+        fileName: fileName || `Guia_Trabajo_${title.trim().replace(/\s+/g, '_')}.pdf`,
+        fileSize: fileSize || '850 KB',
+        grades: {}
+      };
+      addPhysicalAssignment(newAssignment);
+    }
 
-    addPhysicalAssignment(newAssignment);
     onClose();
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl max-w-xl w-full overflow-hidden border border-gray-200">
+      <div className="bg-white rounded-none shadow-2xl max-w-xl w-full overflow-hidden border border-gray-300">
         {/* Cabecera */}
         <div className="px-6 py-4 flex items-center justify-between text-white" style={{ backgroundColor: RED }}>
           <div className="flex items-center gap-2">
             <ClipboardList size={20} />
-            <h3 className="font-bold text-base">Crear Tarea con Revisión Física</h3>
+            <h3 className="font-bold text-base uppercase tracking-wider">
+              {taskToEdit ? 'Editar Tarea Académica' : 'Crear Nueva Tarea'}
+            </h3>
           </div>
-          <button onClick={onClose} className="p-1 hover:bg-white/20 rounded-lg transition-colors text-white">
+          <button onClick={onClose} className="p-1 hover:bg-white/20 rounded-none transition-colors text-white">
             <X size={20} />
           </button>
         </div>

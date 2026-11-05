@@ -5,7 +5,6 @@ import React from 'react';
 import Layout from '../../components/layouts/Layout';
 import FastActions from '../../components/shared/FastActions';
 import ScheduleView from '../../components/shared/ScheduleView';
-import StudentAbsencesTable from '../../components/Student/StudentAbsencesTable';
 import AnnouncementsSideList from '../../components/Student/AnnouncementsSideList';
 import DeadlinesSideList from '../../components/Student/DeadlinesSideList';
 import { useAuth } from '../../contexts/AuthContext';
@@ -16,13 +15,9 @@ export default function DashboardStudent() {
   return (
     <Layout currentPage={'Dashboard'}>
       <div className="flex flex-col lg:flex-row justify-between gap-4">
-        {/* Sección principal de analíticas y horario */}
-        <div className="flex-1 min-w-0 space-y-4">
-          {/* 1. El Horario como Vista Principal (Prioridad de carga arriba del todo) */}
+        {/* Sección principal: Horario como Vista Principal al ras y ultra-simplificada */}
+        <div className="flex-1 min-w-0">
           <ScheduleView embedded={true} />
-
-          {/* 2. Tabla de Mis inasistencias posicionada debajo del Horario */}
-          <StudentAbsencesTable user={user} />
         </div>
 
         {/* Columna lateral derecha */}

@@ -71,7 +71,7 @@ export const users = [
     role: 'student',
     status: 'Active',
     email: 'student@titan.edu.tr',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150',
     grade: '3.° Secundaria',
     class: '3A',
     phone: '+51 983 654 321',

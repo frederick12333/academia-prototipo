@@ -105,15 +105,15 @@ export const GradesTableTeacher = ({ selectedCourse, selectedClass, searchTerm }
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+    <div className="bg-white border border-gray-300 rounded-none overflow-hidden">
       {/* Barra de acciones de la tabla */}
-      <div className="p-4 border-b border-gray-200 bg-gray-50 flex flex-wrap items-center justify-between gap-3">
+      <div className="p-3.5 border-b border-gray-300 bg-gray-50 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-bold uppercase tracking-wider text-gray-500">
+          <span className="text-xs font-bold uppercase tracking-wider text-gray-600">
             Escala Vigesimal Oficial (0 – 20)
           </span>
           {saveSuccess && (
-            <span className="text-xs font-semibold text-green-700 bg-green-100 px-2.5 py-1 rounded-full flex items-center gap-1">
+            <span className="text-xs font-semibold text-green-700 bg-green-50 px-2.5 py-1 rounded-none border border-green-300 flex items-center gap-1">
               <Check size={14} /> ¡Notas guardadas y sincronizadas!
             </span>
           )}
@@ -123,7 +123,7 @@ export const GradesTableTeacher = ({ selectedCourse, selectedClass, searchTerm }
           <button
             type="button"
             onClick={() => setIsWeightsModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition-colors shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-none border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition-colors"
           >
             <Settings size={14} style={{ color: RED }} />
             Configurar Ponderaciones (%)
@@ -133,7 +133,7 @@ export const GradesTableTeacher = ({ selectedCourse, selectedClass, searchTerm }
             <button
               type="button"
               onClick={startEditMode}
-              className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-lg text-white transition-opacity hover:opacity-90 shadow-sm"
+              className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-none text-white transition-opacity hover:opacity-90"
               style={{ backgroundColor: RED }}
             >
               <Edit2 size={14} />
@@ -144,14 +144,14 @@ export const GradesTableTeacher = ({ selectedCourse, selectedClass, searchTerm }
               <button
                 type="button"
                 onClick={() => setEditMode(false)}
-                className="px-3 py-1.5 text-xs font-semibold rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition-colors"
+                className="px-3 py-1.5 text-xs font-semibold rounded-none border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 transition-colors"
               >
                 Cancelar
               </button>
               <button
                 type="button"
                 onClick={saveAllGrades}
-                className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-lg bg-green-700 text-white hover:bg-green-800 transition-colors shadow-sm"
+                className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-none bg-green-700 text-white hover:bg-green-800 transition-colors"
               >
                 <Check size={14} />
                 Guardar Notas
@@ -161,18 +161,18 @@ export const GradesTableTeacher = ({ selectedCourse, selectedClass, searchTerm }
         </div>
       </div>
 
-      {/* Tabla de Calificaciones */}
+      {/* Tabla de Calificaciones Corporativa Plana */}
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="w-full text-sm border-collapse">
           <thead>
-            <tr className="bg-gray-100 border-b border-gray-200">
-              <th className="text-left py-3 px-4 text-xs font-bold uppercase tracking-wider text-gray-700">
+            <tr style={{ backgroundColor: RED }} className="text-white border-b border-red-800">
+              <th className="text-left py-3 px-4 text-xs font-bold uppercase tracking-wider text-white">
                 Alumno
               </th>
-              <th className="text-left py-3 px-3 text-xs font-bold uppercase tracking-wider text-gray-700">
+              <th className="text-left py-3 px-3 text-xs font-bold uppercase tracking-wider text-white border-l border-red-700/60">
                 Clase
               </th>
-              <th className="text-left py-3 px-3 text-xs font-bold uppercase tracking-wider text-gray-700">
+              <th className="text-left py-3 px-3 text-xs font-bold uppercase tracking-wider text-white border-l border-red-700/60">
                 Asignatura
               </th>
 
@@ -180,26 +180,26 @@ export const GradesTableTeacher = ({ selectedCourse, selectedClass, searchTerm }
               {evaluationColumns.map((col) => (
                 <th
                   key={col.id}
-                  className="text-center py-3 px-3 text-xs font-bold uppercase tracking-wider text-gray-800 border-l border-gray-200"
+                  className="text-center py-3 px-3 text-xs font-bold uppercase tracking-wider text-white border-l border-red-700/60"
                 >
                   <div>{col.name}</div>
-                  <div className="text-[10px] font-semibold text-red-700">({col.weight}%)</div>
+                  <div className="text-[10px] font-normal text-red-200">({col.weight}%)</div>
                 </th>
               ))}
 
-              <th className="text-center py-3 px-4 text-xs font-bold uppercase tracking-wider text-gray-900 border-l border-gray-200 bg-gray-200/60">
+              <th className="text-center py-3 px-4 text-xs font-bold uppercase tracking-wider text-white border-l border-red-700/60 bg-black/10">
                 Promedio
               </th>
-              <th className="text-center py-3 px-4 text-xs font-bold uppercase tracking-wider text-gray-900 border-l border-gray-200">
+              <th className="text-center py-3 px-4 text-xs font-bold uppercase tracking-wider text-white border-l border-red-700/60">
                 Estado
               </th>
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-200">
+          <tbody>
             {students.length === 0 ? (
               <tr>
-                <td colSpan={evaluationColumns.length + 5} className="py-8 text-center text-gray-400">
+                <td colSpan={evaluationColumns.length + 5} className="py-8 text-center text-gray-400 bg-white">
                   No se encontraron alumnos para los filtros seleccionados.
                 </td>
               </tr>
@@ -211,7 +211,7 @@ export const GradesTableTeacher = ({ selectedCourse, selectedClass, searchTerm }
                 return (
                   <tr
                     key={student.id}
-                    className={`hover:bg-gray-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50/40'}`}
+                    className={`border-b border-gray-200 transition-colors hover:bg-gray-100/60 ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
                   >
                     {/* Alumno */}
                     <td className="py-2.5 px-4">
@@ -219,27 +219,27 @@ export const GradesTableTeacher = ({ selectedCourse, selectedClass, searchTerm }
                         <img
                           src={student.avatar}
                           alt={student.name}
-                          className="w-8 h-8 rounded-full object-cover border border-gray-200"
+                          className="w-8 h-8 rounded-none object-cover border border-gray-300"
                           onError={(e) => {
                             e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(student.name)}&background=C0392B&color=fff&size=32`;
                           }}
                         />
                         <div>
                           <div className="font-semibold text-gray-900 leading-tight">{student.name}</div>
-                          <div className="text-[11px] text-gray-400">ID: {student.id}</div>
+                          <div className="text-[11px] text-gray-500 font-mono">ID: {student.id}</div>
                         </div>
                       </div>
                     </td>
 
                     {/* Clase */}
-                    <td className="py-2.5 px-3">
-                      <span className="px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 text-gray-800 border border-gray-200">
+                    <td className="py-2.5 px-3 border-l border-gray-200">
+                      <span className="px-2 py-0.5 rounded-none text-xs font-semibold bg-gray-100 text-gray-800 border border-gray-300">
                         {student.class || 'N/D'}
                       </span>
                     </td>
 
                     {/* Asignatura */}
-                    <td className="py-2.5 px-3 text-gray-700 font-medium">{courseName}</td>
+                    <td className="py-2.5 px-3 border-l border-gray-200 text-gray-700 font-medium">{courseName}</td>
 
                     {/* Columnas de evaluación */}
                     {evaluationColumns.map((col) => {
@@ -252,7 +252,7 @@ export const GradesTableTeacher = ({ selectedCourse, selectedClass, searchTerm }
                         : '-';
 
                       return (
-                        <td key={col.id} className="py-2 px-2 text-center border-l border-gray-100">
+                        <td key={col.id} className="py-2 px-2 text-center border-l border-gray-200">
                           {editMode ? (
                             <input
                               type="number"
@@ -262,7 +262,7 @@ export const GradesTableTeacher = ({ selectedCourse, selectedClass, searchTerm }
                               value={localGrades[student.id]?.[col.id] ?? ''}
                               onChange={(e) => handleLocalGradeChange(student.id, col.id, e.target.value)}
                               placeholder="0 - 20"
-                              className="w-16 p-1 text-center font-bold text-sm bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-red-400"
+                              className="w-16 p-1 text-center font-bold text-sm bg-white border border-gray-300 rounded-none focus:outline-none focus:border-red-600"
                             />
                           ) : (
                             <span
@@ -282,13 +282,13 @@ export const GradesTableTeacher = ({ selectedCourse, selectedClass, searchTerm }
                     })}
 
                     {/* Promedio */}
-                    <td className="py-2.5 px-4 text-center border-l border-gray-200 bg-gray-50/70">
+                    <td className="py-2.5 px-4 text-center border-l border-gray-200 bg-gray-100/50">
                       {average !== null ? (
                         <span
-                          className={`text-sm font-bold px-2.5 py-0.5 rounded ${
+                          className={`text-sm font-bold px-2.5 py-0.5 rounded-none border ${
                             average >= 10.5
-                              ? 'text-green-800 bg-green-100'
-                              : 'text-red-800 bg-red-100'
+                              ? 'text-green-800 bg-green-50 border-green-300'
+                              : 'text-red-800 bg-red-50 border-red-300'
                           }`}
                         >
                           {average.toFixed(2)}
@@ -301,12 +301,12 @@ export const GradesTableTeacher = ({ selectedCourse, selectedClass, searchTerm }
                     {/* Estado */}
                     <td className="py-2.5 px-4 text-center border-l border-gray-200">
                       <span
-                        className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                        className={`text-xs font-bold px-2.5 py-0.5 rounded-none border ${
                           status === 'Aprobado'
-                            ? 'text-green-700 bg-green-50 border border-green-200'
+                            ? 'text-green-700 bg-green-50 border-green-300'
                             : status === 'Desaprobado'
-                            ? 'text-red-700 bg-red-50 border border-red-200'
-                            : 'text-gray-400'
+                            ? 'text-red-700 bg-red-50 border-red-300'
+                            : 'text-gray-400 border-gray-300'
                         }`}
                       >
                         {status}

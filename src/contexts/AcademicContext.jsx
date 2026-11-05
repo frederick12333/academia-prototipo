@@ -347,6 +347,10 @@ export const AcademicProvider = ({ children }) => {
     return newAssignment;
   };
 
+  const updatePhysicalAssignment = (assignmentId, updatedData) => {
+    setAssignments(prev => prev.map(a => a.id === assignmentId ? { ...a, ...updatedData } : a));
+  };
+
   // ─── Promedio Ponderado en Base 20 ──────────────────────────────────────────
   const calculateStudentCourseAverage = (studentId, courseName) => {
     if (!gradesMatrix || !gradesMatrix[studentId]) {
@@ -389,6 +393,7 @@ export const AcademicProvider = ({ children }) => {
         addPhysicalExam,
         assignments,
         addPhysicalAssignment,
+        updatePhysicalAssignment,
         calculateStudentCourseAverage,
       }}
     >

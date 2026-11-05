@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { AbsenceJustificationModal } from '../Student/AbsenceJustificationModal';
-import { SendPetitionModal } from '../Student/SendPetitionModal';
 import { useModal } from '../../contexts/ModalProvider';
 import { CreatePhysicalExamModal } from '../teacher/CreatePhysicalExamModal';
 import { CreateHybridAssignmentModal } from '../teacher/CreateHybridAssignmentModal';
@@ -25,14 +24,13 @@ const FastActions = ({ user }) => {
     ],
     student: [
       { id: 'absence_justification', label: 'Justificar Inasistencia', action: 'absence_justification' },
-      { id: 'send_petition',         label: 'Enviar Solicitud',        action: 'send_petition' },
       { id: 'view_assignments',      label: 'Ver Tareas',              action: 'view_assignments' },
     ],
   };
 
   useEffect(() => {
     const saved = localStorage.getItem(`fastActions_${user?.role}`);
-    const forbiddenIds = ['add_student', 'new_subject', 'new_announcement', 'send_message', 'new_class'];
+    const forbiddenIds = ['add_student', 'new_subject', 'new_announcement', 'send_message', 'new_class', 'send_petition'];
 
     if (saved) {
       try {
@@ -65,9 +63,6 @@ const FastActions = ({ user }) => {
         break;
       case 'absence_justification':
         showModal(() => <AbsenceJustificationModal isOpen={true} onClose={hideModal} />);
-        break;
-      case 'send_petition':
-        showModal(() => <SendPetitionModal isOpen={true} onClose={hideModal} />);
         break;
       case 'view_assignments':
         navigate('/student/assignments');

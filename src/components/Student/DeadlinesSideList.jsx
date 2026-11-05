@@ -1,105 +1,173 @@
-import React, { useMemo } from 'react';
-import { Bell } from 'lucide-react';
-import { assignments } from '../../data/assignmentsData';
-import { exams, courses } from '../../data/mockData';
-import { format, isToday, startOfToday, isValid } from 'date-fns';
+import React from 'react';
+import { CalendarClock, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const safeDate = (dateVal) => {
-  if (!dateVal) return new Date();
-  const d = new Date(dateVal);
-  return isValid(d) ? d : new Date();
-};
+// Fecha oficial de referencia del sistema (Noviembre 2026)
+const SYSTEM_NOW = new Date('2026-11-04T20:36:00');
+
+const MOCK_DEADLINES = [
+  {
+    id: 1,
+    subject: 'Física',
+    type: 'Tarea',
+    title: 'Guía Práctica N° 1 - Vectores y Cinemática',
+    deadline: '09/11 @ 19:00',
+    isoDate: '2026-11-09T19:00:00',
+    description: 'Resolver los ejercicios de cinemática y vectores en el cuaderno de trabajo.',
+    target: '/student/assignments'
+  },
+  {
+    id: 2,
+    subject: 'Matemáticas',
+    type: 'Tarea',
+    title: 'Ficha de Ejercicios N° 1 - Polinomios y Factorización',
+    deadline: '11/11 @ 19:00',
+    isoDate: '2026-11-11T19:00:00',
+    description: 'Desarrollar los problemas de factorización de polinomios.',
+    target: '/student/assignments'
+  },
+  {
+    id: 3,
+    subject: 'Física',
+    type: 'Presencial',
+    title: 'Primer Examen',
+    deadline: '12/11 @ 08:00 - 10:00',
+    isoDate: '2026-11-12T08:00:00',
+    description: 'Evaluación física presencial escrita. Traer lápiz 2B y carné estudiantil.',
+    target: '/student/schedule'
+  },
+  {
+    id: 4,
+    subject: 'Matemáticas',
+    type: 'Presencial',
+    title: 'Primer Examen',
+    deadline: '14/11 @ 10:00 - 12:00',
+    isoDate: '2026-11-14T10:00:00',
+    description: 'Evaluación física de operaciones y ecuaciones algebraicas.',
+    target: '/student/schedule'
+  },
+  {
+    id: 5,
+    subject: 'Literatura',
+    type: 'Tarea',
+    title: 'Análisis Literario - Obra Ollantay',
+    deadline: '15/11 @ 19:00',
+    isoDate: '2026-11-15T19:00:00',
+    description: 'Redactar el análisis en hojas cuadriculadas para revisión física.',
+    target: '/student/assignments'
+  },
+  {
+    id: 6,
+    subject: 'Física',
+    type: 'Tarea',
+    title: 'Ficha N° 0 - Repaso de Álgebra Vectorial',
+    deadline: '01/11 @ 18:00',
+    isoDate: '2026-11-01T18:00:00',
+    description: 'Ejercicios preparatorios de inicio de ciclo.',
+    target: '/student/assignments'
+  },
+  {
+    id: 7,
+    subject: 'Literatura',
+    type: 'Tarea',
+    title: 'Control de Lectura N° 1 - Mitos Andinos',
+    deadline: '03/11 @ 19:00',
+    isoDate: '2026-11-03T19:00:00',
+    description: 'Entrega de resumen en cuaderno de trabajo.',
+    target: '/student/assignments'
+  }
+];
 
 const DeadlinesSideList = () => {
   const navigate = useNavigate();
 
-  const deadlines = useMemo(() => {
-    const safeAssignments = Array.isArray(assignments) ? assignments : [];
-    const safeExams = Array.isArray(exams) ? exams : [];
-    const safeCourses = Array.isArray(courses) ? courses : [];
-
-    const allDeadlines = [
-      ...safeAssignments.map(assignment => {
-        const course = safeCourses.find(c => c && c.name === assignment.courseName);
-        const d = safeDate(assignment.deadline);
-        return {
-          id: `assignment-${assignment.id}`,
-          title: assignment.title || 'Tarea',
-          subject: course?.name || assignment.courseName || 'Asignatura',
-          deadline: isValid(d) ? `${format(d, 'HH:mm')} del ${format(d, 'dd/MM/yyyy')}` : 'Por definir',
-          details: assignment.description || '',
-          mode: 'Tarea',
-          date: d,
-          type: 'assignment'
-        };
-      }),
-      ...safeExams.map(exam => {
-        const d = safeDate(`${exam.date}T${exam.time?.slice(0, 5) || '08:00'}`);
-        return {
-          id: `exam-${exam.id}`,
-          title: exam.title || 'Evaluación',
-          subject: exam.course?.name || exam.courseName || 'Asignatura',
-          deadline: isValid(d) ? `${exam.time || ''} del ${format(d, 'dd/MM/yyyy')}` : 'Por definir',
-          details: exam.instructions || exam.description || '',
-          mode: exam.isOnline ? 'En línea' : 'Presencial',
-          date: d,
-          type: 'exam'
-        };
-      })
-    ];
-
-    const todayStart = startOfToday();
-    return allDeadlines
-      .filter(deadline => deadline.date >= todayStart)
-      .sort((a, b) => a.date - b.date)
-      .slice(0, 5);
-  }, []);
-
-  const handleViewClick = (deadline) => {
-    const path = deadline.type === 'assignment' ? '/student/assignments' : '/student/exams';
-    navigate(`${path}?search=${encodeURIComponent(deadline.title)}`);
+  // Función para determinar si la fecha de la entrega ya pasó (efecto marchito)
+  const checkIsPast = (isoDateStr) => {
+    return new Date(isoDateStr) < SYSTEM_NOW;
   };
 
+  const pendingCount = MOCK_DEADLINES.filter(d => !checkIsPast(d.isoDate)).length;
+
   return (
-    <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-base font-semibold text-gray-900">Próximas entregas</h3>
-        <Bell className="h-5 w-5 text-gray-400" />
+    <div className="bg-white rounded-xl p-3 sm:p-4 border border-gray-200 shadow-sm">
+      {/* Cabecera compacta */}
+      <div className="flex items-center justify-between mb-3 pb-2 border-b border-gray-100">
+        <div className="flex items-center gap-2">
+          <CalendarClock className="h-4 w-4 text-red-600" />
+          <h3 className="text-sm font-bold text-gray-900 tracking-tight">Próximas entregas</h3>
+        </div>
+        <span className="text-[11px] font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+          {pendingCount} vigentes
+        </span>
       </div>
-      <div className="space-y-2">
-        {deadlines.length === 0 ? (
-          <p className="text-xs text-gray-400 py-3 text-center">No hay entregas pendientes próximas.</p>
-        ) : (
-          deadlines.map((deadline) => (
+
+      {/* Contenedor optimizado: máximo 3 elementos visibles con scroll vertical independiente */}
+      <div className="max-h-[320px] overflow-y-auto pr-1 space-y-2 select-none">
+        {MOCK_DEADLINES.map((item) => {
+          const isPast = checkIsPast(item.isoDate);
+
+          return (
             <div
-              key={deadline.id}
-              className={`p-3 rounded-lg border-l-4 ${
-                isToday(deadline.date) ? 'border-red-600 bg-red-50' : 'border-gray-300 bg-gray-50'
-              } hover:bg-gray-100 transition-colors`}
+              key={item.id}
+              className={`border rounded-lg p-2.5 sm:p-3 transition-all flex items-center justify-between gap-3 ${
+                isPast
+                  ? 'opacity-50 grayscale contrast-75 bg-gray-100 border-gray-200'
+                  : 'bg-gray-50 border-gray-100 hover:bg-gray-100/80 shadow-2xs'
+              }`}
             >
-              <div className="flex flex-col">
-                <h4 className={`font-semibold ${isToday(deadline.date) ? 'text-red-700' : 'text-gray-900'} text-xs`}>
-                  {deadline.title}
-                </h4>
-                <p className="text-[11px] text-gray-500 mt-0.5">{deadline.deadline}</p>
-                <p className="text-xs font-bold text-gray-800 my-1">{deadline.subject}</p>
-                {deadline.details && (
-                  <p className="text-[11px] text-gray-600 line-clamp-2">{deadline.details}</p>
-                )}
-                <span className="text-[10px] font-semibold text-red-700 mt-1">{deadline.mode}</span>
-              </div>
-              <div className="flex justify-end mt-2">
-                <button
-                  onClick={() => handleViewClick(deadline)}
-                  className="px-3 py-1 bg-red-700 text-white text-xs font-medium rounded hover:bg-red-800 transition-colors"
+              {/* Información principal del entregable */}
+              <div className="flex-1 min-w-0">
+                {/* Meta: Materia, Tipo y Fecha con estado dinámico */}
+                <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                  <span
+                    className={`text-xs font-bold px-2 py-0.5 rounded flex-shrink-0 ${
+                      isPast
+                        ? 'bg-gray-200 text-gray-600'
+                        : 'bg-red-50 text-red-600'
+                    }`}
+                  >
+                    {item.subject}
+                  </span>
+                  <span className="text-[11px] font-medium text-gray-400">·</span>
+                  <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider flex-shrink-0">
+                    {item.type}
+                  </span>
+                  <span className="text-[11px] text-gray-400">·</span>
+                  <span className="text-xs text-gray-500 font-medium truncate">
+                    {item.deadline}
+                  </span>
+                </div>
+
+                {/* Título truncado */}
+                <h4 
+                  className={`text-sm truncate ${isPast ? 'font-medium text-gray-600' : 'font-semibold text-gray-800'}`} 
+                  title={item.title}
                 >
-                  Ver
-                </button>
+                  {item.title}
+                </h4>
+
+                {/* Descripción breve con truncado */}
+                <p className="text-xs text-gray-500 line-clamp-1 mt-0.5" title={item.description}>
+                  {item.description}
+                </p>
               </div>
+
+              {/* Botón Ver (Activo o Deshabilitado suave según vigencia) */}
+              <button
+                onClick={() => !isPast && navigate(item.target)}
+                disabled={isPast}
+                className={`text-xs font-bold px-3 py-1.5 rounded transition-colors flex-shrink-0 ${
+                  isPast
+                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    : 'bg-red-600 hover:bg-red-700 text-white shadow-xs active:scale-95'
+                }`}
+                title={isPast ? 'Entrega pasada' : 'Ver actividad'}
+              >
+                {isPast ? 'Pasado' : 'Ver'}
+              </button>
             </div>
-          ))
-        )}
+          );
+        })}
       </div>
     </div>
   );

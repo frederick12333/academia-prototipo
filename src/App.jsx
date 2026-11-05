@@ -15,11 +15,13 @@ import Attendance from './pages/Teacher/Attendance';
 import TeacherProfile from './pages/Teacher/TeacherProfile';
 import StudentListPage from './pages/Teacher/StudentListPage';
 import AttendanceDaily from './pages/Teacher/AttendanceDaily';
+import RankingTeacher from './pages/Teacher/RankingTeacher';
 
 // Student Pages
 import StudentProfile from './pages/Student/StudentProfile';
 import DashboardStudent from './pages/Student/DashboardStudent';
 import GradesStudent from './pages/Student/Grades';
+import RankingStudent from './pages/Student/Ranking';
 import SubjectsList from './pages/Student/SubjectsList ';
 import TeachersList from './pages/Student/TeachersList ';
 import SubjectFullData from './pages/Student/SubjectFullData';
@@ -116,6 +118,14 @@ function App() {
                           }
                         />
                         <Route
+                          path="/teacher/ranking"
+                          element={
+                            <ProtectedRoute requiredRole="teacher">
+                              <RankingTeacher />
+                            </ProtectedRoute>
+                          }
+                        />
+                        <Route
                           path="/teacher/attendance"
                           element={
                             <ProtectedRoute requiredRole="teacher">
@@ -162,6 +172,14 @@ function App() {
                           element={
                             <ProtectedRoute requiredRole="student">
                               <GradesStudent />
+                            </ProtectedRoute>
+                          }
+                        />
+                        <Route
+                          path="/student/ranking"
+                          element={
+                            <ProtectedRoute requiredRole="student">
+                              <RankingStudent />
                             </ProtectedRoute>
                           }
                         />
